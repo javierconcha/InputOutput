@@ -12,7 +12,8 @@
 #########################################################################################
 import os
 
-date = '130926'
+date = raw_input("Enter the date (e.g. 130919):")
+
 dirname = ''.join(('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/',date,'/SVC_spectra_',date,'/'))
 
 # Create spectralist.txt
@@ -25,7 +26,6 @@ outFile.close()
 
 # Create directory SVCreflectances
 mypath = dirname + 'SVCreflectances/'
-print mypath
 if not os.path.isdir(mypath):
    os.makedirs(mypath)
 
@@ -35,13 +35,11 @@ SpectraList = open(''.join((dirname,'spectralist.txt')))
 for line in SpectraList:
     filename = line.replace('_','')
     filename = filename.replace(".sig","").strip()
-    # print filename
 
     filepath = ''.join((dirname,line))
     inFile = open(filepath.strip())
 
     outFileName = ''.join((mypath,filename,'spectra.txt')).strip()
-    # print outFileName
     outFile = open(outFileName, "w")
 
     key = "data="
@@ -58,16 +56,14 @@ for line in SpectraList:
         elif line2.startswith(key):
             key_found = True
 
-# Create SVCSpectraList.txt
+# Create SVCSpectraList.txt to be used in Matlab
 os.chdir(mypath)
 outFile = open('./SVCSpectraList.txt', "w")
 for files in os.listdir("."):
     if files.endswith(".txt") and files.startswith("L"):
-        print files
         outFile.writelines(files + '\n')
 outFile.close()
 
 # Close files
 SpectraList.close()
 inFile.close()
-outFile.close()
