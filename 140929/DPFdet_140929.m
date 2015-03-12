@@ -20,62 +20,94 @@ wavelength = wavelength'*0.001;
 
 L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
 
-filename = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/input_list1.txt';
 
 
-fid = fopen(filename);
-c = textscan(fid,'%s','delimiter','\n');
-fclose all;
-
-%% LONGS
-rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/RvectorLONGS.txt');
-
+%% LUT from HL for same concentrations but different DPFs
+rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/RvectorDPFdet_140929_150305.txt');
 
 nruns = size(rr,1)/size(wavelength,1);
-RrsLONGS = reshape(rr(:,1),size(wavelength,1),nruns);
-% RrsLONGS = RrsLONGS*pi;
+LUT_DPFdet_ = reshape(rr(:,1),size(wavelength,1),nruns);
+% LUT_DPFdet_ = LUT_DPFdet_*pi;
 
-RrsLONGSL8 = spect_sampL8(RrsLONGS,wavelength);
+LUT_DPFdet_L8 = spect_sampL8(LUT_DPFdet_,wavelength);
 
-% figure
-% fs = 15;
-% set(gcf,'color','white')
-% plot(L8bands,RrsLONGSL8)
-% % hold on
-% % plot(wavelength,ONTNSRefinterp,'.-r')
-% title('Rrs for LONGS','fontsize',fs)
-% xlabel('wavelength [nm]','fontsize',fs)
-% ylabel('reflectance','fontsize',fs)
-% set(gca,'fontsize',fs)
-% grid on
-% xlim([400 2200])
-% ylim([0 .3])
+% Concentrations
 
-% LongS = [0.010427 0.015314 0.032556 0.020807 ...
-%           0.009461 0.001035 0.000651];
+filename = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/concentration_listDPFdet140929_150306.txt';
 
-LongS = [0.003286 0.004843 0.010526 0.006787 ...
-          0.003129 0.000323 0.000214]; % LONGN Rrs
+fid = fopen(filename);
+c1 = textscan(fid,'%s %s %s');
+fclose all;
 
-% LongS = [ 0.002991 0.004547 0.010292 0.006556 ...
-%            0.002935 0.000281 0.000176  ];   % Rrs       
-% find LongS in waterpixels with index I
-[Y,I1] = min(sqrt(mean((RrsLONGSL8(:,1:5)-ones(size(RrsLONGSL8,1),1)*LongS(:,1:5)).^2,2)));
+c = {[c1{1}] [c1{2}] [c1{3}]};
+LUTconc = [c{1}(:) c{2}(:) c{3}(:)];
 
-C1 = textscan(c{1}{I1},'%s');
-disp(C1{:})
+%% ONTOS
+pp = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/ONTOSRef_140919.txt');
+wavelengthSVC = pp(:,1);
+ONTOS_SVC = pp(:,2);
+ONTOS_L8 = spect_sampL8(ONTOS_SVC,wavelengthSVC);
+
+figure
+plot(L8bands,ONTOS_L8)
+
+
+% ONTNS = [ 0.003355  0.004671  0.004345  0.000874 ... % from 140919
+%           0.000042 -0.000003  0.000006 ]; % in Rrs
+
+rule1 = strcmp(c{1}(:),'input140929ONTOS')&strcmp(c{2}(:),c{3}(:));
+
+LUTused = LUT_DPFdet_L8(rule1,1:5);
+LUTconcused = LUTconc(rule1,:);
+
+[Y,I1] = min(sqrt(mean((LUTused(:,1:5)-ones(size(LUTused,1),1)*ONTOS_L8(:,1:5)).^2,2)));
+
+
+disp(LUTconcused(I1,:))
 
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(L8bands,LongS,'.-k')
+plot(L8bands,ONTOS_L8,'.-k')
 hold on
-plot(L8bands,RrsLONGSL8(I1,:),'.-r')
-title('DPF det. -- LongS','fontsize',fs)
+plot(L8bands(1:5),LUTused(I1,:),'.-r')
+title('DPF det. -- ONTOS','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
-ylabel('reflectance','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
-legend('LONGS field',char(C1{1}))
+legend('ONTOS field',char(LUTconcused(I1,:)))
+
+%% LONGS
+pp = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/LONGSRef_140919.txt');
+wavelengthSVC = pp(:,1);
+LONGS_SVC = pp(:,2);
+LONGS_L8 = spect_sampL8(LONGS_SVC,wavelengthSVC);
+
+figure
+plot(L8bands,LONGS_L8)
+
+
+rule2 = strcmp(c{1}(:),'input140929LONGS')&strcmp(c{2}(:),c{3}(:));
+
+LUTused = LUT_DPFdet_L8(rule2,1:5);
+LUTconcused = LUTconc(rule2,:);
+
+[Y,I1] = min(sqrt(mean((LUTused(:,1:5)-ones(size(LUTused,1),1)*LONGS_L8(:,1:5)).^2,2)));
+
+
+disp(LUTconcused(I1,:))
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(L8bands,LONGS_L8,'.-k')
+hold on
+plot(L8bands(1:5),LUTused(I1,:),'.-r')
+title('DPF det. -- LONGS','fontsize',fs)
+xlabel('wavelength [\mu m]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+set(gca,'fontsize',fs)
+legend('LONGS field',char(LUTconcused(I1,:)))
 
 %% Cranb
 rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/RvectorCranb.txt');
@@ -185,7 +217,7 @@ fs = 15;
 set(gcf,'color','white')
 plot(L8bands,LongS,'-k')
 hold on
-plot(L8bands,RrsLONGSL8(I1,:),'.-k')
+plot(L8bands,LUT_DPFdet_L8(I1,:),'.-k')
 plot(L8bands,Cranb,'-r')
 plot(L8bands,RrsCranbL8(I2,:),'.-r')
 plot(L8bands,ONTNS,'-b')
@@ -199,7 +231,7 @@ legend('LONGS field',char(C1{1}),'Cranb field',char(C2{1}),'ONTNS field',char(C3
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(L8bands,RrsLONGSL8(I1-1:I1+1,:),'k')
+plot(L8bands,LUT_DPFdet_L8(I1-1:I1+1,:),'k')
 hold on
 plot(L8bands,RrsCranbL8(I2-1:I2+1,:),'r')
 plot(L8bands,RrsONTNSL8(I3-1:I3+1,:),'b')

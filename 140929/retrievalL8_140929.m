@@ -359,8 +359,8 @@ set(gca,'fontsize',fs)
 
 %% LUTs from HydroLight
 % % new 03/02/15, spectrally sampling made in matlab
-LUTfilename1 = 'Rvector140929_150305.txt'; 
-LUTconcfilename1 = 'concentration_list140929_150305.txt';
+LUTfilename1 = 'Rvector140929_150305_2.txt'; 
+LUTconcfilename1 = 'concentration_list140929_150305_2.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/';
 
