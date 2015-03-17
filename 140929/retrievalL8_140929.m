@@ -7,7 +7,7 @@ addpath('/Users/javier/Downloads/mtit')
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929
 %% L8 image cropped
 % From ELM using new L8 reflectance product
-folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrstif.tif';
+folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_140317.tif';
 filename = '';
 
 filepath = [folderpath filename];
@@ -256,7 +256,7 @@ title(str,'fontsize',fs)
 
 %% Display high values in the different bands
 im = double(imL8crop);
-bn = 7;
+bn = 5;
 imhighNIR = zeros(size(im,1),size(im,2));
 cond2 = im(:,:,bn)> (meanwp(bn)+2*stdwp(bn)) & imL8cropmask ~= 0;
 imhighNIR(cond2)=1;% only high NIR
@@ -272,7 +272,7 @@ str = sprintf('High values for band %i',bn);
 title(str,'fontsize',fs)
 set(gca,'fontsize',fs)
 
-% display All water pixels with no high values in NIR
+%% display All water pixels with no high values in NIR
 
 figure
 fs = 15;
@@ -422,8 +422,10 @@ CHlimit = 5;
 SMlimit = 10;
 CDlimit = 0.5;
 
-rule5 = strcmp(c{1}(:),'input140929ONTNS')& LUTconc(:,1)<CHlimit&LUTconc(:,2)<SMlimit&LUTconc(:,3)<CDlimit;
-rule2 = strcmp(c{1}(:),'input140929LONGS')& LUTconc(:,1)>=CHlimit&LUTconc(:,2)>=SMlimit&LUTconc(:,3)>=CDlimit;
+rule5 = strcmp(c{1}(:),'input140929ONTOS')& ...
+    LUTconc(:,1)<CHlimit&LUTconc(:,2)<SMlimit&LUTconc(:,3)<CDlimit;
+rule2 = strcmp(c{1}(:),'input140929LONGS')& ...
+    LUTconc(:,1)>=CHlimit&LUTconc(:,2)>=SMlimit&LUTconc(:,3)>=CDlimit;
 
 LUTsmart = LUT(rule5|rule2,:);
 LUTconcsmart = LUTconc(rule5|rule2,:);
@@ -440,7 +442,7 @@ LUTconcpond = LUTconc(rule2,:);
 Inputpond = c{1}(rule2);
 DPFpond = c{5}(rule2);
 
-WhichLUT =1;
+WhichLUT =2;
 
 switch WhichLUT
     case 0
@@ -483,7 +485,7 @@ end
 % LUTONTNS = LUT(rule4,:);
 % LUTconcONTNS = LUTconc(rule4,:);
 
-%% Display LUTsmart
+%% Display Used
 figure
 fs = 15;
 set(gcf,'color','white')
@@ -658,6 +660,14 @@ for index = 1:size(IMatrix,1)
         DPFType(index)= 1.4;
     elseif strcmp(DPFused(IMatrix(index)),'FFbb016.dpf')
         DPFType(index)= 1.6;
+    elseif strcmp(DPFused(IMatrix(index)),'FFbb018.dpf')
+        DPFType(index)= 1.8;  
+    elseif strcmp(DPFused(IMatrix(index)),'FFbb020.dpf')
+        DPFType(index)= 2.0;     
+    elseif strcmp(DPFused(IMatrix(index)),'FFbb022.dpf')
+        DPFType(index)= 2.2;      
+    elseif strcmp(DPFused(IMatrix(index)),'FFbb024.dpf')
+        DPFType(index)= 2.4;        
     end
 end
 

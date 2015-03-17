@@ -42,20 +42,27 @@ fclose all;
 c = {[c1{1}] [c1{2}] [c1{3}]};
 LUTconc = [c{1}(:) c{2}(:) c{3}(:)];
 
+rule0 = strcmp(c{2}(:),c{3}(:));
+rule1 = strcmp(c{1}(:),'input140929ONTOS')&strcmp(c{2}(:),c{3}(:));
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(L8bands,LUT_DPFdet_L8(rule1,:))
+title('DPF det. -- LUT','fontsize',fs)
+xlabel('wavelength [\mu m]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+set(gca,'fontsize',fs)
 %% ONTOS
-pp = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/ONTOSRef_140919.txt');
+pp = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/ONTOSL8_Ref_140919corr.txt');
 wavelengthSVC = pp(:,1);
 ONTOS_SVC = pp(:,2);
 ONTOS_L8 = spect_sampL8(ONTOS_SVC,wavelengthSVC);
 
-figure
-plot(L8bands,ONTOS_L8)
-
-
 % ONTNS = [ 0.003355  0.004671  0.004345  0.000874 ... % from 140919
 %           0.000042 -0.000003  0.000006 ]; % in Rrs
 
-rule1 = strcmp(c{1}(:),'input140929ONTOS')&strcmp(c{2}(:),c{3}(:));
+
 
 LUTused = LUT_DPFdet_L8(rule1,1:5);
 LUTconcused = LUTconc(rule1,:);
@@ -68,15 +75,19 @@ disp(LUTconcused(I1,:))
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(L8bands,ONTOS_L8,'.-k')
+plot(L8bands,ONTOS_L8,'.-k','linewidth',1.5)
 hold on
-plot(L8bands(1:5),LUTused(I1,:),'.-r')
+plot(L8bands(1:5),LUTused(I1,:),'.-r','linewidth',1.5)
+plot(L8bands,LUT_DPFdet_L8(rule1,:))
 title('DPF det. -- ONTOS','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('ONTOS field',char(LUTconcused(I1,:)))
+grid on
 
+Ref = [L8bands', [LUTused(I1,:)';0;0]];
+save('ONTOSL8_Ref_140919_HL.txt','Ref','-ascii')
 %% LONGS
 pp = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/LONGSRef_140919.txt');
 wavelengthSVC = pp(:,1);
