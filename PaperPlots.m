@@ -1,3 +1,72 @@
+%% Plot ROI 
+clear
+clc
+
+folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
+filename = 'LC80170302014272LGN00/LC80170302014272LGN00_ROI_RGB.tif';
+
+filepath = [folderpath filename];
+%
+% from http://www.mathworks.com/help/map/ref/geotiff2mstruct.html?refresh=true
+% Compare inverse transform of points using projinv and minvtran.
+% Obtain the projection structure of 'boston.tif'.
+% filename = 'boston.tif';
+proj = geotiffinfo(filepath);
+
+% Convert the corner map coordinates to latitude and longitude.
+x = proj.CornerCoords.X;
+y = proj.CornerCoords.Y;
+[latProj, lonProj] = projinv(proj, x, y);
+
+% Obtain the mstruct from the GeoTIFF projection.
+mstruct = geotiff2mstruct(proj);
+
+% Convert the units of x and y to meter to match projection units.
+x = unitsratio('meter','sf') * x;
+y = unitsratio('meter','sf') * y;
+
+% Convert the corner map coordinates to latitude and longitude.
+[latMstruct, lonMstruct] = minvtran(mstruct, x, y);
+
+% % Verify the values are within a tolerance of each other.
+% abs(latProj - latMstruct) <= 1e-7
+% abs(lonProj - lonMstruct) <= 1e-7
+
+
+R = georasterref('RasterInterpretation','cells');
+R.RasterSize = [proj.Height proj.Width];
+R.Latlim  = [min(latProj(:)) max(latProj(:))];
+R.Lonlim = [min(lonProj(:)) max(lonProj(:))];
+R.ColumnsStartFrom = 'north';
+R.RowsStartFrom = 'west';
+
+RGB = imread(filepath);
+RGBdisplay(:,:,1) = uint8(RGB(:,:,1));
+RGBdisplay(:,:,2) = uint8(RGB(:,:,2));
+RGBdisplay(:,:,3) = uint8(RGB(:,:,3));
+
+figure
+fs = 20;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+ax = worldmap(R.Latlim,R.Lonlim);
+geoshow(RGBdisplay, R)
+axis equal
+%%
+
+
+figure
+% usamap(latlim, lonlim)
+
+% mapshow(uint8(imTIF),R)
+% hold on
+imshow(uint8(RGB))
+% axis image off
+%%
+[boston, R] = geotiffread('boston.tif');
+    figure
+    mapshow(boston, R)
+%     axis image off
 %% ELM parameters
 
 % ENVI ASCII Plot File [Wed Feb 25 11:13:20 2015]
