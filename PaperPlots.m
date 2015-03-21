@@ -6,7 +6,7 @@ folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
 filename = 'LC80170302014272LGN00/LC80170302014272LGN00_ROI_RGB.tif';
 
 filepath = [folderpath filename];
-%
+%%
 % from http://www.mathworks.com/help/map/ref/geotiff2mstruct.html?refresh=true
 % Compare inverse transform of points using projinv and minvtran.
 % Obtain the projection structure of 'boston.tif'.
@@ -40,33 +40,96 @@ R.Lonlim = [min(lonProj(:)) max(lonProj(:))];
 R.ColumnsStartFrom = 'north';
 R.RowsStartFrom = 'west';
 
-RGB = imread(filepath);
-RGBdisplay(:,:,1) = uint8(RGB(:,:,1));
-RGBdisplay(:,:,2) = uint8(RGB(:,:,2));
-RGBdisplay(:,:,3) = uint8(RGB(:,:,3));
+folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
+filename = 'LC80170302014272LGN00/LC80170302014272LGN00_ROI_RGB.tif';
+filepath = [folderpath filename];
 
-figure
+[RGB,map] = imread(filepath);
+
+RGB_R = double(RGB(:,:,3));
+RGB_G = double(RGB(:,:,2));
+RGB_B = double(RGB(:,:,1));
+
+% Adjusting threshold for display
+CTE = 1.5;
+
+threshold_B = mean(RGB_B(:))+CTE*std(RGB_B(:));
+RGB_B(RGB_B>threshold_B)=threshold_B;
+
+threshold_G = mean(RGB_G(:))+CTE*std(RGB_G(:));
+RGB_G(RGB_G>threshold_G)=threshold_G;
+
+threshold_R = mean(RGB_R(:))+CTE*std(RGB_R(:));
+RGB_R(RGB_R>threshold_R)=threshold_R;
+
+% Convert values to [0 1] for display
+RGBdisplay_B = (RGB_B-min(RGB_B(:)))/(max(RGB_B(:))-min(RGB_B(:)));
+RGBdisplay_G = (RGB_G-min(RGB_G(:)))/(max(RGB_G(:))-min(RGB_G(:)));
+RGBdisplay_R = (RGB_R-min(RGB_R(:)))/(max(RGB_R(:))-min(RGB_R(:)));
+
+RGBdisplay(:,:,3) = RGBdisplay_B;
+RGBdisplay(:,:,2) = RGBdisplay_G;
+RGBdisplay(:,:,1) = RGBdisplay_R;
+
+figure('Renderer', 'opengl')
 fs = 20;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-ax = worldmap(R.Latlim,R.Lonlim);
+% ax = worldmap(R.Latlim,R.Lonlim);
+
+ax = axesm(mstruct, 'Grid', 'on',...
+    'GColor', [.9 .9 .9], ...
+    'MapProjection','utm',...
+    'MapLatlimit', R.Latlim, 'MapLonLimit', R.Lonlim, ...
+    'ParallelLabel', 'on', 'PLabelLocation', .025, 'PlabelMeridian', 'west', ...
+    'MeridianLabel', 'on', 'MlabelLocation', .05, 'MLabelParallel', 'south', ...
+    'MLabelRound', -2, 'PLabelRound', -2, ...
+    'PLineVisible', 'on', 'PLineLocation', .025, ...
+    'MLineVisible', 'on', 'MlineLocation', .05, ...
+    'Grid','off', ...
+    'Frame','on', ...
+    'FontWeight','bold', ...
+    'FontSize',14, ...
+    'LabelUnits','degrees');
+
 geoshow(RGBdisplay, R)
-axis equal
+
+axis off
+tightmap
 %%
+% Read in a gray scale image and make it double 
+I1 = imread('moon.tif');
+I1(1:5,1:5,1)
 
+I2 = imread(filepath);
+I2(1:5,1:5,1)
+% in the range 0-255.
+doubleGrayImage1 = double(I1);
+subplot(2,2,1);
+imshow(doubleGrayImage1, []) % Doesn't look right.
+doubleGrayImage1(1:5,1:5,1)
 
-figure
-% usamap(latlim, lonlim)
+% Read in a gray scale image and make it double 
+% in the range 0-1.
+doubleGrayImage2 = im2double(I1);
+subplot(2,2,2);
+imshow(doubleGrayImage2, []) % Doesn't look right.
+doubleGrayImage2(1:5,1:5,1)
 
-% mapshow(uint8(imTIF),R)
-% hold on
-imshow(uint8(RGB))
-% axis image off
-%%
-[boston, R] = geotiffread('boston.tif');
-    figure
-    mapshow(boston, R)
-%     axis image off
+% Read in an image and make it double 
+% in the range 0-255.
+doubleRGBImage3 = double(I2);
+subplot(2,2,3);
+imshow(doubleRGBImage3, []) % Doesn't look right.
+doubleRGBImage3(1:5,1:5,1)
+
+% Read in an image and make it double 
+% in the range 0-1.
+doubleRGBImage4 = im2double(I2);
+subplot(2,2,4);
+imshow(doubleRGBImage4) % Now looks right, but values are changed.
+doubleRGBImage4(1:5,1:5,1)
+
 %% ELM parameters
 
 % ENVI ASCII Plot File [Wed Feb 25 11:13:20 2015]
