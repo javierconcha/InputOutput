@@ -1,6 +1,7 @@
+cd /Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_Landsat_Special_Issue/Images
 %% Plot ROI 
-clear
-clc
+% clear
+% clc
 
 folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
 filename = 'LC80170302014272LGN00/LC80170302014272LGN00_ROI_RGB.tif';
@@ -89,46 +90,13 @@ ax = axesm(mstruct, 'Grid', 'on',...
     'Grid','off', ...
     'Frame','on', ...
     'FontWeight','bold', ...
-    'FontSize',14, ...
+    'FontSize',18, ...
     'LabelUnits','degrees');
 
 geoshow(RGBdisplay, R)
 
 axis off
 tightmap
-%%
-% Read in a gray scale image and make it double 
-I1 = imread('moon.tif');
-I1(1:5,1:5,1)
-
-I2 = imread(filepath);
-I2(1:5,1:5,1)
-% in the range 0-255.
-doubleGrayImage1 = double(I1);
-subplot(2,2,1);
-imshow(doubleGrayImage1, []) % Doesn't look right.
-doubleGrayImage1(1:5,1:5,1)
-
-% Read in a gray scale image and make it double 
-% in the range 0-1.
-doubleGrayImage2 = im2double(I1);
-subplot(2,2,2);
-imshow(doubleGrayImage2, []) % Doesn't look right.
-doubleGrayImage2(1:5,1:5,1)
-
-% Read in an image and make it double 
-% in the range 0-255.
-doubleRGBImage3 = double(I2);
-subplot(2,2,3);
-imshow(doubleRGBImage3, []) % Doesn't look right.
-doubleRGBImage3(1:5,1:5,1)
-
-% Read in an image and make it double 
-% in the range 0-1.
-doubleRGBImage4 = im2double(I2);
-subplot(2,2,4);
-imshow(doubleRGBImage4) % Now looks right, but values are changed.
-doubleRGBImage4(1:5,1:5,1)
 
 %% ELM parameters
 
