@@ -44,6 +44,8 @@ Rrs1b = (Lt1-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs2b = (Lt2-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs3b = (Lt3-rho.*Lskyb)./(pi.*Lg./0.99);
 
+RrsONTOS140929 = Rrs3a;
+
 figure
 fs = 15;
 set(gcf,'color','white')
@@ -118,7 +120,7 @@ Rrs1b = (Lt1-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs2b = (Lt2-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs3b = (Lt3-rho.*Lskyb)./(pi.*Lg./0.99);
 
-RrsONTOS140929 = Rrs1a;
+% RrsONTOS140929 = Rrs1a;
 
 figure
 fs = 15;
