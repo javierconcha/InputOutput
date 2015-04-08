@@ -36,11 +36,11 @@ fid = fopen(filename);
 c1 = textscan(fid,'%s %s %s');
 fclose all;
 
-c = {[c1{1}] [c1{2}] [c1{3}]};
-LUTconc = [c{1}(:) c{2}(:) c{3}(:)];
+c2 = {[c1{1}] [c1{2}] [c1{3}]};
+LUTconc2 = [c2{1}(:) c2{2}(:) c2{3}(:)];
 
 % rule0 = strcmp(c{2}(:),c{3}(:));
-rule1 = strcmp(c{1}(:),'input140929ONTOS')&strcmp(c{2}(:),c{3}(:));
+rule1 = strcmp(c2{1}(:),'input140929ONTOS')&strcmp(c2{2}(:),c2{3}(:));
 % rule1 = ~isnan(rule0); % to select all elements in the LUT
 
 figure
@@ -51,10 +51,9 @@ title('DPF det. -- LUT','fontsize',fs)
 xlabel('wavelength_HL [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
-%% ONTOS from SVCextract140929
+%% ONTOS closest match from SVCextract140929.m (run SVCextract140929.m first)
 
 Rrs_SITE_test = RrsONTOS140929;
-
 Rrs_SITE_test_HL = interp1(wavelengthSVC,Rrs_SITE_test,wavelength_HL);
 Rrs_SITE_test_HL = Rrs_SITE_test_HL-Rrs_SITE_test_HL(end);
 
@@ -66,31 +65,57 @@ wl_nm = wavelength_HL;
 cond1 = wl_nm>500;
 
 LUTused = LUT_DPFdet(rule1,cond1);
-LUTconcused = LUTconc(rule1,:);
+LUTconcused = LUTconc2(rule1,:);
+LUT_DPFdet_index = find(rule1);
 
 [Y,I1] = min(sqrt(mean((LUTused-ones(size(LUTused,1),1)*Rrs_SITE_test_HL(cond1)).^2,2)));
-
 
 disp(LUTconcused(I1,:))
 
 figure
 fs = 15;
 set(gcf,'color','white')
+set(gca,'fontsize',fs)
 plot(wl_nm,Rrs_SITE_test_HL,'g','linewidth',1.5)
 hold on
 plot(wl_nm(cond1),LUTused(I1,:),'r','linewidth',1.5)
-
 plot(wl_nm,LUT_DPFdet(rule1,:))
+plot(wl_nm,LUT_DPFdet(LUT_DPFdet_index(I1),:),'c','linewidth',1.5)
 title('DPF det. -- ONTOS ; NIR=0,wl>500','fontsize',fs)
-xlabel('wavelength_HL [\mu m]','fontsize',fs)
+xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
-set(gca,'fontsize',fs)
 legend('ONTOS field',char(LUTconcused(I1,:)))
 ylim([0 0.01])
 grid on
+%
+% from LUT in retrievalL8_140929.m to check if the DPF retrieved element
+% match the LUT
+% rule10=strcmp(c{1}(:),'input140929ONTOS')&...
+%     LUTconc(:,1)==2.1&LUTconc(:,2)==1.4&LUTconc(:,3)==0.0954&...
+%     strcmp(c{5}(:),'FFbb012.dpf');
+% plot(wavelength*1000,Rrs(:,rule10),'b','linewidth',1.5)
+% 
+% rule11=strcmp(c{1}(:),'input140929ONTOS')&...
+%     LUTconc(:,1)==10&LUTconc(:,2)==50&LUTconc(:,3)==1.0025&...
+%     strcmp(c{5}(:),'FFbb014.dpf');
+% plot(wavelength*1000,Rrs(:,rule11),'k','linewidth',1.5)
 
-% Ref = [L8bands', [LUTused(I1,:)';0;0]];
-% save('ONTOSL8_Ref_140919_HL.txt','Ref','-ascii')
+RrsONTOSL8 = spect_sampL8(LUT_DPFdet(LUT_DPFdet_index(I1),:)',wl_nm'.*1E-3);
+
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(wl_nm,LUT_DPFdet(LUT_DPFdet_index(I1),:),'c','linewidth',1)
+hold on
+plot(L8bands*1000,RrsONTOSL8,'.')
+xlabel('wavelength [\mu m]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+ylim([0 0.01])
+grid on
+
+Ref = [L8bands', RrsONTOSL8'];
+save('ONTOSL8_Ref_140919_150407_HL.txt','Ref','-ascii')
 %% LONGS
 pp = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/LONGSRef_140919.txt');
 wavelength_HLSVC = pp(:,1);

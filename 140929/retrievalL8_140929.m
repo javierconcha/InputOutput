@@ -360,10 +360,12 @@ set(gca,'fontsize',fs)
 %% LUTs from HydroLight
 % % new 03/02/15, spectrally sampling made in matlab
 % LUTfilename1 = 'Rvector140929_150305_2.txt';
-LUTfilename1 = 'Rvector140929_150317.txt'; % with FFbb018.dpf for ONTOS
+% LUTfilename1 = 'Rvector140929_150317.txt'; % with FFbb018.dpf for ONTOS
+LUTfilename1 = 'Rvector140929_150407.txt'; % with FFbb012.dpf for ONTOS
 
 % LUTconcfilename1 = 'concentration_list140929_150305_2.txt';
-LUTconcfilename1 = 'concentration_list140929_150317.txt';
+% LUTconcfilename1 = 'concentration_list140929_150317.txt';
+LUTconcfilename1 = 'concentration_list140929_150406.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/';
 
@@ -428,11 +430,11 @@ SMlimit = 10;
 CDlimit = 0.5;
 
 rule5 = strcmp(c{1}(:),'input140929ONTOS')& ...
-    LUTconc(:,1)<CHlimit&LUTconc(:,2)<SMlimit&LUTconc(:,3)<CDlimit& ...
-    strcmp(c{5}(:),'FFbb018.dpf');
+    LUTconc(:,1)<CHlimit & LUTconc(:,2)<SMlimit & LUTconc(:,3)<CDlimit;% & ...
+%     strcmp(c{5}(:),'FFbb018.dpf');
 rule2 = strcmp(c{1}(:),'input140929LONGS')& ...
-    LUTconc(:,1)>=CHlimit&LUTconc(:,2)>=SMlimit&LUTconc(:,3)>=CDlimit& ...
-    strcmp(c{5}(:),'FFbb018.dpf');
+    LUTconc(:,1)>=CHlimit & LUTconc(:,2)>=SMlimit & LUTconc(:,3)>=CDlimit;% & ...
+%     strcmp(c{5}(:),'FFbb018.dpf');
 
 LUTsmart = LUT(rule5|rule2,:);
 LUTconcsmart = LUTconc(rule5|rule2,:);
@@ -449,7 +451,7 @@ LUTconcpond = LUTconc(rule2,:);
 Inputpond = c{1}(rule2);
 DPFpond = c{5}(rule2);
 
-WhichLUT =1;
+WhichLUT =0;
 
 switch WhichLUT
     case 0
@@ -505,7 +507,7 @@ plot(L8bands,LUTused)
 str1 = sprintf('Reflectance LUT from HydroLight -- %s',LUTname);
 title(str1,'fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
-ylabel('reflectance','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
 
 

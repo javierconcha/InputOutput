@@ -862,41 +862,51 @@ grid on
 % NSRef = [L8bands' RrsONTNSL8corr'];
 % save([pathname,pathdate,'RrsONTNSL8.txt'],'NSRef','-ascii')
 
-Ref = [L8bands', RrsONTOSL8corr'];
-save('ONTOSL8_Ref_140919corr.txt','Ref','-ascii')
+% Ref = [L8bands', RrsONTOSL8corr'];
+% save('ONTOSL8_Ref_140919corr.txt','Ref','-ascii')
 
-%% Find best match in the HL LUT -- Run the LUT part of retrievalL8_140929.m first...
+%% Find best match in the HL LUT with 120 wl 
+% Run the LUT part of retrievalL8_140929.m first...
 Rrs_SITE_test = RrsONTOS140929;
 
 Rrs_SITE_test_HL = interp1(wavelengthSVC,Rrs_SITE_test,wavelength*1000);
 Rrs_SITE_test_HL = Rrs_SITE_test_HL-Rrs_SITE_test_HL(end);
 
-wl_um = wavelength*1000;
+rule1 = strcmp(c{1}(:),'input140929ONTOS');
+% rule1 = strcmp(c{1}(:),'input140929LONGS');
+% rule1 = ~isnan(ones(size(Rrs,2),1));
+c1_test = c{1}(rule1);
+c2_test = c{2}(rule1);
+c3_test = c{3}(rule1);
+c4_test = c{4}(rule1);
+c5_test = c{5}(rule1);
 
-cond1 = wl_um>500;
 
-Rrs_test = Rrs(cond1,:);
+wl_nm = wavelength*1000;
+
+cond1 = wl_nm>500;
+
+Rrs_test = Rrs(cond1,rule1);
 
 figure
-plot(wl_um,Rrs_SITE_test_HL)
+plot(wl_nm,Rrs_SITE_test_HL)
 xlim([400 1000])
-
 hold on
 
-[Y,I1] = min(sqrt(mean((Rrs_test'-ones(size(Rrs_test,2),1)*Rrs_SITE_test_HL(cond1)').^2,2)));
+[Y,I2] = min(sqrt(mean((Rrs_test'-ones(size(Rrs_test,2),1)*Rrs_SITE_test_HL(cond1)').^2,2)));
 
-plot(wl_um(cond1),Rrs_test(:,I1),'g')
-
+plot(wl_nm(cond1),Rrs_test(:,I2),'g')
 legend('Field','LUT')
-
-str = sprintf('%s %f %f %f %s',char(c{1}(I1)),c{2}(I1),c{3}(I1),c{4}(I1),char(c{5}(I1)));
+str = sprintf('%s %f %f %f %s',char(c1_test(I2)),c2_test(I2),c3_test(I2),c4_test(I2),char(c5_test(I2)));
 title(str)
 grid on
+
+
 %%
 figure
-plot(wl_um,Rrs)
+plot(wl_nm,Rrs)
 hold on
-plot(wl_um(cond1),Rrs_test(:,I1),'g','linewidth',1.5)
+plot(wl_nm(cond1),Rrs_test(:,I2),'g','linewidth',1.5)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SAND 1
 % L8_2014_09_29_R211_T212.sig
