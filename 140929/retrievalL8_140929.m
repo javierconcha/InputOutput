@@ -7,7 +7,7 @@ addpath('/Users/javier/Downloads/mtit')
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929
 %% L8 image cropped
 % From ELM using new L8 reflectance product
-folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_140317.tif';
+folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150408.tif';
 filename = '';
 
 filepath = [folderpath filename];
@@ -58,7 +58,7 @@ maskRGB(:,:,3)=double(imL8cropmask);
 
 impos = impos.*maskRGB;
 
-%%
+%% RGB display
 figure
 set(gcf,'color','white')
 imagesc(impos)
@@ -451,7 +451,7 @@ LUTconcpond = LUTconc(rule2,:);
 Inputpond = c{1}(rule2);
 DPFpond = c{5}(rule2);
 
-WhichLUT =0;
+WhichLUT =1;
 
 switch WhichLUT
     case 0
@@ -657,6 +657,31 @@ axis off
 h = colorbar;
 set(h,'fontsize',cbfs)
 
+%% Read ROIs from ENVI text Stat file 
+
+pathname = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/';
+statfilename = 'ROIstats_140929_150408.txt';
+
+fid = fopen([pathname statfilename]);
+s = textscan(fid, '%s', 'delimiter', '\n');
+% search for "data=":
+idx1 = find(strcmp('Column 7: Mean: SAND~~7',s{1}),1);
+% and read from s{1}(idx1+1:idx2-1) the values using textscan again ...
+data = s{1}(idx1+1:size(s{1},1));
+fclose(fid);
+
+for index = 1:size(data,1)
+    statdata(index,:) = str2num(cell2mat(data(index)));
+end
+
+L8bands_ENVI = statdata(:,1);
+CRANB = statdata(:,2);
+LONGS = statdata(:,3);
+LONGN = statdata(:,4);
+IBAYN = statdata(:,5);
+ONTOS = statdata(:,6);
+SAND = statdata(:,7);
+
 %% Find LONGS
 rule6 = strcmp(Inputused(:),'input140408LONGS')&...
     LUTconcused(:,1)==110 & LUTconcused(:,2)==45 &...
@@ -810,6 +835,132 @@ ylabel('reflectance','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('Field','Rrs','ret. from HL','DPF LUT')
 
+%% RS of ENVIRONMENT PAPER FIGURES
+%% CHL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+figure
+fs = 16;
+ms = 16;
+set(gcf,'color','white')
+imagesc(CHLmap)
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',fs,'Location','southoutside')
+set(h,'Position',[.2 .05 .6 .05])
+title(h,'L8 retrieved <Chl> [\mug/L]','FontSize',fs)
+set(gca, 'Units', 'normalized', 'Position', [0 0 1 1])
+%%
+figure
+fs = 20;
+ms = 25;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LongSconc(1),LongSconcret(1),'.r','MarkerSize', ms);
+hold on
+plot(Cranbconc(1),Cranbconcret(1),'.k','MarkerSize', ms);
+plot(OntOSconc(1),OntOSconcret(1),'.b','MarkerSize', ms);
+plot(OntNSconc(1),OntNSconcret(1),'.g','MarkerSize', ms);
+maxconcChl = 200;
+plot([0 maxconcChl],[0 maxconcChl],'--k')
+axis equal
+ylim([0 maxconcChl])
+xlim([0 maxconcChl])
+xlabel('measured <Chl> [\mug/L] ','fontsize',fs)
+ylabel('L8 retrieved <Chl> [\mug/L]','fontsize',fs)
+legend('LongS','Cranb','OntOS','OntNS')
+
+% save('CHL.txt','-ascii','-double','-tabs','CHLmap')
+%% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+figure
+set(gcf,'color','white')
+imagesc(SMmap)
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',fs,'Location','southoutside')
+set(h,'Position',[.2 .05 .6 .05])
+title(h,'L8 retrieved <TSS> [mg/L]','FontSize',fs)
+set(gca, 'Units', 'normalized', 'Position', [0 0 1 1])
+%%
+figure
+fs = 20;
+ms = 25;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LongSconc(2),LongSconcret(2),'.r','MarkerSize', ms);
+hold on
+plot(Cranbconc(2),Cranbconcret(2),'.k','MarkerSize', ms);
+plot(OntOSconc(2),OntOSconcret(2),'.b','MarkerSize', ms);
+plot(OntNSconc(2),OntNSconcret(2),'.g','MarkerSize', ms);
+maxconcTSS = 60;
+plot([0 maxconcTSS],[0 maxconcTSS],'--k')
+axis equal
+ylim([0 maxconcTSS])
+xlim([0 maxconcTSS])
+xlabel('measured <TSS> [mg/L] ','fontsize',fs)
+ylabel('L8 retrieved <TSS> [m/L]','fontsize',fs)
+legend('LongS','Cranb','OntOS','OntNS')
+% save('TSS.txt','-ascii','-double','-tabs','SMmap')
+%% CDOM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+figure
+set(gcf,'color','white')
+imagesc(CDOMmap)
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',fs,'Location','southoutside')
+set(h,'Position',[.2 .05 .65 .05])
+title(h,'L8 retrieved a_{CDOM}(440nm) [1/m]','FontSize',fs)
+set(gca, 'Units', 'normalized', 'Position', [0 0.05 1 1])
+%%
+figure
+fs = 20;
+ms = 25;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LongSconc(3),LongSconcret(3),'.r','MarkerSize', ms);
+hold on
+plot(Cranbconc(3),Cranbconcret(3),'.k','MarkerSize', ms);
+plot(OntOSconc(3),OntOSconcret(3),'.b','MarkerSize', ms);
+plot(OntNSconc(3),OntNSconcret(3),'.g','MarkerSize', ms);
+maxconcCDOM = 1.5;
+plot([0 maxconcCDOM],[0 maxconcCDOM],'--k')
+axis equal
+ylim([0 maxconcCDOM])
+xlim([0 maxconcCDOM])
+xlabel('measured a_{CDOM}(440nm) [1/m]','fontsize',fs)
+ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
+legend('LongS','Cranb','OntOS','OntNS')
+% save('CDOM.txt','-ascii','-double','-tabs','CDOMmap')
+%% Plot Input (ONTNS or LONGS) and DPFs retrieved
+figure
+subplot(1,2,1)
+set(gcf,'color','white')
+imagesc(INPUTmap)
+title('INPUT map linear scale','fontsize',fs)
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',cbfs)
+
+subplot(1,2,2)
+set(gcf,'color','white')
+imagesc(DPFmap)
+title('DPF map linear scale','fontsize',fs)
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',cbfs)
 
 %% Scatter plot
 
@@ -898,7 +1049,7 @@ colormap('gray')
 h = colorbar;
 set(h,'fontsize',cbfs)
 
-save('CHL.txt','-ascii','-double','-tabs','CHLmap')
+% save('CHL.txt','-ascii','-double','-tabs','CHLmap')
 
 figure
 set(gcf,'color','white')
@@ -912,7 +1063,7 @@ colormap('gray')
 h = colorbar;
 set(h,'fontsize',cbfs)
 
-save('TSS.txt','-ascii','-double','-tabs','SMmap')
+% save('TSS.txt','-ascii','-double','-tabs','SMmap')
 
 figure
 set(gcf,'color','white')
@@ -926,7 +1077,7 @@ colormap('gray')
 h = colorbar;
 set(h,'fontsize',cbfs)
 
-save('CDOM.txt','-ascii','-double','-tabs','CDOMmap')
+% save('CDOM.txt','-ascii','-double','-tabs','CDOMmap')
 
 %% Mapping Concentrations log scale
 
