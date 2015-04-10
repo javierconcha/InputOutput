@@ -206,6 +206,8 @@ Rrs1c = (Lt1-rho.*Lskyc)./(pi.*Lg./0.99);
 Rrs2c = (Lt2-rho.*Lskyc)./(pi.*Lg./0.99);
 Rrs3c = (Lt3-rho.*Lskyc)./(pi.*Lg./0.99);
 
+RrsLONGS140929 = Rrs2a;
+
 figure
 fs = 15;
 set(gcf,'color','white')
@@ -286,7 +288,7 @@ Rrs1b = (Lt1-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs2b = (Lt2-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs3b = (Lt3-rho.*Lskyb)./(pi.*Lg./0.99);
 
-RrsLONGS140929 = Rrs2a;
+% RrsLONGS140929 = Rrs2a;
 
 figure
 fs = 15;
@@ -807,7 +809,7 @@ grid on
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Rrs all
-figure(21)
+figure
 fs = 15;
 set(gcf,'color','white')
 plot(wavelengthSVC,RrsONTOS140929,'r')
@@ -822,7 +824,7 @@ title('R_{rs} -- 09/29/14 ','fontsize',fs)
 xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
-% axis([400 1000 0 0.03])
+axis([400 1000 0 0.04])
 grid on
 %% Spectrally sampled and save in text file
 wlrange = wavelengthSVC>=400 & wavelengthSVC<=2500;
@@ -865,7 +867,7 @@ grid on
 % Ref = [L8bands', RrsONTOSL8corr'];
 % save('ONTOSL8_Ref_140919corr.txt','Ref','-ascii')
 
-%% Find best match in the HL LUT with 120 wl 
+%% Find best match in the HL LUT with 120 wl for ONTOS
 % Run the LUT part of retrievalL8_140929.m first...
 Rrs_SITE_test = RrsONTOS140929;
 
@@ -901,6 +903,41 @@ str = sprintf('%s %f %f %f %s',char(c1_test(I2)),c2_test(I2),c3_test(I2),c4_test
 title(str)
 grid on
 
+%% Find best match in the HL LUT with 120 wl for LONGS
+% Run the LUT part of retrievalL8_140929.m first...
+Rrs_SITE_test = RrsLONGS140929;
+
+Rrs_SITE_test_HL = interp1(wavelengthSVC,Rrs_SITE_test,wavelength*1000);
+Rrs_SITE_test_HL = Rrs_SITE_test_HL-Rrs_SITE_test_HL(end);
+
+rule1 = strcmp(c{1}(:),'input140929LONGS');
+% rule1 = strcmp(c{1}(:),'input140929LONGS');
+% rule1 = ~isnan(ones(size(Rrs,2),1));
+c1_test = c{1}(rule1);
+c2_test = c{2}(rule1);
+c3_test = c{3}(rule1);
+c4_test = c{4}(rule1);
+c5_test = c{5}(rule1);
+
+
+wl_nm = wavelength*1000;
+
+cond1 = wl_nm>500;
+
+Rrs_test = Rrs(cond1,rule1);
+
+figure
+plot(wl_nm,Rrs_SITE_test_HL)
+xlim([400 1000])
+hold on
+
+[Y,I2] = min(sqrt(mean((Rrs_test'-ones(size(Rrs_test,2),1)*Rrs_SITE_test_HL(cond1)').^2,2)));
+
+plot(wl_nm(cond1),Rrs_test(:,I2),'g')
+legend('Field','LUT')
+str = sprintf('%s %f %f %f %s',char(c1_test(I2)),c2_test(I2),c3_test(I2),c4_test(I2),char(c5_test(I2)));
+title(str)
+grid on
 
 %%
 figure
