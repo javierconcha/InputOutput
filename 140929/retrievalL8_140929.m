@@ -538,12 +538,13 @@ end
 figure
 fs = 15;
 set(gcf,'color','white')
+set(gca,'fontsize',fs)
 plot(L8bands,LUTused)
-str1 = sprintf('Reflectance LUT from HydroLight -- %s',LUTname);
-title(str1,'fontsize',fs)
+% str1 = sprintf('Reflectance LUT from HydroLight -- %s',LUTname);
+% title(str1,'fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
-set(gca,'fontsize',fs)
+
 
 
 %% Retrieval Best Match %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -951,7 +952,7 @@ axis off
 h = colorbar;
 set(h,'fontsize',fs,'Location','southoutside')
 set(h,'Position',[.2 .05 .6 .05])
-title(h,'L8 retrieved <Chl> [\mug/L]','FontSize',fs)
+title(h,'L8 retrieved C_a [mg m^{-3}]','FontSize',fs)
 set(gca, 'Units', 'normalized', 'Position', [0 0 1 1])
 %%
 figure
@@ -970,8 +971,8 @@ plot([0 maxconcChl],[0 maxconcChl],'--k')
 axis equal
 ylim([0 maxconcChl])
 xlim([0 maxconcChl])
-xlabel('measured <Chl> [\mug/L] ','fontsize',fs)
-ylabel('L8 retrieved <Chl> [\mug/L]','fontsize',fs)
+xlabel('measured C_a [mg m^{-3}] ','fontsize',fs)
+ylabel('L8 retrieved C_a [mg m^{-3}]','fontsize',fs)
 legend('LONGS','LONGN','CRANB','IBAYN','ONTOS')
 
 % save('CHL.txt','-ascii','-double','-tabs','CHLmap')
@@ -986,7 +987,7 @@ axis off
 h = colorbar;
 set(h,'fontsize',fs,'Location','southoutside')
 set(h,'Position',[.2 .05 .6 .05])
-title(h,'L8 retrieved <TSS> [mg/L]','FontSize',fs)
+title(h,'L8 retrieved TSS [g m^{-3}]','FontSize',fs)
 set(gca, 'Units', 'normalized', 'Position', [0 0 1 1])
 %%
 figure
@@ -1005,8 +1006,8 @@ plot([0 maxconcTSS],[0 maxconcTSS],'--k')
 axis equal
 ylim([0 maxconcTSS])
 xlim([0 maxconcTSS])
-xlabel('measured <TSS> [mg/L] ','fontsize',fs)
-ylabel('L8 retrieved <TSS> [m/L]','fontsize',fs)
+xlabel('measured TSS [g m^{-3}] ','fontsize',fs)
+ylabel('L8 retrieved TSS [g m^{-3}]','fontsize',fs)
 legend('LONGS','LONGN','CRANB','IBAYN','ONTOS')
 % save('TSS.txt','-ascii','-double','-tabs','SMmap')
 %% CDOM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
