@@ -204,3 +204,139 @@ ylabel('Rrs [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
 xlim([.4 2.5]) 
 grid on
+
+%% Retrieved vs Measured
+% CHL
+figure
+fs = 20;
+ms = 10;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LongSconc130919(1),LongSconc130919ret(1),'*k','MarkerSize', ms);
+hold on
+plot(Cranbconc130919(1),Cranbconc130919ret(1),'*k','MarkerSize', ms);
+plot(OntOSconc130919(1),OntOSconc130919ret(1),'*k','MarkerSize', ms);
+plot(OntNSconc130919(1),OntNSconc130919ret(1),'*k','MarkerSize', ms);
+plot(LongSconc140929(1),LongSconc140929ret(1),'^k','MarkerSize', ms);
+plot(LongNconc140929(1),LongNconc140929ret(1),'^k','MarkerSize', ms);
+plot(Cranbconc140929(1),Cranbconc140929ret(1),'^k','MarkerSize', ms);
+plot(IBayNconc140929(1),IBayNconc140929ret(1),'^k','MarkerSize', ms);
+plot(OntOSconc140929(1),OntOSconc140929ret(1),'^k','MarkerSize', ms);
+maxconcChl = 200;
+plot([0 maxconcChl],[0 maxconcChl],'--k')
+axis equal
+ylim([0 maxconcChl])
+xlim([0 maxconcChl])
+xlabel('measured C_a [mg m^{-3}] ','fontsize',fs,'Position',[110 -20])
+ylabel('L8 retrieved C_a [mg m^{-3}]','fontsize',fs)
+% legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
+set(gca,'OuterPosition',[0 0.05 1 1])
+
+%% TSS
+figure
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LongSconc130919(2),LongSconc130919ret(2),'*k','MarkerSize', ms);
+hold on
+plot(Cranbconc130919(2),Cranbconc130919ret(2),'*k','MarkerSize', ms);
+plot(OntOSconc130919(2),OntOSconc130919ret(2),'*k','MarkerSize', ms);
+plot(OntNSconc130919(2),OntNSconc130919ret(2),'*k','MarkerSize', ms);
+plot(LongSconc140929(2),LongSconc140929ret(2),'^k','MarkerSize', ms);
+plot(LongNconc140929(2),LongNconc140929ret(2),'^k','MarkerSize', ms);
+plot(Cranbconc140929(2),Cranbconc140929ret(2),'^k','MarkerSize', ms);
+plot(IBayNconc140929(2),IBayNconc140929ret(2),'^k','MarkerSize', ms);
+plot(OntOSconc140929(2),OntOSconc140929ret(2),'^k','MarkerSize', ms);
+maxconcTSS = 60;
+plot([0 maxconcTSS],[0 maxconcTSS],'--k')
+axis equal
+ylim([0 maxconcTSS])
+xlim([0 maxconcTSS])
+xlabel('measured TSS [g m^{-3}] ','fontsize',fs)
+ylabel('L8 retrieved TSS [g m^{-3}]','fontsize',fs)
+
+%% CDOM
+figure
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LongSconc130919(3),LongSconc130919ret(3),'*k','MarkerSize', ms);
+hold on
+plot(Cranbconc130919(3),Cranbconc130919ret(3),'*k','MarkerSize', ms);
+plot(OntOSconc130919(3),OntOSconc130919ret(3),'*k','MarkerSize', ms);
+plot(OntNSconc130919(3),OntNSconc130919ret(3),'*k','MarkerSize', ms);
+plot(LongSconc140929(3),LongSconc140929ret(3),'^k','MarkerSize', ms);
+plot(LongNconc140929(3),LongNconc140929ret(3),'^k','MarkerSize', ms);
+plot(Cranbconc140929(3),Cranbconc140929ret(3),'^k','MarkerSize', ms);
+plot(IBayNconc140929(3),IBayNconc140929ret(3),'^k','MarkerSize', ms);
+plot(OntOSconc140929(3),OntOSconc140929ret(3),'^k','MarkerSize', ms);
+maxconcCDOM = 1.5;
+plot([0 maxconcCDOM],[0 maxconcCDOM],'--k')
+axis equal
+ylim([0 maxconcCDOM])
+xlim([0 maxconcCDOM])
+xlabel('measured a_{CDOM}(440nm) [1/m]','fontsize',fs)
+ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
+
+%%
+CHL_data = [...
+LongSconc130919(1),LongSconc130919ret(1);
+Cranbconc130919(1),Cranbconc130919ret(1);
+OntOSconc130919(1),OntOSconc130919ret(1);
+OntNSconc130919(1),OntNSconc130919ret(1);
+LongSconc140929(1),LongSconc140929ret(1);
+LongNconc140929(1),LongNconc140929ret(1);
+Cranbconc140929(1),Cranbconc140929ret(1);
+IBayNconc140929(1),IBayNconc140929ret(1);
+OntOSconc140929(1),OntOSconc140929ret(1)];
+
+CHL_RMSE = 100*sqrt(mean((CHL_data(:,1)-CHL_data(:,2)).^2))/max(CHL_data(:));
+
+CHL_std = 100*std(abs(CHL_data(:,1)-CHL_data(:,2)))/max(CHL_data(:));
+
+TSS_data = [...
+LongSconc130919(2),LongSconc130919ret(2);
+Cranbconc130919(2),Cranbconc130919ret(2);
+OntOSconc130919(2),OntOSconc130919ret(2);
+OntNSconc130919(2),OntNSconc130919ret(2);
+LongSconc140929(2),LongSconc140929ret(2);
+LongNconc140929(2),LongNconc140929ret(2);
+Cranbconc140929(2),Cranbconc140929ret(2);
+IBayNconc140929(2),IBayNconc140929ret(2);
+OntOSconc140929(2),OntOSconc140929ret(2)];
+
+TSS_RMSE = 100*sqrt(mean((TSS_data(:,1)-TSS_data(:,2)).^2))/max(TSS_data(:));
+
+TSS_std = 100*std(abs(TSS_data(:,1)-TSS_data(:,2)))/max(TSS_data(:));
+
+CDO_data = [...
+LongSconc130919(3),LongSconc130919ret(3);
+Cranbconc130919(3),Cranbconc130919ret(3);
+OntOSconc130919(3),OntOSconc130919ret(3);
+OntNSconc130919(3),OntNSconc130919ret(3);
+LongSconc140929(3),LongSconc140929ret(3);
+LongNconc140929(3),LongNconc140929ret(3);
+Cranbconc140929(3),Cranbconc140929ret(3);
+IBayNconc140929(3),IBayNconc140929ret(3);
+OntOSconc140929(3),OntOSconc140929ret(3)];
+
+CDO_RMSE = 100*sqrt(mean((CDO_data(:,1)-CDO_data(:,2)).^2))/max(CDO_data(:));
+
+CDO_std = 100*std(abs(CDO_data(:,1)-CDO_data(:,2)))/max(CDO_data(:));
+%%
+
+
+error = [CHL_RMSE    TSS_RMSE    CDO_RMSE];
+
+figure
+set(gcf,'color','white')
+fs = 20;
+bar(error,0.5)
+hold on
+errorbar(error,[CHL_std TSS_std CDO_std],'kx')
+
+Labels = {'Chl-a','TSS','CDOM'};
+set(gca, 'XTick', 1:size(Labels,2), 'XTickLabel',Labels,'FontSize',fs);
+ylabel('Percentage of RMSE [%]','FontSize',fs)
+mycolor=[0 0 1;0 1 0;1 0 0];
+colormap(mycolor)
+ylim([0 50])
+grid on

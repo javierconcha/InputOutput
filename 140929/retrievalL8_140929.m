@@ -11,6 +11,7 @@ folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC8017030201427
 filename = '';
 
 filepath = [folderpath filename];
+clear imL8crop imL8cropRGB maskRGB; % if other retrieval's variables are in Workspace
 
 [imL8crop, cmap] = imread(filepath);
 INFO = imfinfo(filepath);
@@ -34,7 +35,7 @@ masknew = reshape(imL8cropmask,[size(imL8cropmask,1)*size(imL8cropmask,2) size(i
 waterpixels = imnew(masknew==1,:);
 waterpixels = double(waterpixels);
 
-%% added 01-11-14. plot radiance curves
+% added 01-11-14. plot radiance curves
 % radiance image
 imL8radcrop = imread(...
     '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images//LC80170302014272LGN00/LC80170302014272LGN00_ROItif.tif');
@@ -43,6 +44,7 @@ imradnew = reshape(imL8radcrop,[size(imL8radcrop,1)*size(imL8radcrop,2) size(imL
 waterradpixels = imradnew(masknew==1,:);
 waterradpixels = double(waterradpixels);
 % for displaying
+
 imL8cropRGB(:,:,1)=imadjust(imL8crop(:,:,4));
 imL8cropRGB(:,:,2)=imadjust(imL8crop(:,:,3));
 imL8cropRGB(:,:,3)=imadjust(imL8crop(:,:,2));
@@ -534,7 +536,7 @@ end
 % LUTONTNS = LUT(rule4,:);
 % LUTconcONTNS = LUTconc(rule4,:);
 
-%% Display Used
+%% LUT Used
 figure
 fs = 15;
 set(gcf,'color','white')
@@ -544,6 +546,7 @@ plot(L8bands,LUTused)
 % title(str1,'fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
+grid on
 
 
 
@@ -731,8 +734,8 @@ Inputused(IMatrix(I))
 DPFused(IMatrix(I))
 LUTconcused(IMatrix(I),:)
 
-LongSconc = [46.10 28.30 0.9819];
-LongSconcret = XResults(I,:);
+LongSconc140929 = [46.10 28.30 0.9819];
+LongSconc140929ret = XResults(I,:);
 
 figure 
 fs = 15;
@@ -762,8 +765,8 @@ Inputused(IMatrix(I))
 DPFused(IMatrix(I))
 LUTconcused(IMatrix(I),:)
 
-LongNconc = [47.90 16.7 1.0194];
-LongNconcret = XResults(I,:);
+LongNconc140929 = [47.90 16.7 1.0194];
+LongNconc140929ret = XResults(I,:);
 
 figure 
 fs = 15;
@@ -792,8 +795,8 @@ Inputused(IMatrix(I))
 DPFused(IMatrix(I))
 LUTconcused(IMatrix(I),:)
 
-Cranbconc = [58.3 30.70 0.9297];
-Cranbconcret = XResults(I,:);
+Cranbconc140929 = [58.3 30.70 0.9297];
+Cranbconc140929ret = XResults(I,:);
 
 figure
 fs = 15;
@@ -822,8 +825,8 @@ Inputused(IMatrix(I))
 DPFused(IMatrix(I))
 LUTconcused(IMatrix(I),:)
 
-IBayNconc = [28.30 9.11 1.0025];
-IBayNconcret = XResults(I,:);
+IBayNconc140929 = [28.30 9.11 1.0025];
+IBayNconc140929ret = XResults(I,:);
 
 figure
 fs = 15;
@@ -852,8 +855,8 @@ Inputused(IMatrix(I))
 DPFused(IMatrix(I))
 LUTconcused(IMatrix(I),:)
 
-OntOSconc = [2.10 1.4 0.0954];
-OntOSconcret = XResults(I,:);
+OntOSconc140929 = [2.10 1.4 0.0954];
+OntOSconc140929ret = XResults(I,:);
 
 figure
 fs = 15;
@@ -880,12 +883,12 @@ figure('Position',get(0,'ScreenSize'))
 subplot(1,3,1)
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(LongSconc(1),LongSconcret(1),'.r','MarkerSize', ms);
+plot(LongSconc140929(1),LongSconc140929ret(1),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc(1),LongNconcret(1),'.k','MarkerSize', ms);
-plot(Cranbconc(1),Cranbconcret(1),'.b','MarkerSize', ms);
-plot(IBayNconc(1),IBayNconcret(1),'.g','MarkerSize', ms);
-plot(OntOSconc(1),OntOSconcret(1),'.m','MarkerSize', ms);
+plot(LongNconc140929(1),LongNconc140929ret(1),'.k','MarkerSize', ms);
+plot(Cranbconc140929(1),Cranbconc140929ret(1),'.b','MarkerSize', ms);
+plot(IBayNconc140929(1),IBayNconc140929ret(1),'.g','MarkerSize', ms);
+plot(OntOSconc140929(1),OntOSconc140929ret(1),'.m','MarkerSize', ms);
 maxconcChl = 160;
 plot([0 maxconcChl],[0 maxconcChl],'k')
 axis equal
@@ -900,12 +903,12 @@ legend('LONGS','LONGN','CRANB','IBAYN','ONTOS')
 subplot(1,3,2)
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(LongSconc(2),LongSconcret(2),'.r','MarkerSize', ms);
+plot(LongSconc140929(2),LongSconc140929ret(2),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc(2),LongNconcret(2),'.k','MarkerSize', ms);
-plot(Cranbconc(2),Cranbconcret(2),'.b','MarkerSize', ms);
-plot(IBayNconc(2),IBayNconcret(2),'.g','MarkerSize', ms);
-plot(OntOSconc(2),OntOSconcret(2),'.m','MarkerSize', ms);
+plot(LongNconc140929(2),LongNconc140929ret(2),'.k','MarkerSize', ms);
+plot(Cranbconc140929(2),Cranbconc140929ret(2),'.b','MarkerSize', ms);
+plot(IBayNconc140929(2),IBayNconc140929ret(2),'.g','MarkerSize', ms);
+plot(OntOSconc140929(2),OntOSconc140929ret(2),'.m','MarkerSize', ms);
 maxconcTSS = 60;
 plot([0 maxconcTSS],[0 maxconcTSS],'k')
 axis equal
@@ -920,12 +923,12 @@ subplot(1,3,3)
 % figure
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(LongSconc(3),LongSconcret(3),'.r','MarkerSize', ms);
+plot(LongSconc140929(3),LongSconc140929ret(3),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc(3),LongNconcret(3),'.k','MarkerSize', ms);
-plot(Cranbconc(3),Cranbconcret(3),'.b','MarkerSize', ms);
-plot(IBayNconc(3),IBayNconcret(3),'.g','MarkerSize', ms);
-plot(OntOSconc(3),OntOSconcret(3),'.m','MarkerSize', ms);
+plot(LongNconc140929(3),LongNconc140929ret(3),'.k','MarkerSize', ms);
+plot(Cranbconc140929(3),Cranbconc140929ret(3),'.b','MarkerSize', ms);
+plot(IBayNconc140929(3),IBayNconc140929ret(3),'.g','MarkerSize', ms);
+plot(OntOSconc140929(3),OntOSconc140929ret(3),'.m','MarkerSize', ms);
 maxconcCDOM = 1.5;
 plot([0 maxconcCDOM],[0 maxconcCDOM],'k')
 axis equal
@@ -953,28 +956,28 @@ h = colorbar;
 set(h,'fontsize',fs,'Location','southoutside')
 set(h,'Position',[.2 .05 .6 .05])
 title(h,'L8 retrieved C_a [mg m^{-3}]','FontSize',fs)
-set(gca, 'Units', 'normalized', 'Position', [0 0 1 1])
+set(gca, 'Units', 'normalized', 'Position', [0 0.07 1 1])
 %%
 figure
 fs = 20;
 ms = 25;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(LongSconc(1),LongSconcret(1),'.r','MarkerSize', ms);
+plot(LongSconc140929(1),LongSconc140929ret(1),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc(1),LongNconcret(1),'.k','MarkerSize', ms);
-plot(Cranbconc(1),Cranbconcret(1),'.b','MarkerSize', ms);
-plot(IBayNconc(1),IBayNconcret(1),'.g','MarkerSize', ms);
-plot(OntOSconc(1),OntOSconcret(1),'.m','MarkerSize', ms);
-maxconcChl = 200;
+plot(LongNconc140929(1),LongNconc140929ret(1),'.k','MarkerSize', ms);
+plot(Cranbconc140929(1),Cranbconc140929ret(1),'.b','MarkerSize', ms);
+plot(IBayNconc140929(1),IBayNconc140929ret(1),'.g','MarkerSize', ms);
+plot(OntOSconc140929(1),OntOSconc140929ret(1),'.m','MarkerSize', ms);
+maxconcChl = 100;
 plot([0 maxconcChl],[0 maxconcChl],'--k')
 axis equal
 ylim([0 maxconcChl])
 xlim([0 maxconcChl])
-xlabel('measured C_a [mg m^{-3}] ','fontsize',fs)
+xlabel('measured C_a [mg m^{-3}] ','fontsize',fs,'Position',[55 -10])
 ylabel('L8 retrieved C_a [mg m^{-3}]','fontsize',fs)
-legend('LONGS','LONGN','CRANB','IBAYN','ONTOS')
-
+legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
+set(gca,'OuterPosition',[0 0.05 1 1])
 % save('CHL.txt','-ascii','-double','-tabs','CHLmap')
 %% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure
@@ -986,29 +989,29 @@ axis image
 axis off
 h = colorbar;
 set(h,'fontsize',fs,'Location','southoutside')
-set(h,'Position',[.2 .05 .6 .05])
+set(h,'Position',[.2 .055 .6 .05])
 title(h,'L8 retrieved TSS [g m^{-3}]','FontSize',fs)
-set(gca, 'Units', 'normalized', 'Position', [0 0 1 1])
+set(gca, 'Units', 'normalized', 'Position', [0 0.07 1 1])
 %%
 figure
 fs = 20;
 ms = 25;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(LongSconc(2),LongSconcret(2),'.r','MarkerSize', ms);
+plot(LongSconc140929(2),LongSconc140929ret(2),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc(2),LongNconcret(2),'.k','MarkerSize', ms);
-plot(Cranbconc(2),Cranbconcret(2),'.b','MarkerSize', ms);
-plot(IBayNconc(2),IBayNconcret(2),'.g','MarkerSize', ms);
-plot(OntOSconc(2),OntOSconcret(2),'.m','MarkerSize', ms);
-maxconcTSS = 60;
+plot(LongNconc140929(2),LongNconc140929ret(2),'.k','MarkerSize', ms);
+plot(Cranbconc140929(2),Cranbconc140929ret(2),'.b','MarkerSize', ms);
+plot(IBayNconc140929(2),IBayNconc140929ret(2),'.g','MarkerSize', ms);
+plot(OntOSconc140929(2),OntOSconc140929ret(2),'.m','MarkerSize', ms);
+maxconcTSS = 40;
 plot([0 maxconcTSS],[0 maxconcTSS],'--k')
 axis equal
 ylim([0 maxconcTSS])
 xlim([0 maxconcTSS])
 xlabel('measured TSS [g m^{-3}] ','fontsize',fs)
 ylabel('L8 retrieved TSS [g m^{-3}]','fontsize',fs)
-legend('LONGS','LONGN','CRANB','IBAYN','ONTOS')
+legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
 % save('TSS.txt','-ascii','-double','-tabs','SMmap')
 %% CDOM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure
@@ -1020,21 +1023,21 @@ axis image
 axis off
 h = colorbar;
 set(h,'fontsize',fs,'Location','southoutside')
-set(h,'Position',[.2 .05 .65 .05])
+set(h,'Position',[.2 .06 .65 .05])
 title(h,'L8 retrieved a_{CDOM}(440nm) [1/m]','FontSize',fs)
-set(gca, 'Units', 'normalized', 'Position', [0 0.05 1 1])
+set(gca, 'Units', 'normalized', 'Position', [0 0.09 1 1])
 %%
 figure
 fs = 20;
 ms = 25;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(LongSconc(3),LongSconcret(3),'.r','MarkerSize', ms);
+plot(LongSconc140929(3),LongSconc140929ret(3),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc(3),LongNconcret(3),'.k','MarkerSize', ms);
-plot(Cranbconc(3),Cranbconcret(3),'.b','MarkerSize', ms);
-plot(IBayNconc(3),IBayNconcret(3),'.g','MarkerSize', ms);
-plot(OntOSconc(3),OntOSconcret(3),'.m','MarkerSize', ms);
+plot(LongNconc140929(3),LongNconc140929ret(3),'.k','MarkerSize', ms);
+plot(Cranbconc140929(3),Cranbconc140929ret(3),'.b','MarkerSize', ms);
+plot(IBayNconc140929(3),IBayNconc140929ret(3),'.g','MarkerSize', ms);
+plot(OntOSconc140929(3),OntOSconc140929ret(3),'.m','MarkerSize', ms);
 maxconcCDOM = 1.5;
 plot([0 maxconcCDOM],[0 maxconcCDOM],'--k')
 axis equal
@@ -1042,7 +1045,7 @@ ylim([0 maxconcCDOM])
 xlim([0 maxconcCDOM])
 xlabel('measured a_{CDOM}(440nm) [1/m]','fontsize',fs)
 ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
-legend('LONGS','LONGN','CRANB','IBAYN','ONTOS')
+legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
 % save('CDOM.txt','-ascii','-double','-tabs','CDOMmap')
 %% Plot Input (ONTNS or LONGS) and DPFs retrieved
 figure
