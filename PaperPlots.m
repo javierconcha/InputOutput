@@ -222,12 +222,12 @@ plot(LongNconc140929(1),LongNconc140929ret(1),'^k','MarkerSize', ms);
 plot(Cranbconc140929(1),Cranbconc140929ret(1),'^k','MarkerSize', ms);
 plot(IBayNconc140929(1),IBayNconc140929ret(1),'^k','MarkerSize', ms);
 plot(OntOSconc140929(1),OntOSconc140929ret(1),'^k','MarkerSize', ms);
-maxconcChl = 200;
+maxconcChl = 150;
 plot([0 maxconcChl],[0 maxconcChl],'--k')
 axis equal
 ylim([0 maxconcChl])
 xlim([0 maxconcChl])
-xlabel('measured C_a [mg m^{-3}] ','fontsize',fs,'Position',[110 -20])
+xlabel('measured C_a [mg m^{-3}] ','fontsize',fs,'Position',[80 -15])
 ylabel('L8 retrieved C_a [mg m^{-3}]','fontsize',fs)
 % legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
 set(gca,'OuterPosition',[0 0.05 1 1])
@@ -253,13 +253,15 @@ ylim([0 maxconcTSS])
 xlim([0 maxconcTSS])
 xlabel('measured TSS [g m^{-3}] ','fontsize',fs)
 ylabel('L8 retrieved TSS [g m^{-3}]','fontsize',fs)
-
-% CDOM
+set(gca,'OuterPosition',[0 0.05 1 1])
+%% CDOM
 figure
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(LongSconc130919(3),LongSconc130919ret(3),'*k','MarkerSize', ms);
 hold on
+plot(LongSconc140929(3),LongSconc140929ret(3),'^k','MarkerSize', ms); % not correct position!!!
+legend('09-19-13','09-29-14','Location','best')
 plot(Cranbconc130919(3),Cranbconc130919ret(3),'*k','MarkerSize', ms);
 plot(OntOSconc130919(3),OntOSconc130919ret(3),'*k','MarkerSize', ms);
 plot(OntNSconc130919(3),OntNSconc130919ret(3),'*k','MarkerSize', ms);
@@ -273,10 +275,11 @@ plot([0 maxconcCDOM],[0 maxconcCDOM],'--k')
 axis equal
 ylim([0 maxconcCDOM])
 xlim([0 maxconcCDOM])
-xlabel('measured a_{CDOM}(440nm) [1/m]','fontsize',fs)
+xlabel('measured a_{CDOM}(440nm) [1/m]','fontsize',fs,'Position',[0.8 -0.16])
 ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
+set(gca,'OuterPosition',[0 0.05 1 1])
 
-%
+%%
 CHL_data = [...
 LongSconc130919(1),LongSconc130919ret(1);
 Cranbconc130919(1),Cranbconc130919ret(1);
@@ -338,5 +341,5 @@ set(gca, 'XTick', 1:size(Labels,2), 'XTickLabel',Labels,'FontSize',fs);
 ylabel('Percentage of RMSE [%]','FontSize',fs)
 barmap=[0.7 0.7 0.7];
 colormap(barmap)
-ylim([0 30])
+ylim([0 15])
 grid on

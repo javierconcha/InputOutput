@@ -10,6 +10,7 @@ cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929
 % folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150408.tif';
 folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150418CRANB_ONTOS.tif';
 filename = '';
+date = '140929';
 
 filepath = [folderpath filename];
 clear imL8crop imL8cropRGB maskRGB; % if other retrieval's variables are in Workspace
@@ -365,7 +366,7 @@ set(gca,'fontsize',fs)
 
 %% LUTs from HydroLight
 
-clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType
+clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's variables are in Workspace
 
 % % new 03/02/15, spectrally sampling made in matlab
 % LUTfilename1 = 'Rvector140929_150305_2.txt';
@@ -642,7 +643,7 @@ CDOMmaplog10(CDOMmaplog10==-Inf)=-4;
 fs = 30; % font size
 cbfs = 15; % colorbar font size
 
-figure('Position',get(0,'ScreenSize'))
+figure('name',date,'Position',get(0,'ScreenSize'))
 set(gcf,'color','white')
 subplot(2,2,1)
 imagesc(impos)
@@ -686,7 +687,7 @@ axis image
 axis off
 
 %% Plot Input (ONTNS or LONGS) and DPFs retrieved
-figure('Position',get(0,'ScreenSize'))
+figure('name',date,'Position',get(0,'ScreenSize'))
 subplot(1,2,1)
 set(gcf,'color','white')
 imagesc(INPUTmap)
@@ -745,7 +746,7 @@ OntOS = statdata(:,5); OntOS(isnan(OntOS(:)))=0;
 Sand1 = statdata(:,6); Sand1(isnan(Sand1(:)))=0;
 IBayN = statdata(:,7); IBayN(isnan(IBayN(:)))=0;
 
-figure 
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
@@ -777,7 +778,7 @@ LUTconcused(IMatrix(I),:)
 LongSconc140929 = [46.10 28.30 0.9819];
 LongSconc140929ret = XResults(I,:);
 
-figure 
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
@@ -809,7 +810,7 @@ LUTconcused(IMatrix(I),:)
 LongNconc140929 = [47.90 16.7 1.0194];
 LongNconc140929ret = XResults(I,:);
 
-figure 
+figure('name',date) 
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
@@ -840,7 +841,7 @@ LUTconcused(IMatrix(I),:)
 Cranbconc140929 = [58.3 30.70 0.9297];
 Cranbconc140929ret = XResults(I,:);
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
@@ -871,7 +872,7 @@ LUTconcused(IMatrix(I),:)
 IBayNconc140929 = [28.30 9.11 1.0025];
 IBayNconc140929ret = XResults(I,:);
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
@@ -902,7 +903,7 @@ LUTconcused(IMatrix(I),:)
 OntOSconc140929 = [2.10 1.4 0.0954];
 OntOSconc140929ret = XResults(I,:);
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
@@ -924,7 +925,7 @@ xlim([0.4 2.5])
 fs = 25;
 ms = 25; %marker size
 
-figure('Position',get(0,'ScreenSize'))
+figure('name',date,'Position',get(0,'ScreenSize'))
 subplot(1,3,1)
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
@@ -988,7 +989,7 @@ ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
 
 %% RS of ENVIRONMENT PAPER FIGURES
 %% CHL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-figure
+figure('name',date)
 fs = 16;
 ms = 16;
 set(gcf,'color','white')
@@ -1003,7 +1004,7 @@ set(h,'Position',[.2 .05 .6 .05])
 title(h,'L8 retrieved C_a [mg m^{-3}]','FontSize',fs)
 set(gca, 'Units', 'normalized', 'Position', [0 0.07 1 1])
 %%
-figure
+figure('name',date)
 fs = 20;
 ms = 25;
 set(gcf,'color','white')
@@ -1025,7 +1026,9 @@ legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
 set(gca,'OuterPosition',[0 0.05 1 1])
 % save('CHL.txt','-ascii','-double','-tabs','CHLmap')
 %% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-figure
+figure('name',date)
+fs = 16;
+ms = 16;
 set(gcf,'color','white')
 imagesc(SMmap)
 set(gca,'fontsize',fs)
@@ -1038,7 +1041,7 @@ set(h,'Position',[.2 .055 .6 .05])
 title(h,'L8 retrieved TSS [g m^{-3}]','FontSize',fs)
 set(gca, 'Units', 'normalized', 'Position', [0 0.07 1 1])
 %%
-figure
+figure('name',date)
 fs = 20;
 ms = 25;
 set(gcf,'color','white')
@@ -1059,7 +1062,9 @@ ylabel('L8 retrieved TSS [g m^{-3}]','fontsize',fs)
 legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
 % save('TSS.txt','-ascii','-double','-tabs','SMmap')
 %% CDOM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-figure
+figure('name',date)
+fs = 16;
+ms = 16;
 set(gcf,'color','white')
 imagesc(CDOMmap)
 set(gca,'fontsize',fs)
@@ -1072,7 +1077,7 @@ set(h,'Position',[.2 .06 .65 .05])
 title(h,'L8 retrieved a_{CDOM}(440nm) [1/m]','FontSize',fs)
 set(gca, 'Units', 'normalized', 'Position', [0 0.09 1 1])
 %%
-figure
+figure('name',date)
 fs = 20;
 ms = 25;
 set(gcf,'color','white')
@@ -1093,7 +1098,7 @@ ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
 legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
 % save('CDOM.txt','-ascii','-double','-tabs','CDOMmap')
 %% Plot Input (ONTNS or LONGS) and DPFs retrieved
-figure
+figure('name',date)
 subplot(1,2,1)
 set(gcf,'color','white')
 imagesc(INPUTmap)
@@ -1121,7 +1126,7 @@ set(h,'fontsize',cbfs)
 fs = 30; % font size
 cbfs = 15; % colorbar font size
 
-figure
+figure('name',date)
 set(gcf,'color','white')
 imagesc(impos)
 title('RGB image ','fontsize',fs)
@@ -1130,7 +1135,7 @@ axis equal
 axis image
 axis off
 
-figure
+figure('name',date)
 set(gcf,'color','white')
 imagesc(CHLmap)
 title('<CHL>, \mug/L','fontsize',fs)
@@ -1144,7 +1149,7 @@ set(h,'fontsize',cbfs)
 
 % save('CHL.txt','-ascii','-double','-tabs','CHLmap')
 
-figure
+figure('name',date)
 set(gcf,'color','white')
 imagesc(SMmap)
 title('<TSS>, mg/L','fontsize',fs)
@@ -1158,7 +1163,7 @@ set(h,'fontsize',cbfs)
 
 % save('TSS.txt','-ascii','-double','-tabs','SMmap')
 
-figure
+figure('name',date)
 set(gcf,'color','white')
 imagesc(CDOMmap)
 title('a_{CDOM}(440), 1/m','fontsize',fs)
@@ -1175,7 +1180,7 @@ set(h,'fontsize',cbfs)
 %% Mapping Concentrations log scale
 
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 imagesc(CHLmaplog10)
@@ -1184,7 +1189,7 @@ set(gca,'fontsize',fs)
 axis('equal')
 colorbar
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 imagesc(SMmaplog10)
@@ -1193,7 +1198,7 @@ set(gca,'fontsize',fs)
 axis('equal')
 colorbar
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 imagesc(CDOMmaplog10)
