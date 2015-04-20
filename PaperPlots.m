@@ -288,7 +288,7 @@ Cranbconc140929(1),Cranbconc140929ret(1);
 IBayNconc140929(1),IBayNconc140929ret(1);
 OntOSconc140929(1),OntOSconc140929ret(1)];
 
-CHL_RMSE = 100*sqrt(mean((CHL_data(:,1)-CHL_data(:,2)).^2))/max(CHL_data(:));
+CHL_RMSE = 100*sqrt(mean((CHL_data(:,1)-CHL_data(:,2)).^2))/(max(CHL_data(:))-min(CHL_data(:)));
 
 CHL_std = 100*std(abs(CHL_data(:,1)-CHL_data(:,2)))/max(CHL_data(:));
 
@@ -303,7 +303,7 @@ Cranbconc140929(2),Cranbconc140929ret(2);
 IBayNconc140929(2),IBayNconc140929ret(2);
 OntOSconc140929(2),OntOSconc140929ret(2)];
 
-TSS_RMSE = 100*sqrt(mean((TSS_data(:,1)-TSS_data(:,2)).^2))/max(TSS_data(:));
+TSS_RMSE = 100*sqrt(mean((TSS_data(:,1)-TSS_data(:,2)).^2))/(max(TSS_data(:))-min(TSS_data(:)));
 
 TSS_std = 100*std(abs(TSS_data(:,1)-TSS_data(:,2)))/max(TSS_data(:));
 
@@ -318,7 +318,7 @@ Cranbconc140929(3),Cranbconc140929ret(3);
 IBayNconc140929(3),IBayNconc140929ret(3);
 OntOSconc140929(3),OntOSconc140929ret(3)];
 
-CDO_RMSE = 100*sqrt(mean((CDO_data(:,1)-CDO_data(:,2)).^2))/max(CDO_data(:));
+CDO_RMSE = 100*sqrt(mean((CDO_data(:,1)-CDO_data(:,2)).^2))/(max(CDO_data(:))-min(CDO_data(:)));
 
 CDO_std = 100*std(abs(CDO_data(:,1)-CDO_data(:,2)))/max(CDO_data(:));
 %
@@ -338,5 +338,5 @@ set(gca, 'XTick', 1:size(Labels,2), 'XTickLabel',Labels,'FontSize',fs);
 ylabel('Percentage of RMSE [%]','FontSize',fs)
 barmap=[0.7 0.7 0.7];
 colormap(barmap)
-ylim([0 50])
+ylim([0 30])
 grid on

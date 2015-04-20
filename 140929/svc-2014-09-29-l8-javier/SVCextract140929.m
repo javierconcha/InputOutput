@@ -546,7 +546,7 @@ title('R_{rs} -- CRANB 1','fontsize',fs)
 xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
-axis([400 1000 0 0.03])
+axis([400 1000 0 0.04])
 grid on
 
 %% Radiance Lsky
@@ -619,7 +619,7 @@ title('R_{rs} -- CRANB 2','fontsize',fs)
 xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
-axis([400 1000 0 0.03])
+axis([400 1000 0 0.04])
 grid on
 
 %% Radiance Lsky
@@ -906,6 +906,47 @@ grid on
 %% Find best match in the HL LUT with 120 wl for LONGS
 % Run the LUT part of retrievalL8_140929.m first...
 Rrs_SITE_test = RrsLONGS140929;
+
+Rrs_SITE_test_HL = interp1(wavelengthSVC,Rrs_SITE_test,wavelength*1000);
+Rrs_SITE_test_HL = Rrs_SITE_test_HL-Rrs_SITE_test_HL(end);
+
+rule1 = strcmp(c{1}(:),'input140929LONGS');
+% rule1 = strcmp(c{1}(:),'input140929LONGS');
+% rule1 = ~isnan(ones(size(Rrs,2),1));
+c1_test = c{1}(rule1);
+c2_test = c{2}(rule1);
+c3_test = c{3}(rule1);
+c4_test = c{4}(rule1);
+c5_test = c{5}(rule1);
+
+
+wl_nm = wavelength*1000;
+
+cond1 = wl_nm>500;
+
+Rrs_test = Rrs(cond1,rule1);
+
+figure
+plot(wl_nm,Rrs_SITE_test_HL)
+xlim([400 1000])
+hold on
+
+[Y,I2] = min(sqrt(mean((Rrs_test'-ones(size(Rrs_test,2),1)*Rrs_SITE_test_HL(cond1)').^2,2)));
+
+plot(wl_nm(cond1),Rrs_test(:,I2),'g')
+legend('Field','LUT')
+str = sprintf('%s %f %f %f %s',char(c1_test(I2)),c2_test(I2),c3_test(I2),c4_test(I2),char(c5_test(I2)));
+title(str)
+grid on
+
+%%
+figure
+plot(wl_nm,Rrs)
+hold on
+plot(wl_nm(cond1),Rrs_test(:,I2),'g','linewidth',1.5)
+%% Find best match in the HL LUT with 120 wl for CRANB
+% Run the LUT part of retrievalL8_140929.m first...
+Rrs_SITE_test = RrsCRANB140929;
 
 Rrs_SITE_test_HL = interp1(wavelengthSVC,Rrs_SITE_test,wavelength*1000);
 Rrs_SITE_test_HL = Rrs_SITE_test_HL-Rrs_SITE_test_HL(end);

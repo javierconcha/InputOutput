@@ -364,16 +364,22 @@ set(gca,'fontsize',fs)
 
 
 %% LUTs from HydroLight
+
+clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType
+
 % % new 03/02/15, spectrally sampling made in matlab
 % LUTfilename1 = 'Rvector140929_150305_2.txt';
 % LUTfilename1 = 'Rvector140929_150317.txt'; % with FFbb018.dpf for ONTOS
 % LUTfilename1 = 'Rvector140929_150407.txt'; % with FFbb012.dpf for ONTOS
-LUTfilename1 = 'Rvector140929_150409.txt'; % with FFbb012.dpf for ONTOS
+% LUTfilename1 = 'Rvector140929_150409.txt'; % with FFbb012.dpf for ONTOS
+LUTfilename1 = 'Rvector140929_150420.txt'; % with more dpfs
+
 
 % LUTconcfilename1 = 'concentration_list140929_150305_2.txt';
 % LUTconcfilename1 = 'concentration_list140929_150317.txt';
 % LUTconcfilename1 = 'concentration_list140929_150406.txt';
-LUTconcfilename1 = 'concentration_list140929_150409.txt';
+% LUTconcfilename1 = 'concentration_list140929_150409.txt';
+LUTconcfilename1 = 'concentration_list140929_150420.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/';
 
@@ -384,6 +390,7 @@ LUTconpath1 = [filepath LUTconcfilename1];
 fid = fopen(LUTconpath1);
 c1 = textscan(fid,'%s %f %f %f %s');
 fclose all;
+
 
 
 c = {[c1{1}] [c1{2}] [c1{3}] [c1{4}] [c1{5}]};
@@ -454,7 +461,9 @@ for index = 1:size(LUT,1)
     elseif strcmp(c1{5}(index),'FFbb022.dpf')
         LUTconcDPF(index)= 2.2;      
     elseif strcmp(c1{5}(index),'FFbb024.dpf')
-        LUTconcDPF(index)= 2.4;        
+        LUTconcDPF(index)= 2.4;  
+    elseif strcmp(c1{5}(index),'FFbb026.dpf')
+        LUTconcDPF(index)= 2.6;
     end
 end
 
@@ -465,17 +474,17 @@ end
 %     (strcmp(c{5}(:),'FFbb005.dpf')|strcmp(c{5}(:),'FFbb006.dpf')|strcmp(c{5}(:),'FFbb007.dpf')...
 %     |strcmp(c{5}(:),'FFbb008.dpf')|strcmp(c{5}(:),'FFbb009.dpf'));
 
-CHlimit = 25;
-SMlimit = 8;
-CDlimit = 0.5;
+CHlimit = 28.30;
+SMlimit = 9.11;
+CDlimit = 0.9819;
 DPFlimit = 1.2;
 
 rule5 = strcmp(c{1}(:),'input140929ONTOS')& ...
     LUTconc(:,1)<CHlimit & LUTconc(:,2)<SMlimit & LUTconc(:,3)<CDlimit & ...
-    LUTconcDPF(:)>DPFlimit;
+    LUTconcDPF(:)<DPFlimit;
 rule2 = strcmp(c{1}(:),'input140929LONGS')& ...
     LUTconc(:,1)>=CHlimit & LUTconc(:,2)>=SMlimit & LUTconc(:,3)>=CDlimit & ...
-    LUTconcDPF(:)>DPFlimit;
+    LUTconcDPF(:)>=DPFlimit;
 
 LUTsmart = LUT(rule5|rule2,:);
 LUTconcsmart = LUTconc(rule5|rule2,:);
