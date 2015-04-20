@@ -232,7 +232,7 @@ ylabel('L8 retrieved C_a [mg m^{-3}]','fontsize',fs)
 % legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
 set(gca,'OuterPosition',[0 0.05 1 1])
 
-%% TSS
+% TSS
 figure
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
@@ -254,7 +254,7 @@ xlim([0 maxconcTSS])
 xlabel('measured TSS [g m^{-3}] ','fontsize',fs)
 ylabel('L8 retrieved TSS [g m^{-3}]','fontsize',fs)
 
-%% CDOM
+% CDOM
 figure
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
@@ -276,7 +276,7 @@ xlim([0 maxconcCDOM])
 xlabel('measured a_{CDOM}(440nm) [1/m]','fontsize',fs)
 ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
 
-%%
+%
 CHL_data = [...
 LongSconc130919(1),LongSconc130919ret(1);
 Cranbconc130919(1),Cranbconc130919ret(1);
@@ -321,7 +321,7 @@ OntOSconc140929(3),OntOSconc140929ret(3)];
 CDO_RMSE = 100*sqrt(mean((CDO_data(:,1)-CDO_data(:,2)).^2))/max(CDO_data(:));
 
 CDO_std = 100*std(abs(CDO_data(:,1)-CDO_data(:,2)))/max(CDO_data(:));
-%%
+%
 
 
 error = [CHL_RMSE    TSS_RMSE    CDO_RMSE];
@@ -330,13 +330,13 @@ figure
 set(gcf,'color','white')
 fs = 20;
 bar(error,0.5)
-hold on
-errorbar(error,[CHL_std TSS_std CDO_std],'kx')
+% hold on
+% errorbar(error,[CHL_std TSS_std CDO_std],'kx')
 
 Labels = {'Chl-a','TSS','CDOM'};
 set(gca, 'XTick', 1:size(Labels,2), 'XTickLabel',Labels,'FontSize',fs);
 ylabel('Percentage of RMSE [%]','FontSize',fs)
-mycolor=[0 0 1;0 1 0;1 0 0];
-colormap(mycolor)
+barmap=[0.7 0.7 0.7];
+colormap(barmap)
 ylim([0 50])
 grid on

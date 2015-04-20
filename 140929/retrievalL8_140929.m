@@ -7,7 +7,8 @@ addpath('/Users/javier/Downloads/mtit')
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929
 %% L8 image cropped
 % From ELM using new L8 reflectance product
-folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150408.tif';
+% folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150408.tif';
+folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150418CRANB_ONTOS.tif';
 filename = '';
 
 filepath = [folderpath filename];
@@ -35,6 +36,8 @@ masknew = reshape(imL8cropmask,[size(imL8cropmask,1)*size(imL8cropmask,2) size(i
 waterpixels = imnew(masknew==1,:);
 waterpixels = double(waterpixels);
 
+waterpixels(isnan(waterpixels))=0;
+
 % added 01-11-14. plot radiance curves
 % radiance image
 imL8radcrop = imread(...
@@ -43,6 +46,7 @@ imradnew = reshape(imL8radcrop,[size(imL8radcrop,1)*size(imL8radcrop,2) size(imL
 
 waterradpixels = imradnew(masknew==1,:);
 waterradpixels = double(waterradpixels);
+
 % for displaying
 
 imL8cropRGB(:,:,1)=imadjust(imL8crop(:,:,4));
@@ -461,17 +465,17 @@ end
 %     (strcmp(c{5}(:),'FFbb005.dpf')|strcmp(c{5}(:),'FFbb006.dpf')|strcmp(c{5}(:),'FFbb007.dpf')...
 %     |strcmp(c{5}(:),'FFbb008.dpf')|strcmp(c{5}(:),'FFbb009.dpf'));
 
-CHlimit = 5;
+CHlimit = 25;
 SMlimit = 8;
 CDlimit = 0.5;
-DPFlimit = 4;
+DPFlimit = 1.2;
 
 rule5 = strcmp(c{1}(:),'input140929ONTOS')& ...
     LUTconc(:,1)<CHlimit & LUTconc(:,2)<SMlimit & LUTconc(:,3)<CDlimit & ...
-    LUTconcDPF(:)<DPFlimit;
+    LUTconcDPF(:)>DPFlimit;
 rule2 = strcmp(c{1}(:),'input140929LONGS')& ...
     LUTconc(:,1)>=CHlimit & LUTconc(:,2)>=SMlimit & LUTconc(:,3)>=CDlimit & ...
-    LUTconcDPF(:)<DPFlimit;
+    LUTconcDPF(:)>DPFlimit;
 
 LUTsmart = LUT(rule5|rule2,:);
 LUTconcsmart = LUTconc(rule5|rule2,:);
@@ -699,12 +703,15 @@ set(h,'fontsize',cbfs)
 %% Read ROIs from ENVI text Stat file 
 
 pathname = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/';
-statfilename = 'ROIstats_140929_150408.txt';
+% statfilename = 'ROIstats_140929_150408.txt';
+statfilename = 'ROIstats_140929_150418CRANB_ONTOS.txt';
 
 fid = fopen([pathname statfilename]);
 s = textscan(fid, '%s', 'delimiter', '\n');
 % search for "data=":
-idx1 = find(strcmp('Column 7: Mean: SAND~~7',s{1}),1);
+% idx1 = find(strcmp('Column 7: Mean: SAND~~7',s{1}),1);
+idx1 = find(strcmp('Column 7: Mean: IBAYN~~5',s{1}),1);% for MoB-ELM with bright: CRANB and dark: ONTOS
+
 % and read from s{1}(idx1+1:idx2-1) the values using textscan again ...
 data = s{1}(idx1+1:size(s{1},1));
 fclose(fid);
@@ -714,16 +721,40 @@ for index = 1:size(data,1)
 end
 
 L8bands_ENVI = statdata(:,1);
-Cranb = statdata(:,2);
-LongS = statdata(:,3);
-LongN = statdata(:,4);
-IBayN = statdata(:,5);
-OntOS = statdata(:,6);
-SAND = statdata(:,7);
+% Cranb = statdata(:,2);
+% LongS = statdata(:,3);
+% LongN = statdata(:,4);
+% IBayN = statdata(:,5);
+% OntOS = statdata(:,6);
+% Sand1 = statdata(:,7);
+
+% for MoB-ELM with bright: CRANB and dark: ONTOS
+Cranb = statdata(:,2); Cranb(isnan(Cranb(:)))=0;
+LongS = statdata(:,3); LongS(isnan(LongS(:)))=0;
+LongN = statdata(:,4); LongN(isnan(LongN(:)))=0;
+OntOS = statdata(:,5); OntOS(isnan(OntOS(:)))=0;
+Sand1 = statdata(:,6); Sand1(isnan(Sand1(:)))=0;
+IBayN = statdata(:,7); IBayN(isnan(IBayN(:)))=0;
+
+figure 
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(L8bands_ENVI,Cranb,'r')
+hold on
+plot(L8bands_ENVI,LongS,'g')
+plot(L8bands_ENVI,LongN,'b')
+plot(L8bands_ENVI,OntOS,'c')
+plot(L8bands_ENVI,IBayN,'y')
+plot(L8bands_ENVI,Sand1,'m')
+legend('Cranb','LongS','LongN','OntOS','IBayN','Sand1')
+grid on
+axis([.4 2.5 0 0.025])
+
 
 %% Find LONGS
 rule6 = strcmp(Inputused(:),'input140929LONGS')&...
-    LUTconcused(:,1)==50 & LUTconcused(:,2)==30.7 &...
+    LUTconcused(:,1)==45 & LUTconcused(:,2)==28.00 &...
     LUTconcused(:,3)==1.0025;
 
 
@@ -749,8 +780,9 @@ plot(L8bands,LUTused(rule6,:)','k')
 title('LongS','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
-legend('Field','Rrs','ret. from HL','DPF LUT')
+legend('ROI','Closest L8','ret. from HL','DPF LUT')
 grid on
+xlim([0.4 2.5])
 
 %% Find LONGN
 rule6 = strcmp(Inputused(:),'input140929LONGS')&...
@@ -780,12 +812,13 @@ plot(L8bands,LUTused(rule6,:)','k')
 title('LongN','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
-legend('Field','Rrs','ret. from HL','DPF LUT')
+legend('ROI','Closest L8','ret. from HL','DPF LUT')
 grid on
+xlim([0.4 2.5])
 
 %% Find Cranb
 rule6 = strcmp(Inputused(:),'input140929LONGS')&...
-    LUTconcused(:,1)==50 & LUTconcused(:,2)==30.7 &...
+    LUTconcused(:,1)==60 & LUTconcused(:,2)==30.7 &...
     LUTconcused(:,3)==1.0025;
 
 % find Cranb in waterpixels with index I
@@ -810,12 +843,13 @@ plot(L8bands,LUTused(rule6,:)','k')
 title('Cranb','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
-legend('Field','Rrs','ret. from HL','DPF LUT')
+legend('ROI','Closest L8','ret. from HL','DPF LUT')
 grid on
+xlim([0.4 2.5])
 
 %% Find IBayN
 rule6 = strcmp(Inputused(:),'input140929LONGS')&...
-    LUTconcused(:,1)==20.0 & LUTconcused(:,2)==9.1100 &...
+    LUTconcused(:,1)==30.0 & LUTconcused(:,2)==9.1100 &...
     LUTconcused(:,3)==1.0025;
 
 % find IBayN in waterpixels with index I
@@ -840,8 +874,9 @@ plot(L8bands,LUTused(rule6,:)','k')
 title('IbayN','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
-legend('Field','Rrs','ret. from HL','DPF LUT')
+legend('ROI','Closest L8','ret. from HL','DPF LUT')
 grid on
+xlim([0.4 2.5])
 
 %% Find OntOS
 rule6 = strcmp(Inputused(:),'input140929ONTOS')&...
@@ -870,8 +905,9 @@ plot(L8bands,LUTused(rule6,:)','k')
 title('OntOS','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
-legend('Field','Rrs','ret. from HL','DPF LUT')
+legend('ROI','Closest L8','ret. from HL','DPF LUT')
 grid on
+xlim([0.4 2.5])
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Scatter plot

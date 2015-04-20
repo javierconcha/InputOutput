@@ -41,6 +41,7 @@ ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTOS','IBAYN');
 xlim([400 900])
+grid on
 
 figure
 fs = 15;
@@ -58,6 +59,7 @@ ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTOS','IBAYN')
 xlim([400 900])
+grid on
 
 %% CH mass-specific absorption coefficient
 % astar = a/X where a is absorption coeff. and X is the component concentration
@@ -120,9 +122,10 @@ ylabel('a*, [m^2/mg]','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTOS','IBAYN')
 xlim([400 900])
+grid on
 
 
-%% Correcting ONTOS and LONGS
+%% Correcting ONTOS and LONGS and CRANB
 
 astar_CH_ONTOS_corrected = astar_CH_ONTOS;
 astar_CH_ONTOS_corrected(wavelength>=750)=0;
@@ -153,11 +156,11 @@ legend('LONGS','ONTOS')
 % xlim([400 900])
 
 %% saving to be used in HL
-astar = [wavelength(end:-1:1) astar_CH_ONTOS_corrected(end:-1:1)];
-save('astar_CH_ONTOS140929_CountyUncorr.txt','-ascii','astar')
-
-astar = [wavelength(end:-1:1) astar_CH_LONGS_corrected(end:-1:1)];
-save('astar_CH_LONGS140929_CountyUncorr.txt','-ascii','astar')
+% astar = [wavelength(end:-1:1) astar_CH_ONTOS_corrected(end:-1:1)];
+% save('astar_CH_ONTOS140929_CountyUncorr.txt','-ascii','astar')
+% 
+% astar = [wavelength(end:-1:1) astar_CH_LONGS_corrected(end:-1:1)];
+% save('astar_CH_LONGS140929_CountyUncorr.txt','-ascii','astar')
 
 %% SM mass-specific absorption coefficient
 % astar = a/X where a is absorption coeff. and X is the component concentration
@@ -199,6 +202,7 @@ ylabel('a*, [m^2/g]','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTOS','IBAYN')
 xlim([400 900])
+grid on
 
 
 %% Correcting SM 
@@ -241,12 +245,12 @@ legend('LONGS','ONTOS','LONGS fit','ONTOS fit')
 % xlim([400 900])
 
 %% save the SM to be used in HL
-
-astar = [wavelength(end:-1:1) SM_ONTOS_fitted(end:-1:1)];
-save('astar_SM_ONTOS140929_County.txt','-ascii','astar')
-
-astar = [wavelength(end:-1:1) SM_LONGS_fitted(end:-1:1)];
-save('astar_SM_LONGS140929_County.txt','-ascii','astar')
+% 
+% astar = [wavelength(end:-1:1) SM_ONTOS_fitted(end:-1:1)];
+% save('astar_SM_ONTOS140929_County.txt','-ascii','astar')
+% 
+% astar = [wavelength(end:-1:1) SM_LONGS_fitted(end:-1:1)];
+% save('astar_SM_LONGS140929_County.txt','-ascii','astar')
 %% CDOM absorption coefficient
 
 % Loading
@@ -683,8 +687,8 @@ legend('LONGN','LONGS','CRANB','ONTOS','IBAYN');
 grid on
 
 %% saving to be used in HL
-astar = [wavelength(end:-1:1) astar_CD_LONGS440(end:-1:1)];
-save('astar_CDOM_LONGS140929.txt','-ascii','astar')
-
-astar = [wavelength(end:-1:1) astar_CD_ONTOS440(end:-1:1)];
-save('astar_CDOM_ONTOS140929.txt','-ascii','astar')
+% astar = [wavelength(end:-1:1) astar_CD_LONGS440(end:-1:1)];
+% save('astar_CDOM_LONGS140929.txt','-ascii','astar')
+% 
+% astar = [wavelength(end:-1:1) astar_CD_ONTOS440(end:-1:1)];
+% save('astar_CDOM_ONTOS140929.txt','-ascii','astar')
