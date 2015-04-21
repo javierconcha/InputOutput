@@ -254,14 +254,14 @@ xlim([0 maxconcTSS])
 xlabel('measured TSS [g m^{-3}] ','fontsize',fs)
 ylabel('L8 retrieved TSS [g m^{-3}]','fontsize',fs)
 set(gca,'OuterPosition',[0 0.05 1 1])
-%% CDOM
+% CDOM
 figure
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(LongSconc130919(3),LongSconc130919ret(3),'*k','MarkerSize', ms);
 hold on
 plot(LongSconc140929(3),LongSconc140929ret(3),'^k','MarkerSize', ms); % not correct position!!!
-legend('09-19-13','09-29-14','Location','best')
+legend('09-19-2013','09-29-2014','Location','best')
 plot(Cranbconc130919(3),Cranbconc130919ret(3),'*k','MarkerSize', ms);
 plot(OntOSconc130919(3),OntOSconc130919ret(3),'*k','MarkerSize', ms);
 plot(OntNSconc130919(3),OntNSconc130919ret(3),'*k','MarkerSize', ms);
@@ -291,9 +291,9 @@ Cranbconc140929(1),Cranbconc140929ret(1);
 IBayNconc140929(1),IBayNconc140929ret(1);
 OntOSconc140929(1),OntOSconc140929ret(1)];
 
-CHL_RMSE = 100*sqrt(mean((CHL_data(:,1)-CHL_data(:,2)).^2))/(max(CHL_data(:))-min(CHL_data(:)));
+CHL_RMSE = 100*sqrt(mean((CHL_data(:,1)-CHL_data(:,2)).^2))/(max(CHL_data(:,1))-min(CHL_data(:,1)));
 
-CHL_std = 100*std(abs(CHL_data(:,1)-CHL_data(:,2)))/max(CHL_data(:));
+CHL_std = 100*std(abs(CHL_data(:,1)-CHL_data(:,2)))/(max(CHL_data(:,1))-min(CHL_data(:,1)));
 
 TSS_data = [...
 LongSconc130919(2),LongSconc130919ret(2);
@@ -306,9 +306,9 @@ Cranbconc140929(2),Cranbconc140929ret(2);
 IBayNconc140929(2),IBayNconc140929ret(2);
 OntOSconc140929(2),OntOSconc140929ret(2)];
 
-TSS_RMSE = 100*sqrt(mean((TSS_data(:,1)-TSS_data(:,2)).^2))/(max(TSS_data(:))-min(TSS_data(:)));
+TSS_RMSE = 100*sqrt(mean((TSS_data(:,1)-TSS_data(:,2)).^2))/(max(TSS_data(:,1))-min(TSS_data(:,1)));
 
-TSS_std = 100*std(abs(TSS_data(:,1)-TSS_data(:,2)))/max(TSS_data(:));
+TSS_std = 100*std(abs(TSS_data(:,1)-TSS_data(:,2)))/(max(TSS_data(:,1))-min(TSS_data(:,1)));
 
 CDO_data = [...
 LongSconc130919(3),LongSconc130919ret(3);
@@ -321,12 +321,10 @@ Cranbconc140929(3),Cranbconc140929ret(3);
 IBayNconc140929(3),IBayNconc140929ret(3);
 OntOSconc140929(3),OntOSconc140929ret(3)];
 
-CDO_RMSE = 100*sqrt(mean((CDO_data(:,1)-CDO_data(:,2)).^2))/(max(CDO_data(:))-min(CDO_data(:)));
+CDO_RMSE = 100*sqrt(mean((CDO_data(:,1)-CDO_data(:,2)).^2))/(max(CDO_data(:,1))-min(CDO_data(:,1)));
 
-CDO_std = 100*std(abs(CDO_data(:,1)-CDO_data(:,2)))/max(CDO_data(:));
-%
-
-
+CDO_std = 100*std(abs(CDO_data(:,1)-CDO_data(:,2)))/(max(CDO_data(:,1))-min(CDO_data(:,1)));
+%%
 error = [CHL_RMSE    TSS_RMSE    CDO_RMSE];
 
 figure
@@ -335,11 +333,24 @@ fs = 20;
 bar(error,0.5)
 % hold on
 % errorbar(error,[CHL_std TSS_std CDO_std],'kx')
+Labels = {'C_a','TSS','a_{CDOM}(440nm)'};
 
-Labels = {'Chl-a','TSS','CDOM'};
-set(gca, 'XTick', 1:size(Labels,2), 'XTickLabel',Labels,'FontSize',fs);
-ylabel('Percentage of RMSE [%]','FontSize',fs)
+set(gca,'FontSize',fs);
+ylabel('RMSE [%]','FontSize',fs)
 barmap=[0.7 0.7 0.7];
 colormap(barmap)
-ylim([0 15])
+ylim([0 20])
 grid on
+
+addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
+%
+[hx,hy] = format_ticks(gca,Labels);
+
+for i=1:size(error,2)
+    
+    text(i,error(i),[num2str(error(i),'%0.1f') '%'],...
+    'HorizontalAlignment','center',...
+    'VerticalAlignment','bottom','FontSize',16)
+end
+
+
