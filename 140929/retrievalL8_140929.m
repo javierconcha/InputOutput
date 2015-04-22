@@ -560,6 +560,7 @@ plot(L8bands,LUTused)
 % title(str1,'fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
+xlim([0.4 2.5])
 grid on
 
 

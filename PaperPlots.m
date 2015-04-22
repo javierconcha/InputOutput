@@ -117,8 +117,8 @@ geoshow(RGBdisplay, R)
 
 axis off
 tightmap
-
-%% ELM parameters
+%% ELM parameters for 130919
+date = '130919';
 
 % ENVI ASCII Plot File [Wed Feb 25 11:13:20 2015]
 % Column 1: Wavelength
@@ -126,15 +126,77 @@ tightmap
 % Column 3: ONTOSRef_140919.txt:C2~~22##0,128,0
 % Column 4: PIFrad140929.txt:C2~~4##0,0,255
 % Column 5: RrsDTROC4272.txt:C2~~6##0,255,255
-% Column 6: RrsDTROC4272.txt:C2~~7##255,0,255
 ELMpar = [... 
- 0.443000  47.715229  0.009902  77.846487  0.033414  0.033414;
- 0.482600  38.305432  0.009372  75.344770  0.038789  0.038789;
- 0.561300  21.273056  0.007824  65.115974  0.047262  0.047262;
- 0.654600  10.047512  0.003416  57.065069  0.052816  0.052816;
- 0.864600   2.932883  0.001856  40.646813  0.061532  0.061532;
- 1.609000   0.161773  0.000688  10.359676  0.067213  0.067213;
- 2.201000   0.029518  0.000066   2.766715  0.057581  0.057581];
+ 0.443000  52.806560  3.3447259e-03  78.717176  0.033414;
+ 0.482600  42.548113  4.6444715e-03  74.112108  0.038789;
+ 0.561300  22.680736  4.3333294e-03  61.115627  0.047262;
+ 0.654600  10.145411  8.7691634e-04  52.317747  0.052816;
+ 0.864600   2.647640  4.7364307e-05  36.663148  0.061532;
+ 1.609000   0.108184  0.0000000e+00   9.509572  0.067213;
+ 2.201000   0.022955  0.0000000e+00   2.560293  0.057581];
+
+%  ELMpar = [... % Original with ref instead of Rrs
+%  0.443000  52.806560  0.010692  78.717176   0.096503;
+%  0.482600  42.548113  0.014882  74.112108   0.103900;
+%  0.561300  22.680736  0.013961  61.115627   0.118600;
+%  0.654600  10.145411  0.002833  52.317747   0.127000;
+%  0.864600   2.647640  0.000149  36.663148   0.160100;
+%  1.609000   0.108184  0.000000   9.509572   0.165000;
+%  2.201000   0.022955  0.000000   2.560293   0.153900];
+
+
+Wavelength      = ELMpar(:,1);
+Darkrad130919   = ELMpar(:,2);
+ONTOSRef_130919 = ELMpar(:,3);
+PIFrad130919    = ELMpar(:,4);
+RrsDTROC4272  = ELMpar(:,5);
+
+figure('name',date)
+% subplot(1,2,1)
+fs = 15;
+lw = 1.5;
+set(gcf,'color','white')
+plot(ELMpar(:,1),Darkrad130919,'--k','LineWidth',lw)
+hold on 
+plot(ELMpar(:,1),PIFrad130919 ,'LineWidth',lw)
+legend('Dark: water ROI','Bright: PIF from L8')
+xlabel('wavelength [\mum]','fontsize',fs)
+ylabel('Radiance [W/m^2/sr/\mum]','fontsize',fs)
+set(gca,'fontsize',fs)
+xlim([.4 2.5])
+grid on
+
+figure('name',date)
+% subplot(1,2,2)
+fs = 15;
+lw = 1.5;
+set(gcf,'color','white')
+plot(ELMpar(:,1),ONTOSRef_130919,'--k','LineWidth',lw)
+hold on 
+plot(ELMpar(:,1),RrsDTROC4272,'LineWidth',lw)
+legend('Dark: ONTOS field','Bright: PIF L8 refl. product','Location','best')
+xlabel('wavelength [\mum]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+set(gca,'fontsize',fs)
+xlim([.4 2.5])
+grid on
+%% ELM parameters for 140929
+date = '140929';
+
+% ENVI ASCII Plot File [Wed Feb 25 11:13:20 2015]
+% Column 1: Wavelength
+% Column 2: Darkrad140929.txt:C2~~2##255,0,0
+% Column 3: ONTOSRef_140919.txt:C2~~22##0,128,0
+% Column 4: PIFrad140929.txt:C2~~4##0,0,255
+% Column 5: RrsDTROC4272.txt:C2~~6##0,255,255
+ELMpar = [... 
+ 0.443000  47.715229  3.4123331e-03  77.846487  0.033414;
+ 0.482600  38.305432  4.9252741e-03  75.344770  0.038789;
+ 0.561300  21.273056  5.7814978e-03  65.115974  0.047262;
+ 0.654600  10.047512  1.1573833e-03  57.065069  0.052816;
+ 0.864600   2.932883  5.0124583e-05  40.646813  0.061532;
+ 1.609000   0.161773  0.0000000e+00  10.359676  0.067213;
+ 2.201000   0.029518  0.0000000e+00   2.766715  0.057581];
 
 
 Wavelength      = ELMpar(:,1);
@@ -143,7 +205,7 @@ ONTOSRef_140919 = ELMpar(:,3);
 PIFrad140929   	= ELMpar(:,4);
 RrsDTROC4272 	= ELMpar(:,5);
 
-figure
+figure('name',date)
 % subplot(1,2,1)
 fs = 15;
 lw = 1.5;
@@ -152,14 +214,13 @@ plot(ELMpar(:,1),Darkrad140929,'--k','LineWidth',lw)
 hold on 
 plot(ELMpar(:,1),PIFrad140929 ,'LineWidth',lw)
 legend('Dark: water ROI','Bright: PIF from L8')
-title('Radiance values for ELM-based method','fontsize',fs)
 xlabel('wavelength [\mum]','fontsize',fs)
 ylabel('Radiance [W/m^2/sr/\mum]','fontsize',fs)
 set(gca,'fontsize',fs)
 xlim([.4 2.5])
 grid on
 
-figure
+figure('name',date)
 % subplot(1,2,2)
 fs = 15;
 lw = 1.5;
@@ -167,15 +228,32 @@ set(gcf,'color','white')
 plot(ELMpar(:,1),ONTOSRef_140919,'--k','LineWidth',lw)
 hold on 
 plot(ELMpar(:,1),RrsDTROC4272,'LineWidth',lw)
-legend('Dark: ONTOS field','Bright: PIF L8 refl. product')
-title('Reflectance values for ELM-based method','fontsize',fs)
+legend('Dark: ONTOS field','Bright: PIF L8 refl. product','Location','best')
 xlabel('wavelength [\mum]','fontsize',fs)
-ylabel('Rrs [1/\pi]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
 xlim([.4 2.5])
 grid on
+%% ROIs for 130919. Run retrievalL8v2.m first!
+date = '130919';
+figure('name',date)
+fs = 15;
+lw = 1.5;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(L8bands,LongS,'r','LineWidth',lw)
+hold on
+plot(L8bands,Cranb,'g','LineWidth',lw)
+plot(L8bands,OntOS,'b','LineWidth',lw)
+plot(L8bands,OntNS,'c','LineWidth',lw)
+legend('LONGS','CRANB','ONTOS','ONTNS')
+xlabel('wavelength [\mum]','fontsize',fs)
+ylabel('Rrs [1/sr]','fontsize',fs)
 
-%% ROIs 
+xlim([.4 2.5]) 
+grid on
+
+%% ROIs for 140929
 ROIstat = [...
   0.443000   0.005023   0.005443   0.005369   0.005977   0.005441   0.032622;
   0.482600   0.007257   0.007529   0.007508   0.008020   0.008765   0.040927;
