@@ -1,11 +1,12 @@
 cd /Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_Landsat_Special_Issue/Images
 %% Plot ROI 
-clear
-clc
+% clear
+% clc
 
 folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
 % filename = 'LC80170302014272LGN00/LC80170302014272LGN00_ROI_RGB.tif';
-filename = 'LC80160302013262LGN00/LC80160302013262LGN00_ONelm140629.tif';
+% filename = 'LC80160302013262LGN00/LC80160302013262LGN00_ONelm140629.tif';
+filename = 'LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150418CRANB_ONTOS.tif';
 
 % filename = 'LC80160302013262LGN00/LC80160302013262LGN00_WaterAndDTROC.tif';
 % filename = 'LC80160302013262LGN00/LC80160302013262LGN00_WholeImage.tif';
@@ -283,81 +284,7 @@ set(gca,'fontsize',fs)
 xlim([.4 2.5]) 
 grid on
 
-%% Retrieved vs Measured
-% CHL
-figure
-fs = 20;
-ms = 10;
-set(gcf,'color','white')
-set(gca,'fontsize',fs)
-plot(LongSconc130919(1),LongSconc130919ret(1),'*k','MarkerSize', ms);
-hold on
-plot(Cranbconc130919(1),Cranbconc130919ret(1),'*k','MarkerSize', ms);
-plot(OntOSconc130919(1),OntOSconc130919ret(1),'*k','MarkerSize', ms);
-plot(OntNSconc130919(1),OntNSconc130919ret(1),'*k','MarkerSize', ms);
-plot(LongSconc140929(1),LongSconc140929ret(1),'^k','MarkerSize', ms);
-plot(LongNconc140929(1),LongNconc140929ret(1),'^k','MarkerSize', ms);
-plot(Cranbconc140929(1),Cranbconc140929ret(1),'^k','MarkerSize', ms);
-plot(IBayNconc140929(1),IBayNconc140929ret(1),'^k','MarkerSize', ms);
-plot(OntOSconc140929(1),OntOSconc140929ret(1),'^k','MarkerSize', ms);
-maxconcChl = 150;
-plot([0 maxconcChl],[0 maxconcChl],'--k')
-axis equal
-ylim([0 maxconcChl])
-xlim([0 maxconcChl])
-xlabel('measured C_a [mg m^{-3}] ','fontsize',fs,'Position',[80 -15])
-ylabel('L8 retrieved C_a [mg m^{-3}]','fontsize',fs)
-% legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
-set(gca,'OuterPosition',[0 0.05 1 1])
-
-% TSS
-figure
-set(gcf,'color','white')
-set(gca,'fontsize',fs)
-plot(LongSconc130919(2),LongSconc130919ret(2),'*k','MarkerSize', ms);
-hold on
-plot(Cranbconc130919(2),Cranbconc130919ret(2),'*k','MarkerSize', ms);
-plot(OntOSconc130919(2),OntOSconc130919ret(2),'*k','MarkerSize', ms);
-plot(OntNSconc130919(2),OntNSconc130919ret(2),'*k','MarkerSize', ms);
-plot(LongSconc140929(2),LongSconc140929ret(2),'^k','MarkerSize', ms);
-plot(LongNconc140929(2),LongNconc140929ret(2),'^k','MarkerSize', ms);
-plot(Cranbconc140929(2),Cranbconc140929ret(2),'^k','MarkerSize', ms);
-plot(IBayNconc140929(2),IBayNconc140929ret(2),'^k','MarkerSize', ms);
-plot(OntOSconc140929(2),OntOSconc140929ret(2),'^k','MarkerSize', ms);
-maxconcTSS = 60;
-plot([0 maxconcTSS],[0 maxconcTSS],'--k')
-axis equal
-ylim([0 maxconcTSS])
-xlim([0 maxconcTSS])
-xlabel('measured TSS [g m^{-3}] ','fontsize',fs)
-ylabel('L8 retrieved TSS [g m^{-3}]','fontsize',fs)
-set(gca,'OuterPosition',[0 0.05 1 1])
-% CDOM
-figure
-set(gcf,'color','white')
-set(gca,'fontsize',fs)
-plot(LongSconc130919(3),LongSconc130919ret(3),'*k','MarkerSize', ms);
-hold on
-plot(LongSconc140929(3),LongSconc140929ret(3),'^k','MarkerSize', ms); % not correct position!!!
-legend('09-19-2013','09-29-2014','Location','best')
-plot(Cranbconc130919(3),Cranbconc130919ret(3),'*k','MarkerSize', ms);
-plot(OntOSconc130919(3),OntOSconc130919ret(3),'*k','MarkerSize', ms);
-plot(OntNSconc130919(3),OntNSconc130919ret(3),'*k','MarkerSize', ms);
-plot(LongSconc140929(3),LongSconc140929ret(3),'^k','MarkerSize', ms);
-plot(LongNconc140929(3),LongNconc140929ret(3),'^k','MarkerSize', ms);
-plot(Cranbconc140929(3),Cranbconc140929ret(3),'^k','MarkerSize', ms);
-plot(IBayNconc140929(3),IBayNconc140929ret(3),'^k','MarkerSize', ms);
-plot(OntOSconc140929(3),OntOSconc140929ret(3),'^k','MarkerSize', ms);
-maxconcCDOM = 1.5;
-plot([0 maxconcCDOM],[0 maxconcCDOM],'--k')
-axis equal
-ylim([0 maxconcCDOM])
-xlim([0 maxconcCDOM])
-xlabel('measured a_{CDOM}(440nm) [1/m]','fontsize',fs,'Position',[0.8 -0.16])
-ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
-set(gca,'OuterPosition',[0 0.05 1 1])
-
-%%
+%% RMSE
 CHL_data = [...
 LongSconc130919(1),LongSconc130919ret(1);
 Cranbconc130919(1),Cranbconc130919ret(1);
@@ -369,7 +296,8 @@ Cranbconc140929(1),Cranbconc140929ret(1);
 IBayNconc140929(1),IBayNconc140929ret(1);
 OntOSconc140929(1),OntOSconc140929ret(1)];
 
-CHL_RMSE = 100*sqrt(mean((CHL_data(:,1)-CHL_data(:,2)).^2))/(max(CHL_data(:,1))-min(CHL_data(:,1)));
+CHL_RMSE = sqrt(mean((CHL_data(:,1)-CHL_data(:,2)).^2));
+CHL_RMSErange = 100*CHL_RMSE/(max(CHL_data(:,1))-min(CHL_data(:,1)));
 
 CHL_std = 100*std(abs(CHL_data(:,1)-CHL_data(:,2)))/(max(CHL_data(:,1))-min(CHL_data(:,1)));
 
@@ -384,7 +312,8 @@ Cranbconc140929(2),Cranbconc140929ret(2);
 IBayNconc140929(2),IBayNconc140929ret(2);
 OntOSconc140929(2),OntOSconc140929ret(2)];
 
-TSS_RMSE = 100*sqrt(mean((TSS_data(:,1)-TSS_data(:,2)).^2))/(max(TSS_data(:,1))-min(TSS_data(:,1)));
+TSS_RMSE = sqrt(mean((TSS_data(:,1)-TSS_data(:,2)).^2));
+TSS_RMSErange = 100*TSS_RMSE/(max(TSS_data(:,1))-min(TSS_data(:,1)));
 
 TSS_std = 100*std(abs(TSS_data(:,1)-TSS_data(:,2)))/(max(TSS_data(:,1))-min(TSS_data(:,1)));
 
@@ -399,11 +328,13 @@ Cranbconc140929(3),Cranbconc140929ret(3);
 IBayNconc140929(3),IBayNconc140929ret(3);
 OntOSconc140929(3),OntOSconc140929ret(3)];
 
-CDO_RMSE = 100*sqrt(mean((CDO_data(:,1)-CDO_data(:,2)).^2))/(max(CDO_data(:,1))-min(CDO_data(:,1)));
+CDO_RMSE = sqrt(mean((CDO_data(:,1)-CDO_data(:,2)).^2));
+CDO_RMSErange = 100*CDO_RMSE/(max(CDO_data(:,1))-min(CDO_data(:,1)));
 
 CDO_std = 100*std(abs(CDO_data(:,1)-CDO_data(:,2)))/(max(CDO_data(:,1))-min(CDO_data(:,1)));
-%%
-error = [CHL_RMSE    TSS_RMSE    CDO_RMSE];
+%
+error = [CHL_RMSErange    TSS_RMSErange    CDO_RMSErange];
+% error = [CHL_RMSE    TSS_RMSE    CDO_RMSE];
 
 figure
 set(gcf,'color','white')
@@ -431,4 +362,117 @@ for i=1:size(error,2)
     'VerticalAlignment','bottom','FontSize',16)
 end
 
+%% Retrieved vs Measured
+% CHL
+figure
+fs = 20;
+ms = 10;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LongSconc130919(1),LongSconc130919ret(1),'*k','MarkerSize', ms);
+hold on
+plot(Cranbconc130919(1),Cranbconc130919ret(1),'*k','MarkerSize', ms);
+plot(OntOSconc130919(1),OntOSconc130919ret(1),'*k','MarkerSize', ms);
+plot(OntNSconc130919(1),OntNSconc130919ret(1),'*k','MarkerSize', ms);
+plot(LongSconc140929(1),LongSconc140929ret(1),'^k','MarkerSize', ms);
+plot(LongNconc140929(1),LongNconc140929ret(1),'^k','MarkerSize', ms);
+plot(Cranbconc140929(1),Cranbconc140929ret(1),'^k','MarkerSize', ms);
+plot(IBayNconc140929(1),IBayNconc140929ret(1),'^k','MarkerSize', ms);
+plot(OntOSconc140929(1),OntOSconc140929ret(1),'^k','MarkerSize', ms);
+maxconcCHL = 150;
+plot([0 maxconcCHL],[0 maxconcCHL],'--k')
+axis equal
+ylim([0 maxconcCHL])
+xlim([0 maxconcCHL])
+xlabel('measured C_a [mg m^{-3}] ','fontsize',fs,'Position',[80 -15])
+ylabel('L8 retrieved C_a [mg m^{-3}]','fontsize',fs)
+set(gca,'OuterPosition',[0 0.05 1 1])
 
+hold on % regression
+[a,b] = polyfit(CHL_data(:,1),CHL_data(:,2),1);
+x1=[0 maxconcChl];
+y1=a(1).*x1+a(2);
+plot(x1,y1,'r-','LineWidth',1)
+C = corrcoef([CHL_data(:,1),CHL_data(:,2)]);
+r2 = C(1,2)^2;
+str1 = sprintf('y: %2.2f x + %2.2f \n R^2: %2.2f; N: %i \n RMSE: %2.2f',a(1),a(2),r2,size(CHL_data,1),CHL_RMSE);
+xLimits = get(gca,'XLim');
+yLimits = get(gca,'YLim');
+xLoc = xLimits(1)+0.1*(xLimits(2)-xLimits(1));
+yLoc = yLimits(1)+0.85*(yLimits(2)-yLimits(1));
+h = text(xLoc,yLoc,str1,'FontSize',16,'FontWeight','bold');
+
+%% TSS
+figure
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LongSconc130919(2),LongSconc130919ret(2),'*k','MarkerSize', ms);
+hold on
+plot(Cranbconc130919(2),Cranbconc130919ret(2),'*k','MarkerSize', ms);
+plot(OntOSconc130919(2),OntOSconc130919ret(2),'*k','MarkerSize', ms);
+plot(OntNSconc130919(2),OntNSconc130919ret(2),'*k','MarkerSize', ms);
+plot(LongSconc140929(2),LongSconc140929ret(2),'^k','MarkerSize', ms);
+plot(LongNconc140929(2),LongNconc140929ret(2),'^k','MarkerSize', ms);
+plot(Cranbconc140929(2),Cranbconc140929ret(2),'^k','MarkerSize', ms);
+plot(IBayNconc140929(2),IBayNconc140929ret(2),'^k','MarkerSize', ms);
+plot(OntOSconc140929(2),OntOSconc140929ret(2),'^k','MarkerSize', ms);
+maxconcTSS = 60;
+plot([0 maxconcTSS],[0 maxconcTSS],'--k')
+axis equal
+ylim([0 maxconcTSS])
+xlim([0 maxconcTSS])
+xlabel('measured TSS [g m^{-3}] ','fontsize',fs)
+ylabel('L8 retrieved TSS [g m^{-3}]','fontsize',fs)
+set(gca,'OuterPosition',[0 0.05 1 1])
+
+hold on % regression
+[a,b] = polyfit(TSS_data(:,1),TSS_data(:,2),1);
+x1=[0 maxconcTSS];
+y1=a(1).*x1+a(2);
+plot(x1,y1,'r-','LineWidth',1)
+C = corrcoef([TSS_data(:,1),TSS_data(:,2)]);
+r2 = C(1,2)^2;
+str1 = sprintf('y: %2.2f x + %2.2f \n R^2: %2.2f; N: %i \n RMSE: %2.2f',a(1),a(2),r2,size(TSS_data,1),TSS_RMSE);
+xLimits = get(gca,'XLim');
+yLimits = get(gca,'YLim');
+xLoc = xLimits(1)+0.1*(xLimits(2)-xLimits(1));
+yLoc = yLimits(1)+0.85*(yLimits(2)-yLimits(1));
+h = text(xLoc,yLoc,str1,'FontSize',16,'FontWeight','bold');
+%% CDOM
+figure
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LongSconc130919(3),LongSconc130919ret(3),'*k','MarkerSize', ms);
+hold on
+plot(LongSconc140929(3),LongSconc140929ret(3),'^k','MarkerSize', ms); % not correct position!!!
+legend('09-19-2013','09-29-2014','Location','best')
+plot(Cranbconc130919(3),Cranbconc130919ret(3),'*k','MarkerSize', ms);
+plot(OntOSconc130919(3),OntOSconc130919ret(3),'*k','MarkerSize', ms);
+plot(OntNSconc130919(3),OntNSconc130919ret(3),'*k','MarkerSize', ms);
+plot(LongSconc140929(3),LongSconc140929ret(3),'^k','MarkerSize', ms);
+plot(LongNconc140929(3),LongNconc140929ret(3),'^k','MarkerSize', ms);
+plot(Cranbconc140929(3),Cranbconc140929ret(3),'^k','MarkerSize', ms);
+plot(IBayNconc140929(3),IBayNconc140929ret(3),'^k','MarkerSize', ms);
+plot(OntOSconc140929(3),OntOSconc140929ret(3),'^k','MarkerSize', ms);
+maxconcCDOM = 1.5;
+plot([0 maxconcCDOM],[0 maxconcCDOM],'--k')
+axis equal
+ylim([0 maxconcCDOM])
+xlim([0 maxconcCDOM])
+xlabel('measured a_{CDOM}(440nm) [1/m]','fontsize',fs,'Position',[0.8 -0.16])
+ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
+set(gca,'OuterPosition',[0 0.05 1 1])
+
+hold on % regression
+[a,b] = polyfit(CDO_data(:,1),CDO_data(:,2),1);
+x1=[0 maxconcCDOM];
+y1=a(1).*x1+a(2);
+plot(x1,y1,'r-','LineWidth',1)
+C = corrcoef([CDO_data(:,1),CDO_data(:,2)]);
+r2 = C(1,2)^2;
+str1 = sprintf('y: %2.2f x + %2.2f \n R^2: %2.2f; N: %i \n RMSE: %2.2f',a(1),a(2),r2,size(CDO_data,1),CDO_RMSE);
+xLimits = get(gca,'XLim');
+yLimits = get(gca,'YLim');
+xLoc = xLimits(1)+0.1*(xLimits(2)-xLimits(1));
+yLoc = yLimits(1)+0.85*(yLimits(2)-yLimits(1));
+h = text(xLoc,yLoc,str1,'FontSize',16,'FontWeight','bold');
