@@ -1,9 +1,8 @@
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/
-addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/FACS/')
-addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/gmregress/')
+
 %%
 dir = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
-ncfile = 'LC80160302013262LGN00/ACOLITE/LC80160302013262LGN00_L2_SWIR.nc';
+ncfile = 'LC80160302013262LGN00/ACOLITE/LC80160302013262LGN00_L2_SWIR_Unity.nc';
 % ncfile = 'LC80160302013262LGN00/ACOLITE/LC80160302013262LGN00_L2_NIR.nc';
 
 %%
