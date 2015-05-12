@@ -182,15 +182,19 @@ Ld = length(x);
 dd = zeros(Ld,1);
 switch method %Calculate Data Density
     case 'sq'  %---- Using squares ----
-        for k=1:Ld
+        matlabpool open 4
+        parfor k=1:Ld
             dd(k) = sum( x>(x(k)-r) & x<(x(k)+r) & y>(y(k)-r) & y<(y(k)+r) );
         end %for
         area = (2*r)^2;
         dd = dd/area;
+        matlabpool close
     case 'ci'
-        for k=1:Ld
+        matlabpool open 4
+        parfor k=1:Ld
             dd(k) = sum( sqrt((x-x(k)).^2 + (y-y(k)).^2) < r );
         end
+        matlabpool close
         area = pi*r^2;
         dd = dd/area;
     case 'vo'  %----- Using voronoi cells ------

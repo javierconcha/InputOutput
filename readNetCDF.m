@@ -95,31 +95,33 @@ axis equal
 
 %% histogram
 
-figure('name','NIR')
+figure('name','SWIR')
+
+nbins = 512;
 fs = 15;
 set(gcf,'color','white')
 subplot(2,3,1)
-hist(rhow_443(:)/pi,50)
+hist(rhow_443(:)/pi,nbins)
 xlabel('R_{rs} 443','FontSize',fs)
 
 subplot(2,3,2)
-hist(rhow_483(:)/pi,50)
+hist(rhow_483(:)/pi,nbins)
 xlabel('R_{rs} 483','FontSize',fs)
 
 subplot(2,3,3)
-hist(rhow_561(:)/pi,50)
+hist(rhow_561(:)/pi,nbins)
 xlabel('R_{rs} 561','FontSize',fs)
 
 subplot(2,3,4)
-hist(rhow_655(:)/pi,50)
+hist(rhow_655(:)/pi,nbins)
 xlabel('R_{rs} 655','FontSize',fs)
 
 subplot(2,3,5)
-hist(rhow_865(:)/pi,50)
+hist(rhow_865(:)/pi,nbins)
 xlabel('R_{rs} 865','FontSize',fs)
 
 subplot(2,3,6)
-hist(rhoam_865(:),50)
+hist(rhoam_865(:),nbins)
 xlabel('\rho_{am} 865','FontSize',fs)
 
 set(gca,'fontsize',fs)
@@ -130,6 +132,11 @@ rhow_443_zero = zeros(size(rhow_443));
 
 rhow_443_zero(rhow_443<0) = 1;
 rhow_443_zero(rhow_443>=0) = 0;
+disp('Neg %:')
+100*sum(rhow_443(:)<=0)/size(rhow_443(:),1)
+
+disp('Pos %:')
+100*sum(rhow_443(:)>0)/size(rhow_443(:),1)
 
 figure
 set(gcf,'color','white')
