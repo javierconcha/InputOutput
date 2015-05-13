@@ -81,7 +81,15 @@ rsq = 1-(SSres/SStot);
 
 RMSE = sqrt(mean((x_used-y_used).^2));
 
-str1 = sprintf('y: %2.4f x + %2.4f \n R^2: %2.4f; N: %i \n RMSE: %2.4f',a(1),a(2),rsq,size(x_used,1),RMSE);
+if a(2)>=0
+    str1 = sprintf('y: %2.4f x + %2.4f \n R^2: %2.4f; N: %i \n RMSE: %2.4f',...
+        a(1),abs(a(2)),rsq,size(x_used,1),RMSE);
+else
+    str1 = sprintf('y: %2.4f x - %2.4f \n R^2: %2.4f; N: %i \n RMSE: %2.4f',...
+        a(1),abs(a(2)),rsq,size(x_used,1),RMSE);
+end
+
+
 xLimits = get(gca,'XLim');
 yLimits = get(gca,'YLim');
 xLoc = xLimits(1)+0.1*(xLimits(2)-xLimits(1));
