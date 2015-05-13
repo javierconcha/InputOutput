@@ -9,7 +9,7 @@ im2013262 = imread(filename);
 proj = geotiffinfo(filename);
 info = imfinfo(filename);
 
-densityflag = 0;
+densityflag = 1;
 regressiontype = 'RMA';
 maxref = 0.030;
 %% Band 1: 443nm
