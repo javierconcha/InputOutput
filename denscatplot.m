@@ -1,4 +1,4 @@
-function denscatplot(x,y,regressiontype,densityflag,bandname,maxref)% density scatterplot
+function denscatplot(x,y,regressiontype,densityflag,bandname,maxref,date,comptype)% density scatterplot
 %% Preparing data
 
 disp('Band:')
@@ -36,12 +36,12 @@ elseif densityflag == 1
     ms = 5;
     figure(h)
     hold on
-%     [~] = scatplot(x_used,y_used,method,radius,N,n,po,ms);
+    [~] = scatplot(x_used,y_used,method,radius,N,n,po,ms);
     colorbar off
     hc = colorbar('southoutside','FontSize',14);
     title(hc, 'Pixel Density','FontSize',14)
     set(gca,'position',[0.15 0.28 0.75 0.7]);
-    set(hc,'position',[0.2 0.04 0.6 0.05]);
+    set(hc,'position',[0.2 0.07 0.6 0.05]);
 end
 
 figure(h)
@@ -97,4 +97,9 @@ yLoc = yLimits(1)+0.85*(yLimits(2)-yLimits(1));
 figure(h)
 hold on
 text(xLoc,yLoc,str1,'FontSize',fs,'FontWeight','normal');
+
+%% Save figure
+str3 = sprintf('%s_AcoliteMoBELMcomp_%s_%s',date,bandname,comptype);
+dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
+print(h,[dirname str3],'-depsc')
 
