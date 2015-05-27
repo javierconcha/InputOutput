@@ -19,7 +19,10 @@ h = figure;
 fs = 15;
 set(gcf,'color','white')
 set(gcf,'name',[date ' ' regressiontype ' ' comptype])
-set(gca,'fontsize',fs)
+set(gca,...
+    'fontsize'  , fs    , ...
+    'XMinorTick', 'on'  , ...
+    'YMinorTick', 'on'  );
 
 %% Density 
 if  densityflag == 0
@@ -50,9 +53,10 @@ str1 = sprintf('R_{rs} %s nm (Acolite) [1/sr]',bandname);
 str2 = sprintf('R_{rs} %s nm (MoB-ELM) [1/sr]',bandname);
 xlabel(str1)
 ylabel(str2)
-grid on
+% grid on
 axis equal
 axis([0 maxref 0 maxref])
+box on
 
 figure(h)
 hold on
@@ -60,8 +64,6 @@ plot([0 maxref],[0 maxref],'--k','LineWidth',1.2)
 %% regression
 if strcmp(regressiontype,'OLS') 
     [a,~] = polyfit(x_used,y_used,1);
-    x1=[0 maxref];
-    y1=a(1).*x1+a(2);
 elseif strcmp(regressiontype,'RMA')
     % %%%%%%%% RMA Regression %%%%%%%%%%%%%
     % [[b1 b0],bintr,bintjm] = gmregress(x_used,y_used);
@@ -74,9 +76,11 @@ elseif strcmp(regressiontype,'RMA')
     end
     
     a(2) = mean(y_used)-mean(x_used)*a(1); % y intercept
-    x1=[0 maxref];
-    y1=a(1).*x1+a(2);    
+    
 end
+
+x1=[0 maxref];
+y1=a(1).*x1+a(2);
 
 figure(h)
 plot(x1,y1,'r-','LineWidth',1.2)
@@ -105,6 +109,7 @@ yLoc = yLimits(1)+0.85*(yLimits(2)-yLimits(1));
 figure(h)
 hold on
 text(xLoc,yLoc,str1,'FontSize',fs,'FontWeight','normal');
+disp(str1)
 
 %% Save figure
 % str3 = sprintf('%s_AcoliteMoBELMcomp_%s_%s',date,bandname,comptype);
