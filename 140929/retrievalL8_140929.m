@@ -8,8 +8,8 @@ cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929
 %% L8 image cropped
 % From ELM using new L8 reflectance product
 % folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150408.tif';
-folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150418CRANB_ONTOS.tif';
-filename = '';
+folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/MOBELM/';
+filename = 'LC80170302014272LGN00_ROI_Rrs_150418CRANB_ONTOS.tif';
 date = '140929';
 
 filepath = [folderpath filename];
@@ -20,7 +20,7 @@ INFO = imfinfo(filepath);
 
 %%%% Mask
 imL8cropmask = imread(...
-    '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROImask.tif');
+    '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/MOBELM/LC80170302014272LGN00_ROImask.tif');
 
 imL8cropmask(imL8cropmask>0)=1;
 
@@ -42,7 +42,7 @@ waterpixels(isnan(waterpixels))=0;
 % added 01-11-14. plot radiance curves
 % radiance image
 imL8radcrop = imread(...
-    '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images//LC80170302014272LGN00/LC80170302014272LGN00_ROItif.tif');
+    '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images//LC80170302014272LGN00/MOBELM/LC80170302014272LGN00_ROItif.tif');
 imradnew = reshape(imL8radcrop,[size(imL8radcrop,1)*size(imL8radcrop,2) size(imL8radcrop,3)]);
 
 waterradpixels = imradnew(masknew==1,:);
@@ -180,6 +180,7 @@ set(gca,'fontsize',fs)
 % ylim([0 0.18])
  hold on
  plot(L8bands,meanwp,'g','linewidth',2)
+ grid on
  
 %% display All water pixels RADIANCE values
 
@@ -349,6 +350,7 @@ title(str,'fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('reflectance','fontsize',fs)
 set(gca,'fontsize',fs)
+grid on
 % ylim([0 .25])
 
 % water pixels Radiance

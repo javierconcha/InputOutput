@@ -1,24 +1,24 @@
 function denscatplot(x,y,regressiontype,densityflag,bandname,maxref,date,comptype)% density scatterplot
 %% Preparing data
 
-disp('Band:')
-disp(bandname)
+
 cond1 = x(:)>0;
 cond2 = y(:)>0;
 cond3 = cond1&cond2;
+cond4 = x(:)<0;
+cond5 = y(:)<0;
 x_used = x(cond3);
 y_used = y(cond3);
 
-disp('x Pos. [%]:')
-disp(100*sum(cond1)/sum(isfinite(x(:))))
-disp('y Pos. [%]:')
-disp(100*sum(cond2)/sum(isfinite(y(:))))
-
+str0 = sprintf('Band %s: x Neg: %2.2f%%; y Neg: %2.2f%%;usable: %2.0f%%',...
+    bandname,100*sum(cond4)/sum(isfinite(x(:))),100*sum(cond5)/sum(isfinite(y(:))),...
+    100*sum(cond3)/sum(isfinite(y(:))));
+disp(str0)
 
 h = figure;
 fs = 15;
 set(gcf,'color','white')
-set(gcf,'name',regressiontype)
+set(gcf,'name',[date ' ' regressiontype ' ' comptype])
 set(gca,'fontsize',fs)
 
 %% Density 
@@ -66,6 +66,13 @@ elseif strcmp(regressiontype,'RMA')
     % %%%%%%%% RMA Regression %%%%%%%%%%%%%
     % [[b1 b0],bintr,bintjm] = gmregress(x_used,y_used);
     a(1) = std(y_used)/std(x_used); % slope
+    
+    if corr(x_used,y_used)<0
+        a(1) = -abs(a(1));
+    elseif corr(x_used,y_used)>=0
+        a(1) = abs(a(1));
+    end
+    
     a(2) = mean(y_used)-mean(x_used)*a(1); % y intercept
     x1=[0 maxref];
     y1=a(1).*x1+a(2);    
@@ -77,7 +84,8 @@ plot(x1,y1,'r-','LineWidth',1.2)
 %% Statistics: r-squared (or coefficient of determination) 
 SStot = sum((y_used-mean(y_used)).^2);
 SSres = sum((y_used-polyval(a,x_used)).^2);
-rsq = 1-(SSres/SStot);
+rsq = 1-(SSres/SStot)
+corr(x_used,y_used)^2
 
 RMSE = sqrt(mean((x_used-y_used).^2));
 
@@ -99,7 +107,7 @@ hold on
 text(xLoc,yLoc,str1,'FontSize',fs,'FontWeight','normal');
 
 %% Save figure
-str3 = sprintf('%s_AcoliteMoBELMcomp_%s_%s',date,bandname,comptype);
-dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-print(h,[dirname str3],'-depsc')
+% str3 = sprintf('%s_AcoliteMoBELMcomp_%s_%s',date,bandname,comptype);
+% dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
+% print(h,[dirname str3],'-depsc')
 
