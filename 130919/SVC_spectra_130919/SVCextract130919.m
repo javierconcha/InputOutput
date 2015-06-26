@@ -1,5 +1,6 @@
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/retrieval/')
+addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929')
 %%
 date = '130919';
 pathname = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/';
@@ -164,7 +165,7 @@ Rrs7b = (Lt7-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs8b = (Lt8-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs9b = (Lt9-0.028.*Lsky)./(pi.*Lg./0.99);
 
-RrsONTNS = Rrs4b;
+RrsONTNS130919 = Rrs4b;
 
 figure
 fs = 15;
@@ -226,7 +227,7 @@ Rrs3 = (Lt3-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs4 = (Lt4-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs5 = (Lt5-0.028.*Lsky)./(pi.*Lg./0.99);
 
-RrsONTOS = Rrs1;
+RrsONTOS130919 = Rrs1;
 
 figure
 fs = 15;
@@ -308,7 +309,7 @@ Rrs4 = (Lt4-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs5 = (Lt5-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs6 = (Lt6-0.028.*Lsky)./(pi.*Lg./0.99);
 
-RrsRVRPLM = Rrs1;
+RrsRVRPL130919 = Rrs1;
 
 figure
 fs = 15;
@@ -383,7 +384,7 @@ Rrs6 = (Lt6-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs7 = (Lt7-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs8 = (Lt8-0.028.*Lsky)./(pi.*Lg./0.99);
 
-RrsRVRPIER = Rrs1;
+RrsRVRPI130919 = Rrs1;
 
 figure
 fs = 15;
@@ -455,7 +456,7 @@ Rrs5 = (Lt5-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs6 = (Lt6-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs7 = (Lt7-0.028.*Lsky)./(pi.*Lg./0.99);
 
-RrsONTEX = Rrs1;
+RrsONTEX130919 = Rrs1;
 
 figure
 fs = 15;
@@ -545,7 +546,7 @@ Rrs8 = (Lt8-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs9 = (Lt9-0.028.*Lsky)./(pi.*Lg./0.99);
 Rrs10 = (Lt10-0.028.*Lsky)./(pi.*Lg./0.99);
 
-RrsIBAYN = Rrs3;
+RrsIBAYN130919 = Rrs3;
 
 figure
 fs = 15;
@@ -574,16 +575,18 @@ set(gca,'fontsize',fs)
 grid on
 
 %% Rrs all
+wavelengthSVC130919 = wavelength;
+
 figure(21)
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,RrsONTNS,'r')
+plot(wavelength,RrsONTNS130919,'r')
 hold on
-plot(wavelength,RrsONTOS,'b')
-plot(wavelength,RrsRVRPLM,'g')
-plot(wavelength,RrsRVRPIER,'m')
-plot(wavelength,RrsIBAYN,'k')
-plot(wavelength,RrsONTEX,'--b')
+plot(wavelength,RrsONTOS130919,'b')
+plot(wavelength,RrsRVRPL130919,'g')
+plot(wavelength,RrsRVRPI130919,'m')
+plot(wavelength,RrsIBAYN130919,'k')
+plot(wavelength,RrsONTEX130919,'--b')
 
 legend('ONTNS','ONTOS','RVRPLM',...
     'RVRPIER','IBAYN','ONTEX')
@@ -591,35 +594,40 @@ title('R_{rs} -- 09/19/13 ','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
-% axis([400 1000 0 0.03])
+axis([400 1000 0 0.015])
 grid on
+
+save Rrs130919AllSites.mat wavelengthSVC130919 ...
+    RrsONTNS130919 RrsONTOS130919 RrsRVRPL130919 ...
+    RrsRVRPI130919 RrsIBAYN130919 RrsONTEX130919
+
 %% Spectrally sampled and save in text file
 wlrange = wavelength>=400 & wavelength<=2500;
 % wlzero = wavelength==2219.0;
 wlavg = wavelength>=2000 & wavelength<=2350;
 
-zeroavg = mean(RrsONTNS(wlavg));
+zeroavg = mean(RrsONTNS130919(wlavg));
 
-RrsONTNScorr = RrsONTNS-zeroavg;
+RrsONTNS130919corr = RrsONTNS130919-zeroavg;
 
-RrsONTNSL8 = spect_sampL8(RrsONTNScorr(wlrange),wavelength(wlrange).*1E-3);
+RrsONTNS130919L8 = spect_sampL8(RrsONTNS130919corr(wlrange),wavelength(wlrange).*1E-3);
 
-RrsONTNSL8corr = RrsONTNSL8;
-RrsONTNSL8corr(5:7)=0;
+RrsONTNS130919L8corr = RrsONTNS130919L8;
+RrsONTNS130919L8corr(5:7)=0;
 
 L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
 
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,RrsONTNS,'r')
+plot(wavelength,RrsONTNS130919,'r')
 hold on
-plot(wavelength,RrsONTNScorr,'--r')
-% plot(wavelength(wlzero),RrsONTNS(wlzero),'.g')
-plot(L8bands.*1E3,RrsONTNSL8,'.-b')
-plot(L8bands.*1E3,RrsONTNSL8corr,'.-k')
-plot(L8bands.*1E3,RrsONTNSL8corr*pi,'--k')
-legend('RrsONTNS','RrsONTNScorr','RrsONTNSL8','RrsONTNSL8corr','RrsONTNSL8corr*pi')
+plot(wavelength,RrsONTNS130919corr,'--r')
+% plot(wavelength(wlzero),RrsONTNS130919(wlzero),'.g')
+plot(L8bands.*1E3,RrsONTNS130919L8,'.-b')
+plot(L8bands.*1E3,RrsONTNS130919L8corr,'.-k')
+plot(L8bands.*1E3,RrsONTNS130919L8corr*pi,'--k')
+legend('RrsONTNS130919','RrsONTNS130919corr','RrsONTNS130919L8','RrsONTNS130919L8corr','RrsONTNS130919L8corr*pi')
 title('R_{rs} -- 09/19/13 ','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
@@ -627,8 +635,8 @@ set(gca,'fontsize',fs)
 % axis([400 1000 0 0.03])
 grid on
 % 
-% NSRef = [L8bands', RrsONTNSL8corr'];
-% save([pathname,pathdate,'RrsONTNSL8.txt'],'NSRef','-ascii')
+% NSRef = [L8bands', RrsONTNS130919L8corr'];
+% save([pathname,pathdate,'RrsONTNS130919L8.txt'],'NSRef','-ascii')
 
 %% Sand spectra -- dried
 % L8_2013_09_19_R210_T211.sig

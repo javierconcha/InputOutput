@@ -809,6 +809,8 @@ grid on
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Rrs all
+wavelengthSVC140929 = wavelengthSVC;
+
 figure
 fs = 15;
 set(gcf,'color','white')
@@ -826,6 +828,11 @@ ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 axis([400 1000 0 0.04])
 grid on
+
+save Rrs140929AllSites.mat wavelengthSVC140929 ...
+    RrsONTOS140929 RrsLONGS140929 RrsLONGN140929 ...
+    RrsCRANB140929 RrsIBAYN140929
+
 %% Spectrally sampled and save in text file
 wlrange = wavelengthSVC>=400 & wavelengthSVC<=2500;
 % wlzero = wavelengthSVC==2219.0;

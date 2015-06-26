@@ -75,7 +75,7 @@ filename = [dir tif14272_SU];
 
 im2014272 = imread(filename);
 
-densityflag = 1; % 0 or 1
+densityflag = 0; % 0 or 1
 regressiontype = 'RMA'; % RMA or OLS
 maxref = 0.030;
 date = '2014272';

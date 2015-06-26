@@ -1,7 +1,6 @@
 function denscatplot(x,y,regressiontype,densityflag,bandname,maxref,date,comptype)% density scatterplot
 %% Preparing data
 
-
 cond1 = x(:)>0;
 cond2 = y(:)>0;
 cond3 = cond1&cond2;
