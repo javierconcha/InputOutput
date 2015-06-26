@@ -1,4 +1,4 @@
-function denscatplot(x,y,regressiontype,densityflag,bandname,maxref,date,comptype)% density scatterplot
+function denscatplot(x,y,regressiontype,densityflag,bandname,maxref,date,labelx,labely)% density scatterplot
 %% Preparing data
 
 cond1 = x(:)>0;
@@ -17,7 +17,7 @@ disp(str0)
 h = figure;
 fs = 15;
 set(gcf,'color','white')
-set(gcf,'name',[date ' ' regressiontype ' ' comptype])
+set(gcf,'name',[date ' ' regressiontype ' ' labelx labely])
 set(gca,...
     'fontsize'  , fs    , ...
     'XMinorTick', 'on'  , ...
@@ -48,8 +48,8 @@ end
 
 figure(h)
 hold on
-str1 = sprintf('R_{rs} %s nm (Acolite) [1/sr]',bandname);
-str2 = sprintf('R_{rs} %s nm (MoB-ELM) [1/sr]',bandname);
+str1 = sprintf('R_{rs} %s nm (%s) [1/sr]',bandname,labelx);
+str2 = sprintf('R_{rs} %s nm (%s) [1/sr]',bandname,labely);
 xlabel(str1)
 ylabel(str2)
 % grid on
