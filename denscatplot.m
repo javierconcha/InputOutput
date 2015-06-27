@@ -17,7 +17,7 @@ disp(str0)
 h = figure;
 fs = 15;
 set(gcf,'color','white')
-set(gcf,'name',[date ' ' regressiontype ' ' labelx labely])
+set(gcf,'name',[date ' ' regressiontype ' ' labelx ' ' labely])
 set(gca,...
     'fontsize'  , fs    , ...
     'XMinorTick', 'on'  , ...
@@ -54,7 +54,7 @@ xlabel(str1)
 ylabel(str2)
 % grid on
 axis equal
-axis([0 maxref 0 maxref])
+% axis([0 maxref 0 maxref])
 box on
 
 figure(h)
