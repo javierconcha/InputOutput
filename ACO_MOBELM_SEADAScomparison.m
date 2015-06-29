@@ -77,7 +77,7 @@ denscatplot(Rrs_561S,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'SeaD
 
 %% Band 4: 655nm
 Rrs_655A = double(im2013262(:,:, 7))/pi; % Acolite
-Rrs_655S = (double(im2013262(:,:,15))*2.0E-6+0.05); % SeaDAS, converted with scale_factor and add_offset from band attributes
+Rrs_655S = double(im2013262(:,:,15))*2.0E-6+0.05; % SeaDAS, converted with scale_factor and add_offset from band attributes
 Rrs_655E = double(im2013262(:,:,25))/pi; % MoBELM; for 2013262 image, not in Rrs
 denscatplot(Rrs_655A,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'Acolite','MoB-ELM')
 denscatplot(Rrs_655A,Rrs_655S,regressiontype,densityflag,'655',maxref,date,'Acolite','SeaDAS')
