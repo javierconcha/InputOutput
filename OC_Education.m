@@ -1,7 +1,24 @@
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/retrieval/')
 addpath('/Users/javier/Downloads/mtit')
-cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929
-%% LUTs from HydroLight
+cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/
+%% Landsat 8 image in Rrs
+folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
+filename = 'LC80160302013262LGN00/MOBELM/LC80160302013262LGN00_ONelm140629.tif';
+
+filepath = [folderpath filename];
+
+[RGB,map] = imread(filepath);
+
+RGB_R = double(RGB(:,:,4));
+RGB_R(RGB_R<0)=0;
+
+RGB_G = double(RGB(:,:,3));
+RGB_G(RGB_G<0)=0;
+
+RGB_B = double(RGB(:,:,2));
+RGB_B(RGB_B<0)=0;
+
+% LUTs from HydroLight
 
 clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's variables are in Workspace
 
@@ -94,97 +111,121 @@ for index = 1:size(LUT,1)
         LUTconcDPF(index)= 2.6;
     end
 end
-%% 
-
+%% Fixed CDOM
 tilex = 200;
 tiley = 50;
 input = 'input140929LONGS';
-DPFlimit = 0.5;
-%% s0101
-CHlimit = 0.01; SMlimit = 0.01; CDlimit = 0.0954; 
+DPFconc = 0.5;
+CDconc = 0.0954;
+CTE = 2.0; % constant for the color adjustment
 
-[M_s0101_RGB,Rrs_s0101] = createtile(input,CHlimit,SMlimit,CDlimit,DPFlimit,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
-%% s0102
-CHlimit = 0.01; SMlimit = 9.11; CDlimit = 0.0954;
 
-[M_s0102_RGB,Rrs_s0102] = createtile(input,CHlimit,SMlimit,CDlimit,DPFlimit,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
-%% s0103
-CHlimit = 0.01; SMlimit = 30.7; CDlimit = 0.0954;
+rule = strcmp(c{1}(:),input) & LUTconcDPF(:)==DPFconc;
+LUTused = LUT(rule,:);
 
-[M_s0103_RGB,Rrs_s0103] = createtile(input,CHlimit,SMlimit,CDlimit,DPFlimit,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
-%% s0201
-CHlimit = 25.0; SMlimit = 0.01; CDlimit = 0.0954;
+% s0101
+CHconc = 0.01; SMconc = 0.01;  
 
-[M_s0201_RGB,Rrs_s0201] = createtile(input,CHlimit,SMlimit,CDlimit,DPFlimit,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
-%% s0202
-CHlimit = 25.0; SMlimit = 9.11; CDlimit = 0.0954;
+[M_s0101_RGB,Rrs_s0101] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0102
+CHconc = 0.01; SMconc = 9.11;
 
-[M_s0202_RGB,Rrs_s0202] = createtile(input,CHlimit,SMlimit,CDlimit,DPFlimit,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
-%% s0203
-CHlimit = 25.0; SMlimit = 30.7; CDlimit = 0.0954;
+[M_s0102_RGB,Rrs_s0102] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0103
+CHconc = 0.01; SMconc = 30.7;
 
-[M_s0203_RGB,Rrs_s0203] = createtile(input,CHlimit,SMlimit,CDlimit,DPFlimit,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
-%% s0301
-CHlimit = 60.0; SMlimit = 0.01; CDlimit = 0.0954;
+[M_s0103_RGB,Rrs_s0103] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0104
+CHconc = 0.01; SMconc = 50.0;
 
-[M_s0301_RGB,Rrs_s0301] = createtile(input,CHlimit,SMlimit,CDlimit,DPFlimit,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
-%% s0302
-CHlimit = 60.0; SMlimit = 9.11; CDlimit = 0.0954;
+[M_s0104_RGB,Rrs_s0104] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0201
+CHconc = 25.0; SMconc = 0.01;
 
-[M_s0302_RGB,Rrs_s0302] = createtile(input,CHlimit,SMlimit,CDlimit,DPFlimit,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
-%% s0303
-CHlimit = 60.0; SMlimit = 30.7; CDlimit = 0.0954;
+[M_s0201_RGB,Rrs_s0201] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0202
+CHconc = 25.0; SMconc = 9.11;
 
-[M_s0303_RGB,Rrs_s0303] = createtile(input,CHlimit,SMlimit,CDlimit,DPFlimit,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
-%%
+[M_s0202_RGB,Rrs_s0202] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0203
+CHconc = 25.0; SMconc = 30.7;
+
+[M_s0203_RGB,Rrs_s0203] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0204
+CHconc = 25.0; SMconc = 50.0;
+
+[M_s0204_RGB,Rrs_s0204] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0301
+CHconc = 60.0; SMconc = 0.01;
+
+[M_s0301_RGB,Rrs_s0301] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0302
+CHconc = 60.0; SMconc = 9.11;
+
+[M_s0302_RGB,Rrs_s0302] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0303
+CHconc = 60.0; SMconc = 30.7;
+
+[M_s0303_RGB,Rrs_s0303] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0304
+CHconc = 60.0; SMconc = 50.0;
+
+[M_s0304_RGB,Rrs_s0304] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+%
 M = [ ...
-  M_s0101_RGB,M_s0102_RGB,M_s0103_RGB; ...
-  M_s0201_RGB,M_s0202_RGB,M_s0203_RGB; ...
-  M_s0301_RGB,M_s0302_RGB,M_s0303_RGB];
+  M_s0101_RGB,M_s0102_RGB,M_s0103_RGB,M_s0104_RGB; ...
+  M_s0201_RGB,M_s0202_RGB,M_s0203_RGB,M_s0204_RGB; ...
+  M_s0301_RGB,M_s0302_RGB,M_s0303_RGB,M_s0304_RGB];
 
 M_R = M(:,:,1);
 M_G = M(:,:,2);
 M_B = M(:,:,3);  
 
-RGB_R = LUT(:,4);
-RGB_G = LUT(:,3);
-RGB_B = LUT(:,2);
+RGB_R = LUTused(:,4);
+RGB_G = LUTused(:,3);
+RGB_B = LUTused(:,2);
 
 % Adjusting threshold for display
-CTE = 1.5; % constant
+
 
 threshold_Bpos = mean(RGB_B(:))+CTE*std(RGB_B(:));
 M_B(M_B>threshold_Bpos)=threshold_Bpos;
 threshold_Bneg = mean(RGB_B(:))-CTE*std(RGB_B(:));
 M_B(M_B<threshold_Bneg)=threshold_Bneg;
+M_B(M_B<0)=0;
 
 threshold_Gpos = mean(RGB_G(:))+CTE*std(RGB_G(:));
 M_G(M_G>threshold_Gpos)=threshold_Gpos;
 threshold_Gneg = mean(RGB_G(:))-CTE*std(RGB_G(:));
 M_G(M_G<threshold_Gneg)=threshold_Gneg;
+M_G(M_G<0)=0;
 
 threshold_Rpos = mean(RGB_R(:))+CTE*std(RGB_R(:));
 M_R(M_R>threshold_Rpos)=threshold_Rpos;
 threshold_Rneg = mean(RGB_R(:))-CTE*std(RGB_R(:));
 M_R(M_R<threshold_Rneg)=threshold_Rneg;
+M_R(M_R<0)=0;
 
 % Convert values to [0 1] for display
-RGBdisplay_B = (M_B-min(RGB_B(:)))/(max(RGB_B(:))-min(RGB_B(:)));
-RGBdisplay_G = (M_G-min(RGB_G(:)))/(max(RGB_G(:))-min(RGB_G(:)));
-RGBdisplay_R = (M_R-min(RGB_R(:)))/(max(RGB_R(:))-min(RGB_R(:)));
+RGBdisplay_B = (M_B)/(max(RGB_B(:))-min(RGB_B(:)));
+RGBdisplay_B(RGBdisplay_B<0)=0;
+RGBdisplay_G = (M_G)/(max(RGB_G(:))-min(RGB_G(:)));
+RGBdisplay_G(RGBdisplay_G<0)=0;
+RGBdisplay_R = (M_R)/(max(RGB_R(:))-min(RGB_R(:)));
+RGBdisplay_R(RGBdisplay_R<0)=0;
 
-RGBdisplay(:,:,3) = RGBdisplay_B;
-RGBdisplay(:,:,2) = RGBdisplay_G;
 RGBdisplay(:,:,1) = RGBdisplay_R;
+RGBdisplay(:,:,2) = RGBdisplay_G;
+RGBdisplay(:,:,3) = RGBdisplay_B;
 
-figure
-imshow(RGBdisplay)
+% figure
+% imshow(RGBdisplay)
 
 figure
 image(RGBdisplay)
 
-figure
-imagesc(RGBdisplay)
+% figure
+% imagesc(RGBdisplay)
 %%
 figure
 plot(L8bands,Rrs_s0101)
@@ -194,3 +235,144 @@ plot(L8bands,Rrs_s0301)
 plot(L8bands,Rrs_s0102)
 plot(L8bands,Rrs_s0202)
 plot(L8bands,Rrs_s0302)
+
+%% FIXED SM
+tilex = 200;
+tiley = 50;
+input = 'input140929LONGS';
+DPFconc = 1.0;
+SMconc =1.4;
+CTE = 2.0; % constant for the color adjustment
+
+
+rule = strcmp(c{1}(:),input) & LUTconcDPF(:)==DPFconc;
+LUTused = LUT(rule,:);
+
+% s0101
+CHconc = 0.01; CDconc = 0.0954;  
+
+[M_s0101_RGB,Rrs_s0101] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0102
+CHconc = 0.01; CDconc = 0.9297;
+
+[M_s0102_RGB,Rrs_s0102] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0103
+CHconc = 0.01; CDconc = 1.0025;
+
+[M_s0103_RGB,Rrs_s0103] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0104
+CHconc = 0.01; CDconc = 1.0194;
+
+[M_s0104_RGB,Rrs_s0104] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0201
+CHconc = 25.0; CDconc = 0.0954;
+
+[M_s0201_RGB,Rrs_s0201] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0202
+CHconc = 25.0; CDconc = 0.9297;
+
+[M_s0202_RGB,Rrs_s0202] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0203
+CHconc = 25.0; CDconc = 1.0025;
+
+[M_s0203_RGB,Rrs_s0203] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0204
+CHconc = 25.0; CDconc = 1.0194;
+
+[M_s0204_RGB,Rrs_s0204] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0301
+CHconc = 60.0; CDconc = 0.0954;
+
+[M_s0301_RGB,Rrs_s0301] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0302
+CHconc = 60.0; CDconc = 0.9297;
+
+[M_s0302_RGB,Rrs_s0302] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0303
+CHconc = 60.0; CDconc = 1.0025;
+
+[M_s0303_RGB,Rrs_s0303] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+% s0304
+CHconc = 60.0; CDconc = 1.0194;
+
+[M_s0304_RGB,Rrs_s0304] = createtile(input,CHconc,SMconc,CDconc,DPFconc,c,LUTconcDPF,LUTconc,LUT,tilex,tiley);
+%
+M = [ ...
+  M_s0101_RGB,M_s0102_RGB,M_s0103_RGB,M_s0104_RGB; ...
+  M_s0201_RGB,M_s0202_RGB,M_s0203_RGB,M_s0204_RGB; ...
+  M_s0301_RGB,M_s0302_RGB,M_s0303_RGB,M_s0304_RGB];
+
+M_R = M(:,:,1);
+M_G = M(:,:,2);
+M_B = M(:,:,3);  
+
+RGB_R = LUTused(:,4);
+RGB_G = LUTused(:,3);
+RGB_B = LUTused(:,2);
+
+% Adjusting threshold for display
+
+
+threshold_Bpos = mean(RGB_B(:))+CTE*std(RGB_B(:));
+M_B(M_B>threshold_Bpos)=threshold_Bpos;
+threshold_Bneg = mean(RGB_B(:))-CTE*std(RGB_B(:));
+M_B(M_B<threshold_Bneg)=threshold_Bneg;
+M_B(M_B<0)=0;
+
+threshold_Gpos = mean(RGB_G(:))+CTE*std(RGB_G(:));
+M_G(M_G>threshold_Gpos)=threshold_Gpos;
+threshold_Gneg = mean(RGB_G(:))-CTE*std(RGB_G(:));
+M_G(M_G<threshold_Gneg)=threshold_Gneg;
+M_G(M_G<0)=0;
+
+threshold_Rpos = mean(RGB_R(:))+CTE*std(RGB_R(:));
+M_R(M_R>threshold_Rpos)=threshold_Rpos;
+threshold_Rneg = mean(RGB_R(:))-CTE*std(RGB_R(:));
+M_R(M_R<threshold_Rneg)=threshold_Rneg;
+M_R(M_R<0)=0;
+
+% Convert values to [0 1] for display
+RGBdisplay_B = (M_B)/(max(RGB_B(:))-min(RGB_B(:)));
+RGBdisplay_B(RGBdisplay_B<0)=0;
+RGBdisplay_G = (M_G)/(max(RGB_G(:))-min(RGB_G(:)));
+RGBdisplay_G(RGBdisplay_G<0)=0;
+RGBdisplay_R = (M_R)/(max(RGB_R(:))-min(RGB_R(:)));
+RGBdisplay_R(RGBdisplay_R<0)=0;
+
+RGBdisplay(:,:,1) = RGBdisplay_R;
+RGBdisplay(:,:,2) = RGBdisplay_G;
+RGBdisplay(:,:,3) = RGBdisplay_B;
+
+% figure
+% imshow(RGBdisplay)
+
+figure
+image(RGBdisplay)
+
+% figure
+% imagesc(RGBdisplay)
+%%
+figure
+plot(L8bands,Rrs_s0101)
+hold on
+plot(L8bands,Rrs_s0201)
+plot(L8bands,Rrs_s0301)
+plot(L8bands,Rrs_s0102)
+plot(L8bands,Rrs_s0202)
+plot(L8bands,Rrs_s0302)
+
+%% Curves with fixed CH
+input = 'input140929ONTOS';
+DPFconc = 1.0;
+CHconc = 0.01;
+rule = strcmp(c{1}(:),input) & LUTconcDPF(:)==DPFconc & ...
+    LUTconc(:,1)==CHconc;
+Rrsused = Rrs(:,rule);
+
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(wavelength,Rrsused')
+str1 = sprintf('Chl-a = %s',CHconc);
+title(str1,'fontsize',fs)
