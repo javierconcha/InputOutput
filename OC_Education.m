@@ -376,14 +376,14 @@ fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(wavelength,Rrsused')
-str1 = sprintf('C_a = %2.2f [mg/L]',CHconc);
+str1 = sprintf('C_a = %2.2f [ug/L]',CHconc);
 title(str1,'fontsize',fs)
 xlabel('wavelength [um]')
 ylabel('remote-sensing reflectance [1/sr]')
 %% Standard Algorithms, no fixed
 
-input = 'input140929LONGS';
-DPFconc = 0.5;
+% input = 'input140929LONGS';
+% DPFconc = 0.5;
 
 
 % rule = strcmp(c{1}(:),input) & LUTconcDPF(:)==DPFconc;
@@ -391,11 +391,34 @@ rule = ~isnan(LUTconc(:,1));
 
 LUTused = LUT(rule,:);
 
-RdivG = LUTused(:,2)./LUTused(:,3);
+for index=1:size(LUTused,1)
+    if LUTused(:,1)>LUTused(:,2)
+        RdivG = LUTused(:,1)./LUTused(:,3);
+    else
+        RdivG = LUTused(:,2)./LUTused(:,3);
+    end
 
+end
+
+% Standard algorithms
 R = 0.1:0.01:15;
 Rlog10 = log10(R);
-C_a = 10.^(0.283-2.753*Rlog10+1.457*Rlog10.^2+0.659*Rlog10.^3-1.403*Rlog10.^4);
+
+% OC2v4, O'Reilly et al. (2000)
+a = [0.319,-2.336,0.879,-0.135,-0.071];
+chl_oc2 = 10.0.^(a(1)+a(2)*Rlog10+a(3)*Rlog10.^2+a(4)*Rlog10.^3) + a(5);
+
+% OC3
+a = [0.283,-2.753,1.457,0.659,-1.403];
+chl_oc3 = 10.0.^(a(1)+a(2).*Rlog10+a(3)*Rlog10.^2+a(4)*Rlog10.^3+a(5)*Rlog10.^4);
+
+% OC4v4, O'Reilly et al. (2000)
+a = [0.366,-3.067,1.930,0.649,-1.532];
+chl_oc4 = 10.0.^(a(1)+a(2).*Rlog10+a(3)*Rlog10.^2+a(4)*Rlog10.^3+a(5)*Rlog10.^4);
+
+% CI, Hu et al. (2012)
+
+CI = LUTused(:,3)-(LUTused(:,1)+((561-443)/(655-443))*(LUTused(:,4)-LUTused(:,1)));
 
 figure
 fs = 15;
@@ -403,16 +426,19 @@ set(gcf,'color','white')
 set(gca,'fontsize',fs)
 loglog(RdivG,LUTconc(rule,1),'.')
 hold on
-loglog(R,C_a)
+loglog(R,chl_oc3,'Color',[0 0.5 0] ,'LineWidth',2.0)
+loglog(R,chl_oc2,'Color',[0.5 0 0] ,'LineWidth',2.0)
+loglog(R,chl_oc4,'Color',[0 0 0] ,'LineWidth',2.0)
+legend('From Hydrolight','OC3 Model','OC2v4 Model','OC4v4 Model')
 grid on
 % str1 = sprintf('C_a = %2.2f [mg/L]',CHconc);
 % title(str1,'fontsize',fs)
 xlabel('R_{blue}/R_{green}')
-ylabel('C_a [mg/L]')
-xlimit([0.1 12])
+ylabel('C_a [ug/L]')
+xlim([0.1 12])
 %% Standard Algorithms
 
-input = 'input140929LONGS';
+input = 'input140929ONTOS';
 DPFconc = 0.5;
 SMconc = 0.0100;
 CDconc = 0.0954;
@@ -424,7 +450,14 @@ rule = strcmp(c{1}(:),input) & LUTconcDPF(:)==DPFconc & ...
 
 LUTused = LUT(rule,:);
 
-RdivG = LUTused(:,2)./LUTused(:,3);
+for index=1:size(LUTused,1)
+    if LUTused(:,1)>LUTused(:,2)
+        RdivG = LUTused(:,1)./LUTused(:,3);
+    else
+        RdivG = LUTused(:,2)./LUTused(:,3);
+    end
+
+end
 
 figure
 fs = 15;
@@ -432,9 +465,13 @@ set(gcf,'color','white')
 set(gca,'fontsize',fs)
 loglog(RdivG,LUTconc(rule,1),'.')
 hold on
-loglog(R,C_a)
+loglog(R,chl_oc3,'Color',[0 0.5 0] ,'LineWidth',2.0)
+loglog(R,chl_oc2,'Color',[0.5 0 0] ,'LineWidth',2.0)
+loglog(R,chl_oc4,'Color',[0 0 0] ,'LineWidth',2.0)
+legend('Hydrolight','OC3 Model','OC2v4 Model','OC4v4 Model')
 grid on
 % str1 = sprintf('C_a = %2.2f [mg/L]',CHconc);
 % title(str1,'fontsize',fs)
 xlabel('R_{blue}/R_{green}')
-ylabel('C_a [mg/L]')
+ylabel('C_a [mg/m^3]')
+xlim([0.1 12])
