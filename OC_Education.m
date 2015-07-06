@@ -9,14 +9,14 @@ filepath = [folderpath filename];
 
 [RGB,map] = imread(filepath);
 
-RGB_R = double(RGB(:,:,4));
-RGB_R(RGB_R<0)=0;
-
-RGB_G = double(RGB(:,:,3));
-RGB_G(RGB_G<0)=0;
-
-RGB_B = double(RGB(:,:,2));
-RGB_B(RGB_B<0)=0;
+% RGB_R = double(RGB(:,:,4));
+% RGB_R(RGB_R<0)=0;
+% 
+% RGB_G = double(RGB(:,:,3));
+% RGB_G(RGB_G<0)=0;
+% 
+% RGB_B = double(RGB(:,:,2));
+% RGB_B(RGB_B<0)=0;
 
 % LUTs from HydroLight
 
@@ -365,6 +365,8 @@ plot(L8bands,Rrs_s0302)
 input = 'input140929ONTOS';
 DPFconc = 1.0;
 CHconc = 0.01;
+CHconc = 25.0;
+CHconc = 60.0;
 rule = strcmp(c{1}(:),input) & LUTconcDPF(:)==DPFconc & ...
     LUTconc(:,1)==CHconc;
 Rrsused = Rrs(:,rule);
@@ -374,5 +376,65 @@ fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(wavelength,Rrsused')
-str1 = sprintf('Chl-a = %s',CHconc);
+str1 = sprintf('C_a = %2.2f [mg/L]',CHconc);
 title(str1,'fontsize',fs)
+xlabel('wavelength [um]')
+ylabel('remote-sensing reflectance [1/sr]')
+%% Standard Algorithms, no fixed
+
+input = 'input140929LONGS';
+DPFconc = 0.5;
+
+
+% rule = strcmp(c{1}(:),input) & LUTconcDPF(:)==DPFconc;
+rule = ~isnan(LUTconc(:,1));
+
+LUTused = LUT(rule,:);
+
+RdivG = LUTused(:,2)./LUTused(:,3);
+
+R = 0.1:0.01:15;
+Rlog10 = log10(R);
+C_a = 10.^(0.283-2.753*Rlog10+1.457*Rlog10.^2+0.659*Rlog10.^3-1.403*Rlog10.^4);
+
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+loglog(RdivG,LUTconc(rule,1),'.')
+hold on
+loglog(R,C_a)
+grid on
+% str1 = sprintf('C_a = %2.2f [mg/L]',CHconc);
+% title(str1,'fontsize',fs)
+xlabel('R_{blue}/R_{green}')
+ylabel('C_a [mg/L]')
+xlimit([0.1 12])
+%% Standard Algorithms
+
+input = 'input140929LONGS';
+DPFconc = 0.5;
+SMconc = 0.0100;
+CDconc = 0.0954;
+
+
+rule = strcmp(c{1}(:),input) & LUTconcDPF(:)==DPFconc & ...
+    LUTconc(:,2)==SMconc & LUTconc(:,3)==CDconc;
+% rule = ~isnan(LUTconc(:,1));
+
+LUTused = LUT(rule,:);
+
+RdivG = LUTused(:,2)./LUTused(:,3);
+
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+loglog(RdivG,LUTconc(rule,1),'.')
+hold on
+loglog(R,C_a)
+grid on
+% str1 = sprintf('C_a = %2.2f [mg/L]',CHconc);
+% title(str1,'fontsize',fs)
+xlabel('R_{blue}/R_{green}')
+ylabel('C_a [mg/L]')
