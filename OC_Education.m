@@ -9,31 +9,10 @@ filepath = [folderpath filename];
 
 [RGB,map] = imread(filepath);
 
-% RGB_R = double(RGB(:,:,4));
-% RGB_R(RGB_R<0)=0;
-% 
-% RGB_G = double(RGB(:,:,3));
-% RGB_G(RGB_G<0)=0;
-% 
-% RGB_B = double(RGB(:,:,2));
-% RGB_B(RGB_B<0)=0;
-
-% LUTs from HydroLight
-
 clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's variables are in Workspace
 
-% % new 03/02/15, spectrally sampling made in matlab
-% LUTfilename1 = 'Rvector140929_150305_2.txt';
-% LUTfilename1 = 'Rvector140929_150317.txt'; % with FFbb018.dpf for ONTOS
-% LUTfilename1 = 'Rvector140929_150407.txt'; % with FFbb012.dpf for ONTOS
-% LUTfilename1 = 'Rvector140929_150409.txt'; % with FFbb012.dpf for ONTOS
 LUTfilename1 = 'Rvector140929_150420.txt'; % with more dpfs
 
-
-% LUTconcfilename1 = 'concentration_list140929_150305_2.txt';
-% LUTconcfilename1 = 'concentration_list140929_150317.txt';
-% LUTconcfilename1 = 'concentration_list140929_150406.txt';
-% LUTconcfilename1 = 'concentration_list140929_150409.txt';
 LUTconcfilename1 = 'concentration_list140929_150420.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/';
@@ -401,7 +380,7 @@ for index=1:size(LUTused,1)
 end
 
 % Standard algorithms
-R = 0.1:0.01:15;
+R = 0.01:0.001:20;
 Rlog10 = log10(R);
 
 % OC2v4, O'Reilly et al. (2000)
@@ -410,7 +389,7 @@ a = [0.1977,-1.8117,1.9743,-2.5635,-0.7218]; % for L8 from SeaDAS
 chl_oc2 = 10.0.^(a(1)+a(2)*Rlog10+a(3)*Rlog10.^2+a(4)*Rlog10.^3) + a(5);
 
 % OC3
-% a = [0. 283,-2.753,1.457,0.659,-1.403];
+% a = [0.283,-2.753,1.457,0.659,-1.403];
 a = [0.2412,-2.0546,1.1776,-0.5538,-0.4570]; % for L8 from SeaDAS
 chl_oc3 = 10.0.^(a(1)+a(2).*Rlog10+a(3)*Rlog10.^2+a(4)*Rlog10.^3+a(5)*Rlog10.^4);
 
@@ -418,36 +397,37 @@ chl_oc3 = 10.0.^(a(1)+a(2).*Rlog10+a(3)*Rlog10.^2+a(4)*Rlog10.^3+a(5)*Rlog10.^4)
 a = [0.366,-3.067,1.930,0.649,-1.532];
 chl_oc4 = 10.0.^(a(1)+a(2).*Rlog10+a(3)*Rlog10.^2+a(4)*Rlog10.^3+a(5)*Rlog10.^4);
 
-% CI, Hu et al. (2012)
-CI = LUTused(:,3)-(LUTused(:,1)+((561-443)/(655-443))*(LUTused(:,4)-LUTused(:,1)));
-CI = LUTused(:,3)-0.5*(LUTused(:,1)+LUTused(:,4));
-
-chl_oci = 10.^(-0.4909+191.6590*CI);
-
-for index=1:size(LUTused,1)
-    if CI(index) <= -0.0005
-        chl_oc3(index) = chl_oci(index);
-    end
-end
+% % CI, Hu et al. (2012)
+% CI = LUTused(:,3)-(LUTused(:,1)+((561-443)/(655-443))*(LUTused(:,4)-LUTused(:,1)));
+% CI = LUTused(:,3)-0.5*(LUTused(:,1)+LUTused(:,4));
+% 
+% chl_oci = 10.^(-0.4909+191.6590*CI);
+% 
+% for index=1:size(LUTused,1)
+%     if CI(index) <= -0.0005
+%         chl_oc3(index) = chl_oci(index);
+%     end
+% end
 
 
 figure
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-loglog(RdivG,LUTconc(rule,1),'.')
+loglog(RdivG,LUTconc(rule,1),'*','LineWidth',2.0)
 hold on
 loglog(R,chl_oc3,'Color',[0 0.5 0] ,'LineWidth',2.0)
 loglog(R,chl_oc2,'Color',[0.5 0 0] ,'LineWidth',2.0)
-loglog(R,chl_oc4,'Color',[0 0 0] ,'LineWidth',2.0)
-legend('From Hydrolight','OC3 Model','OC2v4 Model','OC4v4 Model')
+% loglog(R,chl_oc4,'Color',[0 0 0] ,'LineWidth',2.0)
+legend('Hydrolight','OC3 Model','OC2v4 Model')
 grid on
 % str1 = sprintf('C_a = %2.2f [mg/L]',CHconc);
 % title(str1,'fontsize',fs)
 xlabel('R_{blue}/R_{green}')
-ylabel('C_a [ug/L]')
+ylabel('C_a [mg/m^3]')
 xlim([0.1 12])
-%% Standard Algorithms
+ylim([0.001 100])
+%% Standard Algorithms, everything fixed but chl
 
 input = 'input140929ONTOS';
 DPFconc = 0.5;
@@ -474,15 +454,122 @@ figure
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-loglog(RdivG,LUTconc(rule,1),'.')
+loglog(RdivG,LUTconc(rule,1),'*','LineWidth',2.0)
 hold on
 loglog(R,chl_oc3,'Color',[0 0.5 0] ,'LineWidth',2.0)
 loglog(R,chl_oc2,'Color',[0.5 0 0] ,'LineWidth',2.0)
-loglog(R,chl_oc4,'Color',[0 0 0] ,'LineWidth',2.0)
-legend('Hydrolight','OC3 Model','OC2v4 Model','OC4v4 Model')
+% loglog(R,chl_oc4,'Color',[0 0 0] ,'LineWidth',2.0)
+legend('Hydrolight','OC3 Model','OC2v4 Model')
 grid on
 % str1 = sprintf('C_a = %2.2f [mg/L]',CHconc);
 % title(str1,'fontsize',fs)
 xlabel('R_{blue}/R_{green}')
 ylabel('C_a [mg/m^3]')
 xlim([0.1 12])
+ylim([0.001 100])
+
+
+
+%% LUT to show small concentration changes impacts differently in the low conc. and high conc.
+clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's variables are in Workspace
+
+LUTfilename1 = 'Rvector140929_150707.txt'; % with more dpfs
+
+LUTconcfilename1 = 'concentration_list140929_150707.txt';
+
+filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/';
+
+LUTpath1 = [filepath LUTfilename1];
+rr1 = load(LUTpath1); % Created for 09/29/14 image!!!
+
+LUTconpath1 = [filepath LUTconcfilename1];
+fid = fopen(LUTconpath1);
+c1 = textscan(fid,'%s %f %f %f %s');
+fclose all;
+
+
+
+c = {[c1{1}] [c1{2}] [c1{3}] [c1{4}] [c1{5}]};
+
+
+LUTconc = [c{2}(:) c{3}(:) c{4}(:)];
+
+% LUT from HL with 120 wavelength
+
+wavelength = [...
+  4.02500E+02  4.07500E+02  4.12500E+02  4.17500E+02  4.22500E+02  4.27500E+02  4.32500E+02  4.37500E+02  4.42500E+02  4.47500E+02 ...
+  4.52500E+02  4.57500E+02  4.62500E+02  4.67500E+02  4.72500E+02  4.77500E+02  4.82500E+02  4.87500E+02  4.92500E+02  4.97500E+02 ...
+  5.02500E+02  5.07500E+02  5.12500E+02  5.17500E+02  5.22500E+02  5.27500E+02  5.32500E+02  5.37500E+02  5.42500E+02  5.47500E+02 ...
+  5.52500E+02  5.57500E+02  5.62500E+02  5.67500E+02  5.72500E+02  5.77500E+02  5.82500E+02  5.87500E+02  5.92500E+02  5.97500E+02 ...
+  6.02500E+02  6.07500E+02  6.12500E+02  6.17500E+02  6.22500E+02  6.27500E+02  6.32500E+02  6.37500E+02  6.42500E+02  6.47500E+02 ...
+  6.52500E+02  6.57500E+02  6.62500E+02  6.67500E+02  6.72500E+02  6.77500E+02  6.82500E+02  6.87500E+02  6.92500E+02  6.97500E+02 ...
+  7.02500E+02  7.07500E+02  7.12500E+02  7.17500E+02  7.22500E+02  7.27500E+02  7.32500E+02  7.37500E+02  7.42500E+02  7.47500E+02 ...
+  7.52500E+02  7.57500E+02  7.62500E+02  7.67500E+02  7.72500E+02  7.77500E+02  7.82500E+02  7.87500E+02  7.92500E+02  7.97500E+02 ...
+  8.02500E+02  8.07500E+02  8.12500E+02  8.17500E+02  8.22500E+02  8.27500E+02  8.32500E+02  8.37500E+02  8.42500E+02  8.47500E+02 ...
+  8.52500E+02  8.57500E+02  8.62500E+02  8.67500E+02  8.72500E+02  8.77500E+02  8.82500E+02  8.87500E+02  8.92500E+02  8.97500E+02 ...
+  9.02500E+02  9.07500E+02  9.12500E+02  9.17500E+02  9.22500E+02  9.27500E+02  9.32500E+02  9.37500E+02  9.42500E+02  9.47500E+02 ...
+  9.52500E+02  9.57500E+02  9.62500E+02  9.67500E+02  9.72500E+02  9.77500E+02  9.82500E+02  9.87500E+02  9.92500E+02  9.97500E+02];
+
+wavelength = wavelength'*0.001; % um
+
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+nruns = size(rr1,1)/size(wavelength,1);
+Rrs = reshape(rr1(:,1),size(wavelength,1),nruns);
+
+
+LUT = spect_sampL8(Rrs,wavelength);
+LUTconcDPF = nan(size(LUT,1),1);
+for index = 1:size(LUT,1) 
+    if strcmp(c1{5}(index),'FFbb005.dpf')
+        LUTconcDPF(index)= 0.5;
+    elseif strcmp(c1{5}(index),'FFbb006.dpf')
+        LUTconcDPF(index)= 0.6; 
+    elseif strcmp(c1{5}(index),'FFbb007.dpf')
+        LUTconcDPF(index)= 0.7;
+    elseif strcmp(c1{5}(index),'FFbb008.dpf')
+        LUTconcDPF(index)= 0.8;
+    elseif strcmp(c1{5}(index),'FFbb009.dpf')
+        LUTconcDPF(index)= 0.9;
+    elseif strcmp(c1{5}(index),'FFbb010.dpf')
+        LUTconcDPF(index)= 1.0; 
+    elseif strcmp(c1{5}(index),'FFbb012.dpf')
+        LUTconcDPF(index)= 1.2;
+    elseif strcmp(c1{5}(index),'FFbb014.dpf')
+        LUTconcDPF(index)= 1.4;
+    elseif strcmp(c1{5}(index),'FFbb016.dpf')
+        LUTconcDPF(index)= 1.6;
+    elseif strcmp(c1{5}(index),'FFbb018.dpf')
+        LUTconcDPF(index)= 1.8;  
+    elseif strcmp(c1{5}(index),'FFbb020.dpf')
+        LUTconcDPF(index)= 2.0;     
+    elseif strcmp(c1{5}(index),'FFbb022.dpf')
+        LUTconcDPF(index)= 2.2;      
+    elseif strcmp(c1{5}(index),'FFbb024.dpf')
+        LUTconcDPF(index)= 2.4;  
+    elseif strcmp(c1{5}(index),'FFbb026.dpf')
+        LUTconcDPF(index)= 2.6;
+    end
+end
+%%
+input = 'input140929LONGS';
+SMconc = 5.0;
+CHconc1 = 5.0;
+CHconc2 = 10.0;
+CHconc3 = 60.0;
+CHconc4 = 65.0;
+
+rule = strcmp(c{1}(:),input) & LUTconc(:,2)==SMconc & ...
+        (LUTconc(:,1)==CHconc1|LUTconc(:,1)==CHconc2|LUTconc(:,1)==CHconc3|LUTconc(:,1)==CHconc4);
+% rule = ~isnan(LUTconc(:,1));
+
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(wavelength,Rrs(:,rule)','LineWidth',2.0)
+xlabel('wavelength [um]')
+ylabel('remote-sensing reflectance [1/sr]')
+legend('Chl-a = 5.0 ug/L','Chl-a = 10.0 ug/L','Chl-a = 60.0 ug/L','Chl-a = 65.0 ug/L')
+grid on
+
