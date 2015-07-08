@@ -43,32 +43,32 @@ densityflag = 0;
 regressiontype = 'RMA';
 maxref = 0.030;
 date = '2013262';
-comptype = 'SWIR_Unity';
+% comptype = 'SWIR_Unity';
 
 % Band 1: 443nm
 Rrs_443A = double(im2013262(:,:,11))/pi;
 Rrs_443E = double(im2013262(:,:,1))/pi; % for 2013262 image, not in Rrs
-denscatplot(Rrs_443A,Rrs_443E,regressiontype,densityflag,'443',maxref,date,comptype)
+denscatplot(Rrs_443A,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'Acolite','MOB-ELM')
 
 % Band 2: 483nm
 Rrs_483A = double(im2013262(:,:,12))/pi;
 Rrs_483E = double(im2013262(:,:,2))/pi; % for 2013262 image, not in Rrs
-denscatplot(Rrs_483A,Rrs_483E,regressiontype,densityflag,'483',maxref,date,comptype)
+denscatplot(Rrs_483A,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'Acolite','MOB-ELM')
 
 % Band 3: 561nm
 Rrs_561A = double(im2013262(:,:,13))/pi;
 Rrs_561E = double(im2013262(:,:,3))/pi; % for 2013262 image, not in Rrs
-denscatplot(Rrs_561A,Rrs_561E,regressiontype,densityflag,'561',maxref,date,comptype)
+denscatplot(Rrs_561A,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'Acolite','MOB-ELM')
 
 % Band 4: 655nm
 Rrs_655A = double(im2013262(:,:,14))/pi;
 Rrs_655E = double(im2013262(:,:,4))/pi; % for 2013262 image, not in Rrs
-denscatplot(Rrs_655A,Rrs_655E,regressiontype,densityflag,'655',maxref,date,comptype)
+denscatplot(Rrs_655A,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'Acolite','MOB-ELM')
 
 % Band 5: 865nm
 Rrs_865A = double(im2013262(:,:,15))/pi;
 Rrs_865E = double(im2013262(:,:,5))/pi; % for 2013262 image, not in Rrs
-denscatplot(Rrs_865A,Rrs_865E,regressiontype,densityflag,'865',maxref,date,comptype)
+denscatplot(Rrs_865A,Rrs_865E,regressiontype,densityflag,'865',maxref,date,'Acolite','MOB-ELM')
 
 %% Image 2014272 SWIR_Unity
 filename = [dir tif14272_SU];
@@ -84,27 +84,27 @@ comptype = 'SWIR_Unity'
 % Band 1: 443nm
 Rrs_443A_SU = double(im2014272(:,:,11)/pi);
 Rrs_443E_SU = double(im2014272(:,:,1));
-denscatplot(Rrs_443A_SU,Rrs_443E_SU,regressiontype,densityflag,'443',maxref,date,comptype)
+denscatplot(Rrs_443A_SU,Rrs_443E_SU,regressiontype,densityflag,'443',maxref,date,'Acolite','MOB-ELM')
 
 % Band 2: 483nm
 Rrs_483A_SU = double(im2014272(:,:,12))/pi;
 Rrs_483E_SU = double(im2014272(:,:,2));
-denscatplot(Rrs_483A_SU,Rrs_483E_SU,regressiontype,densityflag,'483',maxref,date,comptype)
+denscatplot(Rrs_483A_SU,Rrs_483E_SU,regressiontype,densityflag,'483',maxref,date,'Acolite','MOB-ELM')
 
 % Band 3: 561nm
 Rrs_561A_SU = double(im2014272(:,:,13))/pi;
 Rrs_561E_SU = double(im2014272(:,:,3));
-denscatplot(Rrs_561A_SU,Rrs_561E_SU,regressiontype,densityflag,'561',maxref,date,comptype)
+denscatplot(Rrs_561A_SU,Rrs_561E_SU,regressiontype,densityflag,'561',maxref,date,'Acolite','MOB-ELM')
 
 % Band 4: 655nm
 Rrs_655A_SU = double(im2014272(:,:,14))/pi;
 Rrs_655E_SU = double(im2014272(:,:,4));
-denscatplot(Rrs_655A_SU,Rrs_655E_SU,regressiontype,densityflag,'655',maxref,date,comptype)
+denscatplot(Rrs_655A_SU,Rrs_655E_SU,regressiontype,densityflag,'655',maxref,date,'Acolite','MOB-ELM')
 
 % Band 5: 865nm
 Rrs_865A_SU = double(im2014272(:,:,15))/pi;
 Rrs_865E_SU = double(im2014272(:,:,5));
-denscatplot(Rrs_865A_SU,Rrs_865E_SU,regressiontype,densityflag,'865',maxref,date,comptype)
+denscatplot(Rrs_865A_SU,Rrs_865E_SU,regressiontype,densityflag,'865',maxref,date,'Acolite','MOB-ELM')
 
 %% Image 2014272 SWIR_Pahlevan
 filename = [dir tif14272_SP];
@@ -120,27 +120,27 @@ comptype = 'SWIR_Pahlevan'
 % Band 1: 443nm
 Rrs_443A_SP = double(im2014272(:,:,11)/pi);
 Rrs_443E_SP = double(im2014272(:,:,1));
-denscatplot(Rrs_443A_SP,Rrs_443E_SP,regressiontype,densityflag,'443',maxref,date,comptype)
+denscatplot(Rrs_443A_SP,Rrs_443E_SP,regressiontype,densityflag,'443',maxref,date,'Acolite','MOB-ELM')
 
 % Band 2: 483nm
 Rrs_483A_SP = double(im2014272(:,:,12))/pi;
 Rrs_483E_SP = double(im2014272(:,:,2));
-denscatplot(Rrs_483A_SP,Rrs_483E_SP,regressiontype,densityflag,'483',maxref,date,comptype)
+denscatplot(Rrs_483A_SP,Rrs_483E_SP,regressiontype,densityflag,'483',maxref,date,'Acolite','MOB-ELM')
 
 % Band 3: 561nm
 Rrs_561A_SP = double(im2014272(:,:,13))/pi;
 Rrs_561E_SP = double(im2014272(:,:,3));
-denscatplot(Rrs_561A_SP,Rrs_561E_SP,regressiontype,densityflag,'561',maxref,date,comptype)
+denscatplot(Rrs_561A_SP,Rrs_561E_SP,regressiontype,densityflag,'561',maxref,date,'Acolite','MOB-ELM')
 
 % Band 4: 655nm
 Rrs_655A_SP = double(im2014272(:,:,14))/pi;
 Rrs_655E_SP = double(im2014272(:,:,4));
-denscatplot(Rrs_655A_SP,Rrs_655E_SP,regressiontype,densityflag,'655',maxref,date,comptype)
+denscatplot(Rrs_655A_SP,Rrs_655E_SP,regressiontype,densityflag,'655',maxref,date,'Acolite','MOB-ELM')
 
 % Band 5: 865nm
 Rrs_865A_SP = double(im2014272(:,:,15))/pi;
 Rrs_865E_SP = double(im2014272(:,:,5));
-denscatplot(Rrs_865A_SP,Rrs_865E_SP,regressiontype,densityflag,'865',maxref,date,comptype)
+denscatplot(Rrs_865A_SP,Rrs_865E_SP,regressiontype,densityflag,'865',maxref,date,'Acolite','MOB-ELM')
 
 %% Image 2014272 SWIR_Franz
 filename = [dir tif14272_SF];
@@ -158,29 +158,29 @@ comptype = 'SWIR_Franz'
 % Band 1: 443nm
 Rrs_443A_SF = double(im2014272(:,:,11)/pi);
 Rrs_443E_SF = double(im2014272(:,:,1));
-denscatplot(Rrs_443A_SF,Rrs_443E_SF,regressiontype,densityflag,'443',maxref,date,comptype)
+denscatplot(Rrs_443A_SF,Rrs_443E_SF,regressiontype,densityflag,'443',maxref,date,'Acolite','MOB-ELM')
 
 % Band 2: 483nm
 Rrs_483A_SF = double(im2014272(:,:,12))/pi;
 Rrs_483E_SF = double(im2014272(:,:,2));
-denscatplot(Rrs_483A_SF,Rrs_483E_SF,regressiontype,densityflag,'483',maxref,date,comptype)
+denscatplot(Rrs_483A_SF,Rrs_483E_SF,regressiontype,densityflag,'483',maxref,date,'Acolite','MOB-ELM')
 
 % Band 3: 561nm
 Rrs_561A_SF = double(im2014272(:,:,13))/pi;
 Rrs_561E_SF = double(im2014272(:,:,3));
-denscatplot(Rrs_561A_SF,Rrs_561E_SF,regressiontype,densityflag,'561',maxref,date,comptype)
+denscatplot(Rrs_561A_SF,Rrs_561E_SF,regressiontype,densityflag,'561',maxref,date,'Acolite','MOB-ELM')
 
 % Band 4: 655nm
 Rrs_655A_SF = double(im2014272(:,:,14))/pi;
 Rrs_655E_SF = double(im2014272(:,:,4));
-denscatplot(Rrs_655A_SF,Rrs_655E_SF,regressiontype,densityflag,'655',maxref,date,comptype)
+denscatplot(Rrs_655A_SF,Rrs_655E_SF,regressiontype,densityflag,'655',maxref,date,'Acolite','MOB-ELM')
 
 % Band 5: 865nm
 Rrs_865A_SF = double(im2014272(:,:,15))/pi;
 Rrs_865E_SF = double(im2014272(:,:,5));
-denscatplot(Rrs_865A_SF,Rrs_865E_SF,regressiontype,densityflag,'865',maxref,date,comptype)
+denscatplot(Rrs_865A_SF,Rrs_865E_SF,regressiontype,densityflag,'865',maxref,date,'Acolite','MOB-ELM')
 
 %% Image 2014272 SWIR_Unity VS SWIR_PahlevanL
 densityflag = 1; % 0 or 1
 regressiontype = 'RMA'; % RMA or OLS
-denscatplot(Rrs_443A_SU,Rrs_443A_SF,regressiontype,densityflag,'443',maxref,date,comptype)
+denscatplot(Rrs_443A_SU,Rrs_443A_SF,regressiontype,densityflag,'443',maxref,date,'Acolite','MOB-ELM')

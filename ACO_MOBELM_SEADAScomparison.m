@@ -42,7 +42,7 @@ filename = [dir tif13262];
 
 im2013262 = imread(filename);
 
-densityflag = 1;
+densityflag = 0;
 regressiontype = 'RMA';
 maxref = 0.030;
 date = '2013262';
