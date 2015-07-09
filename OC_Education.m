@@ -2,18 +2,20 @@ addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/retrieval/')
 addpath('/Users/javier/Downloads/mtit')
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/
 %% Landsat 8 image in Rrs
-folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
-filename = 'LC80160302013262LGN00/MOBELM/LC80160302013262LGN00_ONelm140629.tif';
-
-filepath = [folderpath filename];
-
-[RGB,map] = imread(filepath);
+% folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
+% filename = 'LC80160302013262LGN00/MOBELM/LC80160302013262LGN00_ONelm140629.tif';
+% 
+% filepath = [folderpath filename];
+% 
+% [RGB,map] = imread(filepath);
 
 clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's variables are in Workspace
 
-LUTfilename1 = 'Rvector140929_150420.txt'; % with more dpfs
+% LUTfilename1 = 'Rvector140929_150420.txt'; % with more dpfs
+LUTfilename1 = 'RvectorLogScale.txt'; % with more dpfs
 
-LUTconcfilename1 = 'concentration_list140929_150420.txt';
+% LUTconcfilename1 = 'concentration_list140929_150420.txt';
+LUTconcfilename1 = 'concentration_listLogScale.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/';
 
