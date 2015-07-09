@@ -68,6 +68,9 @@ denscatplot(Rrs_483A,Rrs_483S,regressiontype,densityflag,'483',maxref,date,'Acol
 denscatplot(Rrs_483S,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'SeaDAS','MoB-ELM')
 
 %% Band 3: 561nm
+set(0,'DefaultFigureWindowStyle','docked')
+% set(0,'DefaultFigureWindowStyle','normal')
+
 Rrs_561A = double(im2013262(:,:, 6))/pi; % Acolite
 Rrs_561S = (double(im2013262(:,:,14))*2.0E-6+0.05); % SeaDAS, converted with scale_factor and add_offset from band attributes
 Rrs_561E = double(im2013262(:,:,24))/pi; % MoBELM; for 2013262 image, not in Rrs

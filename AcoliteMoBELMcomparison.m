@@ -79,7 +79,7 @@ densityflag = 0; % 0 or 1
 regressiontype = 'RMA'; % RMA or OLS
 maxref = 0.030;
 date = '2014272';
-comptype = 'SWIR_Unity'
+% comptype = 'SWIR_Unity'
 
 % Band 1: 443nm
 Rrs_443A_SU = double(im2014272(:,:,11)/pi);
@@ -112,10 +112,10 @@ filename = [dir tif14272_SP];
 im2014272 = imread(filename);
 
 densityflag = 0; % 0 or 1
-regressiontype = 'OLS'; % RMA or OLS
+regressiontype = 'RMA'; % RMA or OLS
 maxref = 0.030;
 date = '2014272';
-comptype = 'SWIR_Pahlevan'
+% comptype = 'SWIR_Pahlevan'
 
 % Band 1: 443nm
 Rrs_443A_SP = double(im2014272(:,:,11)/pi);

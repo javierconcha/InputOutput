@@ -3,14 +3,14 @@ figure
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(x_used,y_used,'*')
+% plot(x_used,y_used,'*')
 hold on
-plot(x1,y1,'r')
+plot(x1,y1,'r','LineWidth',2')
 plot(ylim,ylim,'k')
 axis equal
-axis([0 0.02 0 0.02])
+% axis([0 0.02 0 0.02])
 
-N = 101;
+N = 11;
 x_interval = linspace(0,max(x_used),N);
 y_interval = linspace(0,max(y_used),N);
 
@@ -34,10 +34,35 @@ end
 
 plot(x_cellmean(:),y_cellmean(:),'g.')
 
+% OLS
+[a3,~] = polyfit(x_cellmean(isfinite(x_cellmean(:))),y_cellmean(isfinite(y_cellmean(:))),1);
+x3=[0 maxref];
+y3=a3(1).*x3+a3(2);
+
+plot(x3,y3,'b-','LineWidth',2)
+
+% RMA
+a(1) = nanstd(y_cellmean(:))/nanstd(x_cellmean(:)); % slope
+
+if corr(x_cellmean(isfinite(x_cellmean(:))),y_cellmean(isfinite(y_cellmean(:))))<0
+    a(1) = -abs(a(1));
+elseif corr(x_cellmean(isfinite(x_cellmean(:))),y_cellmean(isfinite(y_cellmean(:))))>=0
+    a(1) = abs(a(1));
+end
+
+a(2) = nanmean(y_cellmean(:))-nanmean(x_cellmean(:))*a(1); % y intercept
+
+
+
+x2=[0 maxref];
+y2=a(1).*x2+a(2);
+
+plot(x2,y2,'c-','LineWidth',2)
+
 [xx,yy] = meshgrid(x_interval,y_interval);
 
-plot(xx(:),yy(:),'.k')
-legend('data','Linear Regression','1:1','cell mean','grid')
+% plot(xx(:),yy(:),'.k')
+% legend('data','Linear Regression','1:1','cell mean')
 %%
 figure
 surf(xx,yy,cell_density)
