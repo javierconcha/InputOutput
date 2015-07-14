@@ -4,18 +4,18 @@ addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/gmregress/')
 dir = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
 
 
- tif13262_NF = 'LC80160302013262LGN00/Collocated2013262_140317bigger500_NIR_FranzAve.tif';
- tif13262_NP = 'LC80160302013262LGN00/Collocated2013262_140317bigger500_NIR_PahlevanL.tif';
- tif13262_NU = 'LC80160302013262LGN00/Collocated2013262_140317bigger500_NIR_Unity.tif';
- tif13262_SF = 'LC80160302013262LGN00/Collocated2013262_140317bigger500_SWIR_FranzAve.tif';
- tif13262_SP = 'LC80160302013262LGN00/Collocated2013262_140317bigger500_SWIR_PahlevalL.tif';
- tif13262_SU = 'LC80160302013262LGN00/Collocated2013262_140317bigger500_SWIR_Unity.tif';
- tif14272_NF = 'LC80170302014272LGN00/Collocated2014272_150418CRANB_ONTOS_NIR_Franzave.tif';
- tif14272_NP = 'LC80170302014272LGN00/Collocated2014272_150418CRANB_ONTOS_NIR_PahlevanL.tif';
- tif14272_NU = 'LC80170302014272LGN00/Collocated2014272_150418CRANB_ONTOS_NIR_Unity.tif';
- tif14272_SF = 'LC80170302014272LGN00/Collocated2014272_150418CRANB_ONTOS_SWIR_FranzAve.tif';
- tif14272_SP = 'LC80170302014272LGN00/Collocated2014272_150418CRANB_ONTOS_SWIR_PahlevanL.tif';
- tif14272_SU = 'LC80170302014272LGN00/Collocated2014272_150418CRANB_ONTOS_SWIR_Unity.tif';
+ tif13262_NF = 'LC80160302013262LGN00/SEADAS/Collocated2013262_140317bigger500_NIR_FranzAve.tif';
+ tif13262_NP = 'LC80160302013262LGN00/SEADAS/Collocated2013262_140317bigger500_NIR_PahlevanL.tif';
+ tif13262_NU = 'LC80160302013262LGN00/SEADAS/Collocated2013262_140317bigger500_NIR_Unity.tif';
+ tif13262_SF = 'LC80160302013262LGN00/SEADAS/Collocated2013262_140317bigger500_SWIR_FranzAve.tif';
+ tif13262_SP = 'LC80160302013262LGN00/SEADAS/Collocated2013262_140317bigger500_SWIR_PahlevalL.tif';
+ tif13262_SU = 'LC80160302013262LGN00/SEADAS/Collocated2013262_140317bigger500_SWIR_Unity.tif';
+ tif14272_NF = 'LC80170302014272LGN00/SEADAS/Collocated2014272_150418CRANB_ONTOS_NIR_Franzave.tif';
+ tif14272_NP = 'LC80170302014272LGN00/SEADAS/Collocated2014272_150418CRANB_ONTOS_NIR_PahlevanL.tif';
+ tif14272_NU = 'LC80170302014272LGN00/SEADAS/Collocated2014272_150418CRANB_ONTOS_NIR_Unity.tif';
+ tif14272_SF = 'LC80170302014272LGN00/SEADAS/Collocated2014272_150418CRANB_ONTOS_SWIR_FranzAve.tif';
+ tif14272_SP = 'LC80170302014272LGN00/SEADAS/Collocated2014272_150418CRANB_ONTOS_SWIR_PahlevanL.tif';
+ tif14272_SU = 'LC80170302014272LGN00/SEADAS/Collocated2014272_150418CRANB_ONTOS_SWIR_Unity.tif';
 
 % 1: band_1_R
 % 2: band_2_R
@@ -75,7 +75,7 @@ filename = [dir tif14272_SU];
 
 im2014272 = imread(filename);
 
-densityflag = 0; % 0 or 1
+densityflag = 1; % 0 or 1
 regressiontype = 'RMA'; % RMA or OLS
 maxref = 0.030;
 date = '2014272';
@@ -149,8 +149,8 @@ im2014272 = imread(filename);
 proj = geotiffinfo(filename);
 info = imfinfo(filename);
 
-densityflag = 0; % 0 or 1
-regressiontype = 'OLS'; % RMA or OLS
+densityflag = 1; % 0 or 1
+regressiontype = 'RMA'; % RMA or OLS
 maxref = 0.030;
 date = '2014272';
 comptype = 'SWIR_Franz'

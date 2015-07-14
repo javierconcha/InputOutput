@@ -4,7 +4,7 @@ addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/gmregress/')
 dir = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
 
 
-tif13262 = 'LC80160302013262LGN00/Collocated13262_SWIRFranz_L2LAC_140315bigger500.tif';
+tif13262 = 'LC80160302013262LGN00/SEADAS/Collocated13262_SWIRFranz_L2LAC_140315bigger500.tif';
 
 % 1: lon_R_R
 % 2: lat_R_R
@@ -42,7 +42,7 @@ filename = [dir tif13262];
 
 im2013262 = imread(filename);
 
-densityflag = 0;
+densityflag = 1;
 regressiontype = 'RMA';
 maxref = 0.030;
 date = '2013262';
