@@ -118,6 +118,30 @@ geoshow(RGBdisplay, R)
 
 axis off
 tightmap
+%%
+figure(1)
+% Create line
+
+% Create textbox
+annotation(figure(1),'textbox',...
+    [0.627380952380953 0.759853249475892 0.116964285714286 0.0765199161425577],...
+    'String',{'10 km'},...
+    'FontSize',50,...
+    'TextColor','w',...
+    'FitBoxToText','on',...
+    'EdgeColor','none',...
+    'BackgroundColor','none');
+
+% d = km2deg(10);
+waypoints = [43.31,-77.62; 43.31,-77.495];
+[lttrk,lntrk] = track('rh',waypoints,'degrees'); 
+geoshow(lttrk,lntrk,'DisplayType','line','color','w','LineWidth',4)
+
+% dist = stdist(waypoints(:,1),waypoints(:,2));
+% textm(43.31,-77.62,'10 km','Color',[1 1 1],...
+%                 'FontSize',20,'FontWeight','bold',...
+%                 'HorizontalAlignment','center')
+
 %% ELM parameters for 130919
 date = '130919';
 

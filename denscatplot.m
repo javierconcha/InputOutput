@@ -110,52 +110,52 @@ figure(h)
 hold on
 text(xLoc,yLoc,str1,'FontSize',fs,'FontWeight','normal');
 disp(str1)
-%% cell mean
-N = 101;
-x_interval = linspace(0,max(x_used),N);
-y_interval = linspace(0,max(y_used),2);
-
-x_cellmean = nan(size(x_interval,2),size(y_interval,2));
-y_cellmean = nan(size(x_interval,2),size(y_interval,2));
-cell_density = nan(size(x_interval,2),size(y_interval,2));
-
-for x_index = 1:size(x_interval,2)-1
-%     for y_index = 1:size(y_interval,2)-1
-        y_index = 1;
-        x_rule = x_used>x_interval(x_index)&x_used<=x_interval(x_index+1);
-        x_cell = x_used(x_rule);
-        y_cell = y_used(x_rule);
-        y_rule = y_cell>y_interval(y_index)&y_cell<=y_interval(y_index+1);
-        
-        x_cellmean(x_index,y_index) = mean(x_cell(y_rule));
-        y_cellmean(x_index,y_index) = mean(y_cell(y_rule));
-        cell_density(x_index,y_index) = sum(y_rule);
-        
+% %% cell mean
+% N = 101;
+% x_interval = linspace(0,max(x_used),N);
+% y_interval = linspace(0,max(y_used),2);
+% 
+% x_cellmean = nan(size(x_interval,2),size(y_interval,2));
+% y_cellmean = nan(size(x_interval,2),size(y_interval,2));
+% cell_density = nan(size(x_interval,2),size(y_interval,2));
+% 
+% for x_index = 1:size(x_interval,2)-1
+% %     for y_index = 1:size(y_interval,2)-1
+%         y_index = 1;
+%         x_rule = x_used>x_interval(x_index)&x_used<=x_interval(x_index+1);
+%         x_cell = x_used(x_rule);
+%         y_cell = y_used(x_rule);
+%         y_rule = y_cell>y_interval(y_index)&y_cell<=y_interval(y_index+1);
+%         
+%         x_cellmean(x_index,y_index) = mean(x_cell(y_rule));
+%         y_cellmean(x_index,y_index) = mean(y_cell(y_rule));
+%         cell_density(x_index,y_index) = sum(y_rule);
+%         
+% %     end
+% end
+% 
+% % plot(x_cellmean(:),y_cellmean(:),'g.')
+% % regression
+% if strcmp(regressiontype,'OLS')
+%     [a,~] = polyfit(isfinite(x_cellmean(:)),isfinite(y_cellmean(:)),1);
+% elseif strcmp(regressiontype,'RMA')
+%     a(1) = nanstd(y_cellmean(:))/nanstd(x_cellmean(:)); % slope
+%     
+%     if corr(x_cellmean(isfinite(x_cellmean(:))),y_cellmean(isfinite(y_cellmean(:))))<0
+%         a(1) = -abs(a(1));
+%     elseif corr(x_cellmean(isfinite(x_cellmean(:))),y_cellmean(isfinite(y_cellmean(:))))>=0
+%         a(1) = abs(a(1));
 %     end
-end
-
-% plot(x_cellmean(:),y_cellmean(:),'g.')
-% regression
-if strcmp(regressiontype,'OLS')
-    [a,~] = polyfit(isfinite(x_cellmean(:)),isfinite(y_cellmean(:)),1);
-elseif strcmp(regressiontype,'RMA')
-    a(1) = nanstd(y_cellmean(:))/nanstd(x_cellmean(:)); % slope
-    
-    if corr(x_cellmean(isfinite(x_cellmean(:))),y_cellmean(isfinite(y_cellmean(:))))<0
-        a(1) = -abs(a(1));
-    elseif corr(x_cellmean(isfinite(x_cellmean(:))),y_cellmean(isfinite(y_cellmean(:))))>=0
-        a(1) = abs(a(1));
-    end
-end
-
-a(2) = nanmean(y_cellmean(:))-nanmean(x_cellmean(:))*a(1); % y intercept
-
-
-
-x2=[0 maxref];
-y2=a(1).*x2+a(2);
-
-plot(x2,y2,'c-','LineWidth',2)
+% end
+% 
+% a(2) = nanmean(y_cellmean(:))-nanmean(x_cellmean(:))*a(1); % y intercept
+% 
+% 
+% 
+% x2=[0 maxref];
+% y2=a(1).*x2+a(2);
+% 
+% plot(x2,y2,'c-','LineWidth',2)
 
 
 %% Save figure
