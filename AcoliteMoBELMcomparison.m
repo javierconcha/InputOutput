@@ -39,7 +39,7 @@ filename = [dir tif13262_SU];
 
 im2013262 = imread(filename);
 
-densityflag = 1;
+densityflag = 0;
 regressiontype = 'RMA';
 maxref = 0.030;
 date = '2013262';
@@ -75,7 +75,7 @@ filename = [dir tif14272_SU];
 
 im2014272 = imread(filename);
 
-densityflag = 1; % 0 or 1
+densityflag = 0; % 0 or 1
 regressiontype = 'RMA'; % RMA or OLS
 maxref = 0.030;
 date = '2014272';
@@ -149,7 +149,7 @@ im2014272 = imread(filename);
 proj = geotiffinfo(filename);
 info = imfinfo(filename);
 
-densityflag = 1; % 0 or 1
+densityflag = 0; % 0 or 1
 regressiontype = 'RMA'; % RMA or OLS
 maxref = 0.030;
 date = '2014272';
@@ -181,6 +181,6 @@ Rrs_865E_SF = double(im2014272(:,:,5));
 denscatplot(Rrs_865A_SF,Rrs_865E_SF,regressiontype,densityflag,'865',maxref,date,'Acolite','MOB-ELM')
 
 %% Image 2014272 SWIR_Unity VS SWIR_PahlevanL
-densityflag = 1; % 0 or 1
+densityflag = 0; % 0 or 1
 regressiontype = 'RMA'; % RMA or OLS
 denscatplot(Rrs_443A_SU,Rrs_443A_SF,regressiontype,densityflag,'443',maxref,date,'Acolite','MOB-ELM')

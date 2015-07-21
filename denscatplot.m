@@ -159,7 +159,8 @@ disp(str1)
 
 
 %% Save figure
-% str3 = sprintf('%s_AcoliteMoBELMcomp_%s_%s',date,bandname,comptype);
-% dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
+str3 = sprintf('%s_ACOMOBSEAMUM_%s_%s_%s.fig',date,bandname,labelx,labely);
+dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
+saveas(gcf,[dirname str3])
 

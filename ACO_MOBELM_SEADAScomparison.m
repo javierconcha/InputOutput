@@ -8,7 +8,7 @@ tif13262 = 'LC80160302013262LGN00/SEADAS/Collocated13262_SWIRFranz_L2LAC_140315b
 
 % 1: lon_R_R
 % 2: lat_R_R
-% 3: rhoam_865
+% 3: rhoam_865_R_R
 % 4: rhow_443_R_R
 % 5: rhow_483_R_R
 % 6: rhow_561_R_R
@@ -42,7 +42,7 @@ filename = [dir tif13262];
 
 im2013262 = imread(filename);
 
-densityflag = 1;
+densityflag = 0;
 regressiontype = 'RMA';
 maxref = 0.030;
 date = '2013262';
@@ -68,8 +68,8 @@ denscatplot(Rrs_483A,Rrs_483S,regressiontype,densityflag,'483',maxref,date,'Acol
 denscatplot(Rrs_483S,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'SeaDAS','MoB-ELM')
 
 %% Band 3: 561nm
-set(0,'DefaultFigureWindowStyle','docked')
-% set(0,'DefaultFigureWindowStyle','normal')
+% set(0,'DefaultFigureWindowStyle','docked')
+set(0,'DefaultFigureWindowStyle','normal')
 
 Rrs_561A = double(im2013262(:,:, 6))/pi; % Acolite
 Rrs_561S = (double(im2013262(:,:,14))*2.0E-6+0.05); % SeaDAS, converted with scale_factor and add_offset from band attributes
