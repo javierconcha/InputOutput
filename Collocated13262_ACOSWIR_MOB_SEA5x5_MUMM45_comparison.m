@@ -181,6 +181,17 @@ whos(matObj)
 
 load Rrs130919AllSites.mat
 
+ConcFieldCHL_ONTNS = 0.48;
+ConcFieldCHL_ONTOS = 0.96;
+ConcFieldCHL_ONTEX = 3.12;
+ConcFieldCHL_RVRPI = 2.88;
+ConcFieldCHL_RVRPL = 0.48;
+ConcFieldCHL_LONGN = 123.85;
+ConcFieldCHL_LONGS = 112.76;
+ConcFieldCHL_CRANB = 64.08;
+ConcFieldCHL_BRADI = 19.22;
+ConcFieldCHL_BRADO = 1.44;
+
 %% ONTNS from the field
 sitename = 'ONTNS';
 wlrange = wavelengthSVC130919>=400 & wavelengthSVC130919<=2500;
@@ -218,6 +229,7 @@ grid on
 
 ONTNSlat =	43.272159;
 ONTNSlon = -77.538274;
+
 
 dist2=sum(bsxfun(@minus, cat(3,ONTNSlat,ONTNSlon), cat(3,lat,lon)).^2,3);
 [I,J]=find(dist2==min(dist2(:)));
@@ -257,6 +269,14 @@ dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_
 % print(h,[dirname str3],'-depsc')
 saveas(gcf,[dirname str3],'epsc')
 
+% CHL comparison
+
+CHL_ACO_ONTNS = CHL_ACO(I,J);
+CHL_SEA_ONTNS = CHL_SEA(I,J);
+CHL_MOB_ONTNS = CHL_MOB(I,J);
+CHL_MUM_ONTNS = CHL_MUM(I,J);
+
+
 %% ONTOS from the field
 sitename = 'ONTOS';
 wlrange = wavelengthSVC130919>=400 & wavelengthSVC130919<=2500;
@@ -295,6 +315,7 @@ grid on
 ONTOSlat =	43.308923;
 ONTOSlon = -77.540085;
 
+
 dist2=sum(bsxfun(@minus, cat(3,ONTOSlat,ONTOSlon), cat(3,lat,lon)).^2,3);
 [I,J]=find(dist2==min(dist2(:)));
 
@@ -332,6 +353,13 @@ str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
 saveas(gcf,[dirname str3],'epsc')
+
+% CHL comparison
+
+CHL_ACO_ONTOS = CHL_ACO(I,J);
+CHL_SEA_ONTOS = CHL_SEA(I,J);
+CHL_MOB_ONTOS = CHL_MOB(I,J);
+CHL_MUM_ONTOS = CHL_MUM(I,J);
 
 %% ONTEX from the field
 sitename = 'ONTEX';
@@ -409,6 +437,13 @@ dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_
 % print(h,[dirname str3],'-depsc')
 saveas(gcf,[dirname str3],'epsc')
 
+% CHL comparison
+
+CHL_ACO_ONTEX = CHL_ACO(I,J);
+CHL_SEA_ONTEX = CHL_SEA(I,J);
+CHL_MOB_ONTEX = CHL_MOB(I,J);
+CHL_MUM_ONTEX = CHL_MUM(I,J);
+
 %% RVRPI from the field
 sitename = 'RVRPI';
 wlrange = wavelengthSVC130919>=400 & wavelengthSVC130919<=2500;
@@ -484,6 +519,13 @@ str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
 saveas(gcf,[dirname str3],'epsc')
+
+% CHL comparison
+
+CHL_ACO_RVRPI = CHL_ACO(I,J);
+CHL_SEA_RVRPI = CHL_SEA(I,J);
+CHL_MOB_RVRPI = CHL_MOB(I,J);
+CHL_MUM_RVRPI = CHL_MUM(I,J);
 
 %% RVRPL from the field
 sitename = 'RVRPL';
@@ -562,6 +604,13 @@ dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_
 % print(h,[dirname str3],'-depsc')
 saveas(gcf,[dirname str3],'epsc')
 
+% CHL comparison
+
+CHL_ACO_RVRPL = CHL_ACO(I,J);
+CHL_SEA_RVRPL = CHL_SEA(I,J);
+CHL_MOB_RVRPL = CHL_MOB(I,J);
+CHL_MUM_RVRPL = CHL_MUM(I,J);
+
 %% LONGN Rrs comparison
 
 sitename = 'LONGN';
@@ -606,6 +655,13 @@ str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
 saveas(gcf,[dirname str3],'epsc')
+
+% CHL comparison
+
+CHL_ACO_LONGN = CHL_ACO(I,J);
+CHL_SEA_LONGN = CHL_SEA(I,J);
+CHL_MOB_LONGN = CHL_MOB(I,J);
+CHL_MUM_LONGN = CHL_MUM(I,J);
 
 %% LONGS Rrs comparison
 
@@ -652,6 +708,13 @@ dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_
 % print(h,[dirname str3],'-depsc')
 saveas(gcf,[dirname str3],'epsc')
 
+% CHL comparison
+
+CHL_ACO_LONGS = CHL_ACO(I,J);
+CHL_SEA_LONGS = CHL_SEA(I,J);
+CHL_MOB_LONGS = CHL_MOB(I,J);
+CHL_MUM_LONGS = CHL_MUM(I,J);
+
 %% CRANB Rrs comparison
 
 sitename = 'CRANB';
@@ -696,6 +759,13 @@ str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
 saveas(gcf,[dirname str3],'epsc')
+
+% CHL comparison
+
+CHL_ACO_CRANB = CHL_ACO(I,J);
+CHL_SEA_CRANB = CHL_SEA(I,J);
+CHL_MOB_CRANB = CHL_MOB(I,J);
+CHL_MUM_CRANB = CHL_MUM(I,J);
 
 %% BRADIN Rrs comparison
 
@@ -742,6 +812,13 @@ dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_
 % print(h,[dirname str3],'-depsc')
 saveas(gcf,[dirname str3],'epsc')
 
+% CHL comparison
+
+CHL_ACO_BRADI = CHL_ACO(I,J);
+CHL_SEA_BRADI = CHL_SEA(I,J);
+CHL_MOB_BRADI = CHL_MOB(I,J);
+CHL_MUM_BRADI = CHL_MUM(I,J);
+
 %% BRADONT Rrs comparison
 
 sitename = 'BRADONT';
@@ -785,4 +862,153 @@ grid on
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
+
+% CHL comparison
+
+CHL_ACO_BRADO = CHL_ACO(I,J);
+CHL_SEA_BRADO = CHL_SEA(I,J);
+CHL_MOB_BRADO = CHL_MOB(I,J);
+CHL_MUM_BRADO = CHL_MUM(I,J);
+
 saveas(gcf,[dirname str3],'epsc')
+
+%% CHL comparison
+
+CHL_ACO_sites = [...
+CHL_ACO_ONTNS;
+CHL_ACO_ONTOS;
+CHL_ACO_ONTEX;
+CHL_ACO_RVRPI;
+CHL_ACO_RVRPL;
+CHL_ACO_LONGN;
+CHL_ACO_LONGS;
+CHL_ACO_CRANB;
+CHL_ACO_BRADI;
+CHL_ACO_BRADO];
+
+CHL_SEA_sites = [...
+CHL_SEA_ONTNS;
+CHL_SEA_ONTOS;
+CHL_SEA_ONTEX;
+CHL_SEA_RVRPI;
+CHL_SEA_RVRPL;
+CHL_SEA_LONGN;
+CHL_SEA_LONGS;
+CHL_SEA_CRANB;
+CHL_SEA_BRADI;
+CHL_SEA_BRADO];
+
+CHL_MOB_sites = [...
+CHL_MOB_ONTNS;
+CHL_MOB_ONTOS;
+CHL_MOB_ONTEX;
+CHL_MOB_RVRPI;
+CHL_MOB_RVRPL;
+CHL_MOB_LONGN;
+CHL_MOB_LONGS;
+CHL_MOB_CRANB;
+CHL_MOB_BRADI;
+CHL_MOB_BRADO];
+
+CHL_MUM_sites = [...
+CHL_MUM_ONTNS;
+CHL_MUM_ONTOS;
+CHL_MUM_ONTEX;
+CHL_MUM_RVRPI;
+CHL_MUM_RVRPL;
+CHL_MUM_LONGN;
+CHL_MUM_LONGS;
+CHL_MUM_CRANB;
+CHL_MUM_BRADI;
+CHL_MUM_BRADO];
+
+ConcFieldCHL = [...
+ConcFieldCHL_ONTNS;
+ConcFieldCHL_ONTOS;
+ConcFieldCHL_ONTEX;
+ConcFieldCHL_RVRPI;
+ConcFieldCHL_RVRPL;
+ConcFieldCHL_LONGN;
+ConcFieldCHL_LONGS;
+ConcFieldCHL_CRANB;
+ConcFieldCHL_BRADI;
+ConcFieldCHL_BRADO];
+
+%% RMSE
+CHL_data = [...
+LongSconc130919(1),LongSconc130919ret(1);
+Cranbconc130919(1),Cranbconc130919ret(1);
+OntOSconc130919(1),OntOSconc130919ret(1);
+OntNSconc130919(1),OntNSconc130919ret(1);
+LongSconc140929(1),LongSconc140929ret(1);
+LongNconc140929(1),LongNconc140929ret(1);
+Cranbconc140929(1),Cranbconc140929ret(1);
+IBayNconc140929(1),IBayNconc140929ret(1);
+OntOSconc140929(1),OntOSconc140929ret(1)];	
+
+CHL_RMSE = sqrt(mean((CHL_data(:,1)-CHL_data(:,2)).^2));
+CHL_RMSErange = 100*CHL_RMSE/(max(CHL_data(:,1))-min(CHL_data(:,1)));
+
+CHL_std = 100*std(abs(CHL_data(:,1)-CHL_data(:,2)))/(max(CHL_data(:,1))-min(CHL_data(:,1)));
+
+%% Retrieved vs Measured
+% CHL
+figure
+fs = 25;
+ms = 15;
+lw = 3.0;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+
+plot(ConcFieldCHL,CHL_ACO_sites,'*r','MarkerSize', ms,'LineWidth',lw);
+hold on
+plot(ConcFieldCHL,CHL_SEA_sites,'og','MarkerSize', ms,'LineWidth',lw);
+plot(ConcFieldCHL,CHL_MOB_sites,'^b','MarkerSize', ms,'LineWidth',lw);
+plot(ConcFieldCHL,CHL_MUM_sites,'xk','MarkerSize', ms,'LineWidth',lw);
+legend('Acolite','SeaDAS','MoB-ELM','MUMM')
+maxconcCHL = 150;
+plot([0 maxconcCHL],[0 maxconcCHL],'--k')
+axis equal
+ylim([0 maxconcCHL])
+xlim([0 maxconcCHL])
+xlabel('measured C_a [mg m^{-3}] ','fontsize',fs,'Position',[80 -15])
+ylabel('L8 retrieved C_a [mg m^{-3}]','fontsize',fs)
+set(gca,'OuterPosition',[0 0.05 1 1])
+set(gca,'XMinorTick','on','YMinorTick','on')
+%%
+figure
+fs = 60;
+ms = 40;
+lw = 6.0;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+set(gca,'XMinorTick','on','YMinorTick','on')
+plot(ConcFieldCHL,CHL_ACO_sites,'*r','MarkerSize', ms,'LineWidth',lw);
+hold on
+plot(ConcFieldCHL,CHL_SEA_sites,'og','MarkerSize', ms,'LineWidth',lw);
+plot(ConcFieldCHL,CHL_MOB_sites,'^b','MarkerSize', ms,'LineWidth',lw);
+plot(ConcFieldCHL,CHL_MUM_sites,'xk','MarkerSize', ms,'LineWidth',lw);
+% legend('Acolite','SeaDAS','MoB-ELM','MUMM')
+maxconcCHL = 4;
+plot([0 maxconcCHL],[0 maxconcCHL],'--k','LineWidth',2.0)
+axis equal
+ylim([0 maxconcCHL])
+xlim([0 maxconcCHL])
+% xlabel('measured C_a [mg m^{-3}] ','fontsize',fs,'Position',[80 -15])
+% ylabel('L8 retrieved C_a [mg m^{-3}]','fontsize',fs)
+set(gca,'OuterPosition',[0 0.05 1 1])
+set(gca,'XMinorTick','on','YMinorTick','on')
+%%
+hold on % regression
+[a,b] = polyfit(CHL_data(:,1),CHL_data(:,2),1);
+x1=[0 maxconcChl];
+y1=a(1).*x1+a(2);
+plot(x1,y1,'r-','LineWidth',1)
+C = corrcoef([CHL_data(:,1),CHL_data(:,2)]);
+r2 = C(1,2)^2;
+str1 = sprintf('y: %2.2f x + %2.2f \n R^2: %2.2f; N: %i \n RMSE: %2.2f',a(1),a(2),r2,size(CHL_data,1),CHL_RMSE);
+xLimits = get(gca,'XLim');
+yLimits = get(gca,'YLim');
+xLoc = xLimits(1)+0.1*(xLimits(2)-xLimits(1));
+yLoc = yLimits(1)+0.85*(yLimits(2)-yLimits(1));
+h = text(xLoc,yLoc,str1,'FontSize',16,'FontWeight','bold');
