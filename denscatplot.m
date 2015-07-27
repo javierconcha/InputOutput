@@ -157,10 +157,20 @@ disp(str1)
 % 
 % plot(x2,y2,'c-','LineWidth',2)
 
+if strcmp(bandname,'C_a')
+    strx = sprintf('C_a (%s) [mg/m^3]',labelx);
+    xlabel(strx)
+    stry = sprintf('C_a (%s) [mg/m^3]',labely);
+    ylabel(stry)
+    
+end
+
+xlabh = get(gca,'XLabel');
+set(xlabh,'Position',get(xlabh,'Position') - [0 1 0])
 
 %% Save figure
-str3 = sprintf('%s_ACOMOBSEAMUM_%s_%s_%s.fig',date,bandname,labelx,labely);
+str3 = sprintf('%s_ACOMOBSEAMUM_%s_%s_%s.eps',date,bandname,labelx,labely);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
-saveas(gcf,[dirname str3])
+saveas(gcf,[dirname str3],'epsc')
 

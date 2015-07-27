@@ -8,9 +8,9 @@ pathdate = [date,'/SVC_spectra_130919/'];
 %% Lsky from MODTRAN obtained from ../InputOutput/open_tape7scn.m
 % method = 'rloess';
 % SOL_SCATsmooth = smooth(SOL_SCAT,method);
-% Lsky = interp1(WAVLEN_MCRN*1E3,SOL_SCATsmooth*1E7,wavelength);
+% Lsky = interp1(WAVLEN_MCRN*1E3,SOL_SCATsmooth*1E7,wavelengthSVC);
 
-Lsky = interp1(WAVLEN_MCRN*1E3,SOL_SCAT*1E7,wavelength); % sky was not measured
+Lsky = interp1(WAVLEN_MCRN*1E3,SOL_SCAT*1E7,wavelengthSVC); % sky was not measured
 %% ONTNS 1
 % L8_2013_09_19_R152_T153.sig
 % L8_2013_09_19_R152_T154.sig
@@ -21,7 +21,7 @@ Lsky = interp1(WAVLEN_MCRN*1E3,SOL_SCAT*1E7,wavelength); % sky was not measured
 
 filename = 'L8_2013_09_19_R152_T153.sig';
 filepath = [pathname,pathdate,filename];
-[wavelength,Lg,Lt1,~] = extractSVC(filepath);
+[wavelengthSVC,Lg,Lt1,~] = extractSVC(filepath);
 
 filename = 'L8_2013_09_19_R152_T154.sig';
 filepath = [pathname,pathdate,filename];
@@ -70,20 +70,20 @@ Rrs6a = (Lt6-0.028.*Lsky)./(pi.*Lg./0.99);
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,Rrs1a,'r')
+plot(wavelengthSVC,Rrs1a,'r')
 hold on
-plot(wavelength,Rrs2a,'b')
-plot(wavelength,Rrs3a,'g')
-plot(wavelength,Rrs4a,'--m')
-plot(wavelength,Rrs5a,'--c')
-plot(wavelength,Rrs6a,'--k')
+plot(wavelengthSVC,Rrs2a,'b')
+plot(wavelengthSVC,Rrs3a,'g')
+plot(wavelengthSVC,Rrs4a,'--m')
+plot(wavelengthSVC,Rrs5a,'--c')
+plot(wavelengthSVC,Rrs6a,'--k')
 legend('Lt1','Lt2','Lt3',...
     'Lt4','Lt5','Lt6')
-% plot(wavelength,r./100)
+% plot(wavelengthSVC,r./100)
 
 title('R_{rs} -- ONTNS 1','fontsize',fs)
 % title(method,'fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 axis([0 3000 -0.01 0.01])
@@ -95,14 +95,14 @@ grid on
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,Lsky,'r')
+plot(wavelengthSVC,Lsky,'r')
 % hold on
-% plot(wavelength,Lskyb,'b')
+% plot(wavelengthSVC,Lskyb,'b')
 
 % legend('Lskya','Lskyb')
 
 title('Lsky -- ONTNS ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('radiance (10^{-10}*W/(cm^2*nm*sr))','fontsize',fs)
 set(gca,'fontsize',fs)
 % axis([400 1000 0 0.015])
@@ -121,7 +121,7 @@ grid on
 
 filename = 'L8_2013_09_19_R159_T160.sig';
 filepath = [pathname,pathdate,filename];
-[wavelength,Lg,Lt1,~] = extractSVC(filepath);
+[wavelengthSVC,Lg,Lt1,~] = extractSVC(filepath);
 
 filename = 'L8_2013_09_19_R159_T161.sig';
 filepath = [pathname,pathdate,filename];
@@ -170,23 +170,23 @@ RrsONTNS130919 = Rrs4b;
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,Rrs1b,'r')
+plot(wavelengthSVC,Rrs1b,'r')
 hold on
-plot(wavelength,Rrs2b,'b')
-plot(wavelength,Rrs3b,'g')
-plot(wavelength,Rrs4b,'--m')
-plot(wavelength,Rrs5b,'--c')
-plot(wavelength,Rrs6b,'--k')
-plot(wavelength,Rrs7b,'-.m')
-plot(wavelength,Rrs8b,'-.c')
-plot(wavelength,Rrs9b,'-.k')
+plot(wavelengthSVC,Rrs2b,'b')
+plot(wavelengthSVC,Rrs3b,'g')
+plot(wavelengthSVC,Rrs4b,'--m')
+plot(wavelengthSVC,Rrs5b,'--c')
+plot(wavelengthSVC,Rrs6b,'--k')
+plot(wavelengthSVC,Rrs7b,'-.m')
+plot(wavelengthSVC,Rrs8b,'-.c')
+plot(wavelengthSVC,Rrs9b,'-.k')
 legend('Lt1','Lt2','Lt3',...
     'Lt4','Lt5','Lt6',...
     'Lt7','Lt8','Lt9')
-% plot(wavelength,r./100)
+% plot(wavelengthSVC,r./100)
 
 title('R_{rs} -- ONTNS 2 ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 axis([0 3000 -0.01 0.01])
@@ -203,7 +203,7 @@ grid on
 
 filename = 'L8_2013_09_19_R169_T170.sig';
 filepath = [pathname,pathdate,filename];
-[wavelength,Lg,Lt1,~] = extractSVC(filepath);
+[wavelengthSVC,Lg,Lt1,~] = extractSVC(filepath);
 
 filename = 'L8_2013_09_19_R169_T171.sig';
 filepath = [pathname,pathdate,filename];
@@ -232,16 +232,16 @@ RrsONTOS130919 = Rrs1;
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,Rrs1,'r')
+plot(wavelengthSVC,Rrs1,'r')
 hold on
-plot(wavelength,Rrs2,'b')
-plot(wavelength,Rrs3,'g')
-plot(wavelength,Rrs4,'--m')
-plot(wavelength,Rrs5,'--c')
+plot(wavelengthSVC,Rrs2,'b')
+plot(wavelengthSVC,Rrs3,'g')
+plot(wavelengthSVC,Rrs4,'--m')
+plot(wavelengthSVC,Rrs5,'--c')
 
 
 title('R_{rs} -- ONTOS ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 % axis([0 3000 -0.01 0.01])
@@ -250,7 +250,7 @@ grid on
 
 hold on
 Rrs1old = (Lt2)./(pi.*Lg./0.99);
-plot(wavelength,Rrs1old,'k')
+plot(wavelengthSVC,Rrs1old,'k')
 legend('Lt1','Lt2','Lt3',...
     'Lt4','Lt5','w/o correction')
 
@@ -259,11 +259,11 @@ legend('Lt1','Lt2','Lt3',...
 % fs = 15;
 % set(gcf,'color','white')
 % 
-% plot(wavelength,Rrs2,'b')
+% plot(wavelengthSVC,Rrs2,'b')
 % hold on
-% plot(wavelength,r/100/pi,'k')
+% plot(wavelengthSVC,r/100/pi,'k')
 % title('R_{rs} -- ONTOS ','fontsize',fs)
-% xlabel('wavelength [nm]','fontsize',fs)
+% xlabel('wavelengthSVC [nm]','fontsize',fs)
 % ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 % set(gca,'fontsize',fs)
 % % axis([400 2500 -0.001 0.015])
@@ -280,7 +280,7 @@ legend('Lt1','Lt2','Lt3',...
 
 filename = 'L8_2013_09_19_R175_T176.sig';
 filepath = [pathname,pathdate,filename];
-[wavelength,Lg,Lt1,~] = extractSVC(filepath);
+[wavelengthSVC,Lg,Lt1,~] = extractSVC(filepath);
 
 filename = 'L8_2013_09_19_R175_T177.sig';
 filepath = [pathname,pathdate,filename];
@@ -314,18 +314,18 @@ RrsRVRPL130919 = Rrs1;
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,Rrs1,'r')
+plot(wavelengthSVC,Rrs1,'r')
 hold on
-plot(wavelength,Rrs2,'b')
-plot(wavelength,Rrs3,'g')
-plot(wavelength,Rrs4,'--m')
-plot(wavelength,Rrs5,'--c')
-plot(wavelength,Rrs6,'--k')
+plot(wavelengthSVC,Rrs2,'b')
+plot(wavelengthSVC,Rrs3,'g')
+plot(wavelengthSVC,Rrs4,'--m')
+plot(wavelengthSVC,Rrs5,'--c')
+plot(wavelengthSVC,Rrs6,'--k')
 legend('Lt1','Lt2','Lt3',...
     'Lt4','Lt5','Lt6')
 
 title('R_{rs} -- RVRPLM ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 axis([0 3000 -0.01 0.01])
@@ -345,7 +345,7 @@ grid on
 
 filename = 'L8_2013_09_19_R182_T183.sig';
 filepath = [pathname,pathdate,filename];
-[wavelength,Lg,Lt1,~] = extractSVC(filepath);
+[wavelengthSVC,Lg,Lt1,~] = extractSVC(filepath);
 
 filename = 'L8_2013_09_19_R182_T184.sig';
 filepath = [pathname,pathdate,filename];
@@ -389,21 +389,21 @@ RrsRVRPI130919 = Rrs1;
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,Rrs1,'r')
+plot(wavelengthSVC,Rrs1,'r')
 hold on
-plot(wavelength,Rrs2,'b')
-plot(wavelength,Rrs3,'g')
-plot(wavelength,Rrs4,'--m')
-plot(wavelength,Rrs5,'--c')
-plot(wavelength,Rrs6,'--k')
-plot(wavelength,Rrs7,'-.m')
-plot(wavelength,Rrs8,'-.c')
+plot(wavelengthSVC,Rrs2,'b')
+plot(wavelengthSVC,Rrs3,'g')
+plot(wavelengthSVC,Rrs4,'--m')
+plot(wavelengthSVC,Rrs5,'--c')
+plot(wavelengthSVC,Rrs6,'--k')
+plot(wavelengthSVC,Rrs7,'-.m')
+plot(wavelengthSVC,Rrs8,'-.c')
 legend('Lt1','Lt2','Lt3',...
     'Lt4','Lt5','Lt6',...
     'Lt7','Lt8')
 
 title('R_{rs} -- RVRPIER ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 % axis([0 3000 -0.01 0.01])
@@ -422,7 +422,7 @@ grid on
 
 filename = 'L8_2013_09_19_R191_T192.sig';
 filepath = [pathname,pathdate,filename];
-[wavelength,Lg,Lt1,~] = extractSVC(filepath);
+[wavelengthSVC,Lg,Lt1,~] = extractSVC(filepath);
 
 filename = 'L8_2013_09_19_R191_T193.sig';
 filepath = [pathname,pathdate,filename];
@@ -461,21 +461,21 @@ RrsONTEX130919 = Rrs1;
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,Rrs1,'r')
+plot(wavelengthSVC,Rrs1,'r')
 hold on
-plot(wavelength,Rrs2,'b')
-plot(wavelength,Rrs3,'g')
-plot(wavelength,Rrs4,'--m')
-plot(wavelength,Rrs5,'--c')
-plot(wavelength,Rrs6,'--k')
-plot(wavelength,Rrs7,'-.m')
+plot(wavelengthSVC,Rrs2,'b')
+plot(wavelengthSVC,Rrs3,'g')
+plot(wavelengthSVC,Rrs4,'--m')
+plot(wavelengthSVC,Rrs5,'--c')
+plot(wavelengthSVC,Rrs6,'--k')
+plot(wavelengthSVC,Rrs7,'-.m')
 legend('Lt1','Lt2','Lt3',...
     'Lt4','Lt5','Lt6',...
     'Lt7')
-% plot(wavelength,r./100)
+% plot(wavelengthSVC,r./100)
 
 title('R_{rs} -- ONTEX ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 axis([0 3000 -0.01 0.01])
@@ -497,7 +497,7 @@ grid on
 
 filename = 'L8_2013_09_19_R199_T200.sig';
 filepath = [pathname,pathdate,filename];
-[wavelength,Lg,Lt1,~] = extractSVC(filepath);
+[wavelengthSVC,Lg,Lt1,~] = extractSVC(filepath);
 
 filename = 'L8_2013_09_19_R199_T201.sig';
 filepath = [pathname,pathdate,filename];
@@ -551,23 +551,23 @@ RrsIBAYN130919 = Rrs3;
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,Rrs1,'r')
+plot(wavelengthSVC,Rrs1,'r')
 hold on
-plot(wavelength,Rrs2,'b')
-plot(wavelength,Rrs3,'g')
-plot(wavelength,Rrs4,'--m')
-plot(wavelength,Rrs5,'--c')
-plot(wavelength,Rrs6,'--k')
-plot(wavelength,Rrs7,'-.m')
-plot(wavelength,Rrs8,'-.c')
-plot(wavelength,Rrs9,'-.k')
-plot(wavelength,Rrs10,'k')
+plot(wavelengthSVC,Rrs2,'b')
+plot(wavelengthSVC,Rrs3,'g')
+plot(wavelengthSVC,Rrs4,'--m')
+plot(wavelengthSVC,Rrs5,'--c')
+plot(wavelengthSVC,Rrs6,'--k')
+plot(wavelengthSVC,Rrs7,'-.m')
+plot(wavelengthSVC,Rrs8,'-.c')
+plot(wavelengthSVC,Rrs9,'-.k')
+plot(wavelengthSVC,Rrs10,'k')
 legend('Lt1','Lt2','Lt3',...
     'Lt4','Lt5','Lt6',...
     'Lt7','Lt8','Lt9','Lt10')
 
 title('R_{rs} -- IBAYN ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 % axis([0 3000 -0.01 0.01])
@@ -575,26 +575,27 @@ set(gca,'fontsize',fs)
 grid on
 
 %% Rrs all
-wavelengthSVC130919 = wavelength;
+wavelengthSVC130919 = wavelengthSVC;
 
 figure(21)
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,RrsONTNS130919,'r')
+plot(wavelengthSVC,RrsONTNS130919,'r')
 hold on
-plot(wavelength,RrsONTOS130919,'b')
-plot(wavelength,RrsRVRPL130919,'g')
-plot(wavelength,RrsRVRPI130919,'m')
-plot(wavelength,RrsIBAYN130919,'k')
-plot(wavelength,RrsONTEX130919,'--b')
+plot(wavelengthSVC,RrsONTOS130919,'b')
+plot(wavelengthSVC,RrsRVRPL130919,'g')
+plot(wavelengthSVC,RrsRVRPI130919,'m')
+plot(wavelengthSVC,RrsIBAYN130919,'k')
+plot(wavelengthSVC,RrsONTEX130919,'--b')
 
 legend('ONTNS','ONTOS','RVRPLM',...
     'RVRPIER','IBAYN','ONTEX')
 title('R_{rs} -- 09/19/13 ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
-axis([400 1000 0 0.015])
+xlim([400 1000])
+% axis([400 1000 0 0.015])
 grid on
 
 save Rrs130919AllSites.mat wavelengthSVC130919 ...
@@ -602,15 +603,15 @@ save Rrs130919AllSites.mat wavelengthSVC130919 ...
     RrsRVRPI130919 RrsIBAYN130919 RrsONTEX130919
 
 %% Spectrally sampled and save in text file
-wlrange = wavelength>=400 & wavelength<=2500;
-% wlzero = wavelength==2219.0;
-wlavg = wavelength>=2000 & wavelength<=2350;
+wlrange = wavelengthSVC>=400 & wavelengthSVC<=2500;
+% wlzero = wavelengthSVC==2219.0;
+wlavg = wavelengthSVC>=2000 & wavelengthSVC<=2350;
 
 zeroavg = mean(RrsONTNS130919(wlavg));
 
 RrsONTNS130919corr = RrsONTNS130919-zeroavg;
 
-RrsONTNS130919L8 = spect_sampL8(RrsONTNS130919corr(wlrange),wavelength(wlrange).*1E-3);
+RrsONTNS130919L8 = spect_sampL8(RrsONTNS130919corr(wlrange),wavelengthSVC(wlrange).*1E-3);
 
 RrsONTNS130919L8corr = RrsONTNS130919L8;
 RrsONTNS130919L8corr(5:7)=0;
@@ -620,16 +621,16 @@ L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,RrsONTNS130919,'r')
+plot(wavelengthSVC,RrsONTNS130919,'r')
 hold on
-plot(wavelength,RrsONTNS130919corr,'--r')
-% plot(wavelength(wlzero),RrsONTNS130919(wlzero),'.g')
+plot(wavelengthSVC,RrsONTNS130919corr,'--r')
+% plot(wavelengthSVC(wlzero),RrsONTNS130919(wlzero),'.g')
 plot(L8bands.*1E3,RrsONTNS130919L8,'.-b')
 plot(L8bands.*1E3,RrsONTNS130919L8corr,'.-k')
 plot(L8bands.*1E3,RrsONTNS130919L8corr*pi,'--k')
 legend('RrsONTNS130919','RrsONTNS130919corr','RrsONTNS130919L8','RrsONTNS130919L8corr','RrsONTNS130919L8corr*pi')
 title('R_{rs} -- 09/19/13 ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 % axis([400 1000 0 0.03])
@@ -650,7 +651,7 @@ grid on
 
 filename = 'L8_2013_09_19_R210_T211.sig';
 filepath = [pathname,pathdate,filename];
-[wavelength,Lg,Lt1,~] = extractSVC(filepath);
+[wavelengthSVC,Lg,Lt1,~] = extractSVC(filepath);
 
 filename = 'L8_2013_09_19_R210_T212.sig';
 filepath = [pathname,pathdate,filename];
@@ -692,21 +693,21 @@ Rrs8 = (Lt8)./(pi.*Lg./0.99);
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,Rrs1,'r')
+plot(wavelengthSVC,Rrs1,'r')
 hold on
-plot(wavelength,Rrs2,'b')
-plot(wavelength,Rrs3,'g')
-plot(wavelength,Rrs4,'--m')
-plot(wavelength,Rrs5,'--c')
-plot(wavelength,Rrs6,'--k')
-plot(wavelength,Rrs7,'-.m')
-plot(wavelength,Rrs8,'-.c')
+plot(wavelengthSVC,Rrs2,'b')
+plot(wavelengthSVC,Rrs3,'g')
+plot(wavelengthSVC,Rrs4,'--m')
+plot(wavelengthSVC,Rrs5,'--c')
+plot(wavelengthSVC,Rrs6,'--k')
+plot(wavelengthSVC,Rrs7,'-.m')
+plot(wavelengthSVC,Rrs8,'-.c')
 legend('Lt1','Lt2','Lt3',...
     'Lt4','Lt5','Lt6',...
     'Lt7','Lt8')
 
 title('R_{rs} -- Dried Sand ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 % axis([0 3000 -0.01 0.01])
@@ -723,7 +724,7 @@ grid on
 
 filename = 'L8_2013_09_19_R219_T220.sig';
 filepath = [pathname,pathdate,filename];
-[wavelength,Lg,Lt1,~] = extractSVC(filepath);
+[wavelengthSVC,Lg,Lt1,~] = extractSVC(filepath);
 
 filename = 'L8_2013_09_19_R219_T221.sig';
 filepath = [pathname,pathdate,filename];
@@ -750,17 +751,17 @@ Rrs5 = (Lt5)./(pi.*Lg./0.99);
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,Rrs1,'r')
+plot(wavelengthSVC,Rrs1,'r')
 hold on
-plot(wavelength,Rrs2,'b')
-plot(wavelength,Rrs3,'g')
-plot(wavelength,Rrs4,'--m')
-plot(wavelength,Rrs5,'--c')
+plot(wavelengthSVC,Rrs2,'b')
+plot(wavelengthSVC,Rrs3,'g')
+plot(wavelengthSVC,Rrs4,'--m')
+plot(wavelengthSVC,Rrs5,'--c')
 legend('Lt1','Lt2','Lt3',...
     'Lt4','Lt5')
 
 title('R_{rs} -- Wet Sand ','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 % axis([0 3000 -0.01 0.01])
@@ -768,9 +769,9 @@ set(gca,'fontsize',fs)
 grid on
 
 % %% Save for ENVI resampling to L8 response
-% wavelengthSVC = CellRef{1,1}(:,1)*10^-3;
-% cond = wavelengthSVC>=0.4 & wavelengthSVC<=1.0;
-% wavelengthSVC = wavelengthSVC(cond);
+% wavelengthSVCSVC = CellRef{1,1}(:,1)*10^-3;
+% cond = wavelengthSVCSVC>=0.4 & wavelengthSVCSVC<=1.0;
+% wavelengthSVCSVC = wavelengthSVCSVC(cond);
 % meanRef = mean(D,2)./100; % decimal
 % ONTNSRef = meanRef(cond);
 % 
@@ -778,10 +779,10 @@ grid on
 % fs = 15;
 % set(gcf,'color','white')
 % set(gca,'fontsize',fs)
-% plot(wavelengthSVC,ONTNSRef,'k')
-% xlabel('wavelength [\mu m]','fontsize',fs)
+% plot(wavelengthSVCSVC,ONTNSRef,'k')
+% xlabel('wavelengthSVC [\mu m]','fontsize',fs)
 % ylabel('reflectance','fontsize',fs)
 % 
 % 
-% NSRef = [wavelengthSVC, ONTNSRef];
+% NSRef = [wavelengthSVCSVC, ONTNSRef];
 % save('ONTNSRef.txt','NSRef','-ascii')

@@ -10,7 +10,9 @@ im2013262 = imread(filename);
 
 info = geotiffinfo(filename);
 %1 lon_R_R_R_R_R
+lon = double(im2013262(:,:,1));
 %2 lat_R_R_R_R_R
+lat = double(im2013262(:,:,2));
 %3 rhoam_865_R_R_R_R_R
 %4 rhow_443_ACO_R
 %5 rhow_483_R_R_R_R_R
@@ -90,6 +92,18 @@ Rrs_655E = double(im2013262(:,:,59)); % MoB-ELM (E:ELM); for 2013262 image, not 
 %60 Rrs_865_MOB
 %61 Rrs_1600_MOB
 %62 Rrs_2100_MOB
+
+tif13262 = 'LC80160302013262LGN00/ACOLITE/LC80160302013262LGN00_L2_SWIR_FranzAve.tif';
+% Image 2013262
+filename = [dir tif13262];
+
+im2013262 = imread(filename);
+%23 chlor_a_ACO_OC3
+CHL_ACO = double(im2013262(:,:,23)); % Acolite
+%% Chl ACOLITE
+% R = log10(max(Rrs_443A,Rrs_483A)./Rrs_561A);
+% CHL_ACO = 10.^(0.2412-2.0546.*R+1.1776.*R.^2-0.5538.*R.^3-0.4570.*R.^4);
+
 %%
 densityflag = 1;
 regressiontype = 'RMA';
@@ -98,50 +112,138 @@ date = '2013262';
 
 % Band 1: 443nm
 
-denscatplot(Rrs_443A,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'Acolite','MoB-ELM')
-denscatplot(Rrs_443A,Rrs_443S,regressiontype,densityflag,'443',maxref,date,'Acolite','SeaDAS')
-denscatplot(Rrs_443A,Rrs_443M,regressiontype,densityflag,'443',maxref,date,'Acolite','MUMM')
-denscatplot(Rrs_443S,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'SeaDAS','MoB-ELM')
-denscatplot(Rrs_443S,Rrs_443M,regressiontype,densityflag,'443',maxref,date,'SeaDAS','MUMM')
-denscatplot(Rrs_443M,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'MUMM','MoB-ELM')
+% denscatplot(Rrs_443A,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'Acolite','MoB-ELM')
+% denscatplot(Rrs_443A,Rrs_443S,regressiontype,densityflag,'443',maxref,date,'Acolite','SeaDAS')
+% denscatplot(Rrs_443A,Rrs_443M,regressiontype,densityflag,'443',maxref,date,'Acolite','MUMM')
+% denscatplot(Rrs_443S,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'SeaDAS','MoB-ELM')
+% denscatplot(Rrs_443S,Rrs_443M,regressiontype,densityflag,'443',maxref,date,'SeaDAS','MUMM')
+% denscatplot(Rrs_443M,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'MUMM','MoB-ELM')
 
 % Band 2: 483nm
 
-denscatplot(Rrs_483A,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'Acolite','MoB-ELM')
-denscatplot(Rrs_483A,Rrs_483S,regressiontype,densityflag,'483',maxref,date,'Acolite','SeaDAS')
-denscatplot(Rrs_483A,Rrs_483M,regressiontype,densityflag,'483',maxref,date,'Acolite','MUMM')
-denscatplot(Rrs_483S,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'SeaDAS','MoB-ELM')
-denscatplot(Rrs_483S,Rrs_483M,regressiontype,densityflag,'483',maxref,date,'SeaDAS','MUMM')
-denscatplot(Rrs_483M,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'MUMM','MoB-ELM')
+% denscatplot(Rrs_483A,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'Acolite','MoB-ELM')
+% denscatplot(Rrs_483A,Rrs_483S,regressiontype,densityflag,'483',maxref,date,'Acolite','SeaDAS')
+% denscatplot(Rrs_483A,Rrs_483M,regressiontype,densityflag,'483',maxref,date,'Acolite','MUMM')
+% denscatplot(Rrs_483S,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'SeaDAS','MoB-ELM')
+% denscatplot(Rrs_483S,Rrs_483M,regressiontype,densityflag,'483',maxref,date,'SeaDAS','MUMM')
+% denscatplot(Rrs_483M,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'MUMM','MoB-ELM')
 
 % Band 3: 561nm
 
-denscatplot(Rrs_561A,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'Acolite','MoB-ELM')
-denscatplot(Rrs_561A,Rrs_561S,regressiontype,densityflag,'561',maxref,date,'Acolite','SeaDAS')
-denscatplot(Rrs_561A,Rrs_561M,regressiontype,densityflag,'561',maxref,date,'Acolite','MUMM')
-denscatplot(Rrs_561S,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'SeaDAS','MoB-ELM')
-denscatplot(Rrs_561S,Rrs_561M,regressiontype,densityflag,'561',maxref,date,'SeaDAS','MUMM')
-denscatplot(Rrs_561M,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'MUMM','MoB-ELM')
+% denscatplot(Rrs_561A,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'Acolite','MoB-ELM')
+% denscatplot(Rrs_561A,Rrs_561S,regressiontype,densityflag,'561',maxref,date,'Acolite','SeaDAS')
+% denscatplot(Rrs_561A,Rrs_561M,regressiontype,densityflag,'561',maxref,date,'Acolite','MUMM')
+% denscatplot(Rrs_561S,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'SeaDAS','MoB-ELM')
+% denscatplot(Rrs_561S,Rrs_561M,regressiontype,densityflag,'561',maxref,date,'SeaDAS','MUMM')
+% denscatplot(Rrs_561M,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'MUMM','MoB-ELM')
 
 % Band 4: 655nm
 
-denscatplot(Rrs_655A,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'Acolite','MoB-ELM')
-denscatplot(Rrs_655A,Rrs_655S,regressiontype,densityflag,'655',maxref,date,'Acolite','SeaDAS')
-denscatplot(Rrs_655A,Rrs_655M,regressiontype,densityflag,'655',maxref,date,'Acolite','MUMM')
-denscatplot(Rrs_655S,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'SeaDAS','MoB-ELM')
-denscatplot(Rrs_655S,Rrs_655M,regressiontype,densityflag,'655',maxref,date,'SeaDAS','MUMM')
-denscatplot(Rrs_655M,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'MUMM','MoB-ELM')
+% denscatplot(Rrs_655A,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'Acolite','MoB-ELM')
+% denscatplot(Rrs_655A,Rrs_655S,regressiontype,densityflag,'655',maxref,date,'Acolite','SeaDAS')
+% denscatplot(Rrs_655A,Rrs_655M,regressiontype,densityflag,'655',maxref,date,'Acolite','MUMM')
+% denscatplot(Rrs_655S,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'SeaDAS','MoB-ELM')
+% denscatplot(Rrs_655S,Rrs_655M,regressiontype,densityflag,'655',maxref,date,'SeaDAS','MUMM')
+% denscatplot(Rrs_655M,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'MUMM','MoB-ELM')
 
 %% Chl
-densityflag = 0;
+densityflag = 1;
 regressiontype = 'RMA';
-maxref = 100;
+maxref = 150;
 date = '2013262';
 
-% denscatplot(CHL_ACO,CHL_MOB,regressiontype,densityflag,'',maxref,date,'Acolite','MoB-ELM')
-% denscatplot(CHL_ACO,CHL_SEA,regressiontype,densityflag,'',maxref,date,'Acolite','SeaDAS')
-% denscatplot(CHL_ACO,CHL_MUM,regressiontype,densityflag,'',maxref,date,'Acolite','MUMM')
-denscatplot(CHL_SEA,CHL_MOB,regressiontype,densityflag,'',maxref,date,'SeaDAS','MoB-ELM')
-denscatplot(CHL_SEA,CHL_MUM,regressiontype,densityflag,'',maxref,date,'SeaDAS','MUMM')
-denscatplot(CHL_MUM,CHL_MOB,regressiontype,densityflag,'',maxref,date,'MUMM','MoB-ELM')
+% sum(sum(CHL_ACO>150))
+CHL_ACO(CHL_ACO>150)=NaN;
+CHL_MOB(CHL_MOB>150)=NaN;
+CHL_SEA(CHL_SEA>150)=NaN;
+CHL_MUM(CHL_MUM>150)=NaN;
+% sum(sum(CHL_ACO>150))
+
+denscatplot(CHL_ACO,CHL_MOB,regressiontype,densityflag,'C_a',maxref,date,'Acolite','MoB-ELM')
+
+denscatplot(CHL_ACO,CHL_SEA,regressiontype,densityflag,'C_a',maxref,date,'Acolite','SeaDAS')
+
+denscatplot(CHL_ACO,CHL_MUM,regressiontype,densityflag,'C_a',maxref,date,'Acolite','MUMM')
+
+denscatplot(CHL_SEA,CHL_MOB,regressiontype,densityflag,'C_a',maxref,date,'SeaDAS','MoB-ELM')
+
+denscatplot(CHL_SEA,CHL_MUM,regressiontype,densityflag,'C_a',maxref,date,'SeaDAS','MUMM')
+
+denscatplot(CHL_MUM,CHL_MOB,regressiontype,densityflag,'C_a',maxref,date,'MUMM','MoB-ELM')
+
 %if (rhos_469 != NaN and rhos_555 != NaN and rhos_645 != NaN)  then (       if (LAND)        then            (.091935692 + .61788 * atan(10*(rhos_645-.015)) )       else           (0.29319407 + 0.45585 * atan(50*(rhos_645-.015)) ) ) else NaN
+
+%% Rrs Comparison with ground-truth
+matObj = matfile('Rrs130919AllSites.mat');
+whos(matObj)
+
+load Rrs130919AllSites.mat
+
+%% ONTNS from the field
+wlrange = wavelengthSVC>=400 & wavelengthSVC<=2500;
+% wlzero = wavelengthSVC==2219.0;
+wlavg = wavelengthSVC>=2000 & wavelengthSVC<=2350;
+
+zeroavg = mean(RrsONTNS130919(wlavg));
+
+RrsONTNS130919corr = RrsONTNS130919-zeroavg;
+
+RrsONTNS130919L8 = spect_sampL8(RrsONTNS130919corr(wlrange),wavelengthSVC(wlrange).*1E-3);
+
+RrsONTNS130919L8corr = RrsONTNS130919L8;
+RrsONTNS130919L8corr(5:7)=0;
+
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelengthSVC,RrsONTNS130919,'r')
+hold on
+plot(wavelengthSVC,RrsONTNS130919corr,'--r')
+% plot(wavelengthSVC(wlzero),RrsONTNS130919(wlzero),'.g')
+plot(L8bands.*1E3,RrsONTNS130919L8,'.-b')
+plot(L8bands.*1E3,RrsONTNS130919L8corr,'.-k')
+legend('RrsONTNS130919','RrsONTNS130919corr','RrsONTNS130919L8','RrsONTNS130919L8corr')
+title('R_{rs} -- 09/19/13 ','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
+ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
+set(gca,'fontsize',fs)
+% axis([400 1000 0 0.03])
+grid on
+%% ONTNS Rrs comparison
+
+ONTNSlat =	43.272159;
+ONTNSlon = -77.538274;
+
+dist2=sum(bsxfun(@minus, cat(3,ONTNSlat,ONTNSlon), cat(3,lat,lon)).^2,3);
+[I,J]=find(dist2==min(dist2(:)));
+
+% figure
+% plot(lon(:),lat(:),'.')
+% hold on
+% plot(ONTNSlon,ONTNSlat,'r*')
+% plot(lon(I,J),lat(I,J),'g*')
+
+ONTNS_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+ONTNS_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+ONTNS_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+ONTNS_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+
+figure
+fs = 15;
+lw = 1.5;
+set(gcf,'color','white')
+plot(L8bands(1:4).*1E3,RrsONTNS130919L8corr(1:4),'--b','LineWidth',lw)
+hold on
+plot(L8bands(1:4).*1E3,ONTNS_ACO(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,ONTNS_SEA(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,ONTNS_MOB(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,ONTNS_MUM(1:4),'k','LineWidth',lw)
+legend('Field','Acolite','SeaDAS','MoB-ELM','MUMM')
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+set(gca,'fontsize',fs)
+xlim([400 700])
+% axis([400 1000 0 0.03])
+grid on
