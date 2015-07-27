@@ -180,6 +180,7 @@ whos(matObj)
 load Rrs130919AllSites.mat
 
 %% ONTNS from the field
+sitename = 'ONTNS';
 wlrange = wavelengthSVC>=400 & wavelengthSVC<=2500;
 % wlzero = wavelengthSVC==2219.0;
 wlavg = wavelengthSVC>=2000 & wavelengthSVC<=2350;
@@ -195,7 +196,7 @@ RrsONTNS130919L8corr(5:7)=0;
 
 L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
 
-figure
+figure('name',sitename)
 fs = 15;
 set(gcf,'color','white')
 plot(wavelengthSVC,RrsONTNS130919,'r')
@@ -230,7 +231,7 @@ ONTNS_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
 ONTNS_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
 ONTNS_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
-figure
+figure('name',sitename)
 fs = 15;
 lw = 1.5;
 set(gcf,'color','white')
@@ -247,3 +248,284 @@ set(gca,'fontsize',fs)
 xlim([400 700])
 % axis([400 1000 0 0.03])
 grid on
+
+%% ONTOS from the field
+sitename = 'ONTOS';
+wlrange = wavelengthSVC>=400 & wavelengthSVC<=2500;
+% wlzero = wavelengthSVC==2219.0;
+wlavg = wavelengthSVC>=2000 & wavelengthSVC<=2350;
+
+zeroavg = mean(RrsONTOS130919(wlavg));
+
+RrsONTOS130919corr = RrsONTOS130919-zeroavg;
+
+RrsONTOS130919L8 = spect_sampL8(RrsONTOS130919corr(wlrange),wavelengthSVC(wlrange).*1E-3);
+
+RrsONTOS130919L8corr = RrsONTOS130919L8;
+RrsONTOS130919L8corr(5:7)=0;
+
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+figure('name',sitename)
+fs = 15;
+set(gcf,'color','white')
+plot(wavelengthSVC,RrsONTOS130919,'r')
+hold on
+plot(wavelengthSVC,RrsONTOS130919corr,'--r')
+% plot(wavelengthSVC(wlzero),RrsONTOS130919(wlzero),'.g')
+plot(L8bands.*1E3,RrsONTOS130919L8,'.-b')
+plot(L8bands.*1E3,RrsONTOS130919L8corr,'.-k')
+legend('RrsONTOS130919','RrsONTOS130919corr','RrsONTOS130919L8','RrsONTOS130919L8corr')
+title('R_{rs} -- 09/19/13 ','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
+ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
+set(gca,'fontsize',fs)
+% axis([400 1000 0 0.03])
+grid on
+%% ONTOS Rrs comparison
+
+ONTOSlat =	43.308923;
+ONTOSlon = -77.540085;
+
+dist2=sum(bsxfun(@minus, cat(3,ONTOSlat,ONTOSlon), cat(3,lat,lon)).^2,3);
+[I,J]=find(dist2==min(dist2(:)));
+
+% figure('name',sitename)
+% plot(lon(:),lat(:),'.')
+% hold on
+% plot(ONTOSlon,ONTOSlat,'r*')
+% plot(lon(I,J),lat(I,J),'g*')
+
+ONTOS_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+ONTOS_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+ONTOS_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+ONTOS_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+
+figure('name',sitename)
+fs = 15;
+lw = 1.5;
+set(gcf,'color','white')
+plot(L8bands(1:4).*1E3,RrsONTOS130919L8corr(1:4),'--b','LineWidth',lw)
+hold on
+plot(L8bands(1:4).*1E3,ONTOS_ACO(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,ONTOS_SEA(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,ONTOS_MOB(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,ONTOS_MUM(1:4),'k','LineWidth',lw)
+legend('Field','Acolite','SeaDAS','MoB-ELM','MUMM')
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+set(gca,'fontsize',fs)
+xlim([400 700])
+% axis([400 1000 0 0.03])
+grid on
+
+%% ONTEX from the field
+sitename = 'ONTEX';
+wlrange = wavelengthSVC>=400 & wavelengthSVC<=2500;
+% wlzero = wavelengthSVC==2219.0;
+wlavg = wavelengthSVC>=2000 & wavelengthSVC<=2350;
+
+zeroavg = mean(RrsONTEX130919(wlavg));
+
+RrsONTEX130919corr = RrsONTEX130919-zeroavg;
+
+RrsONTEX130919L8 = spect_sampL8(RrsONTEX130919corr(wlrange),wavelengthSVC(wlrange).*1E-3);
+
+RrsONTEX130919L8corr = RrsONTEX130919L8;
+RrsONTEX130919L8corr(5:7)=0;
+
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+figure('name',sitename)
+fs = 15;
+set(gcf,'color','white')
+plot(wavelengthSVC,RrsONTEX130919,'r')
+hold on
+plot(wavelengthSVC,RrsONTEX130919corr,'--r')
+% plot(wavelengthSVC(wlzero),RrsONTEX130919(wlzero),'.g')
+plot(L8bands.*1E3,RrsONTEX130919L8,'.-b')
+plot(L8bands.*1E3,RrsONTEX130919L8corr,'.-k')
+legend('RrsONTEX130919','RrsONTEX130919corr','RrsONTEX130919L8','RrsONTEX130919L8corr')
+title('R_{rs} -- 09/19/13 ','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
+ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
+set(gca,'fontsize',fs)
+% axis([400 1000 0 0.03])
+grid on
+%% ONTEX Rrs comparison
+
+ONTEXlat =	43.244892;
+ONTEXlon = -77.536671;
+
+dist2=sum(bsxfun(@minus, cat(3,ONTEXlat,ONTEXlon), cat(3,lat,lon)).^2,3);
+[I,J]=find(dist2==min(dist2(:)));
+
+figure('name',sitename)
+plot(lon(:),lat(:),'.')
+hold on
+plot(ONTEXlon,ONTEXlat,'r*')
+plot(lon(I,J),lat(I,J),'g*')
+
+ONTEX_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+ONTEX_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+ONTEX_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+ONTEX_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+
+figure('name',sitename)
+fs = 15;
+lw = 1.5;
+set(gcf,'color','white')
+plot(L8bands(1:4).*1E3,RrsONTEX130919L8corr(1:4),'--b','LineWidth',lw)
+hold on
+plot(L8bands(1:4).*1E3,ONTEX_ACO(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,ONTEX_SEA(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,ONTEX_MOB(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,ONTEX_MUM(1:4),'k','LineWidth',lw)
+legend('Field','Acolite','SeaDAS','MoB-ELM','MUMM')
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+set(gca,'fontsize',fs)
+xlim([400 700])
+% axis([400 1000 0 0.03])
+grid on
+
+%% RVRPI from the field
+sitename = 'RVRPI';
+wlrange = wavelengthSVC>=400 & wavelengthSVC<=2500;
+% wlzero = wavelengthSVC==2219.0;
+wlavg = wavelengthSVC>=2000 & wavelengthSVC<=2350;
+
+zeroavg = mean(RrsRVRPI130919(wlavg));
+
+RrsRVRPI130919corr = RrsRVRPI130919-zeroavg;
+
+RrsRVRPI130919L8 = spect_sampL8(RrsRVRPI130919corr(wlrange),wavelengthSVC(wlrange).*1E-3);
+
+RrsRVRPI130919L8corr = RrsRVRPI130919L8;
+RrsRVRPI130919L8corr(5:7)=0;
+
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+figure('name',sitename)
+fs = 15;
+set(gcf,'color','white')
+plot(wavelengthSVC,RrsRVRPI130919,'r')
+hold on
+plot(wavelengthSVC,RrsRVRPI130919corr,'--r')
+% plot(wavelengthSVC(wlzero),RrsRVRPI130919(wlzero),'.g')
+plot(L8bands.*1E3,RrsRVRPI130919L8,'.-b')
+plot(L8bands.*1E3,RrsRVRPI130919L8corr,'.-k')
+legend('RrsRVRPI130919','RrsRVRPI130919corr','RrsRVRPI130919L8','RrsRVRPI130919L8corr')
+title('R_{rs} -- 09/19/13 ','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
+ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
+set(gca,'fontsize',fs)
+% axis([400 1000 0 0.03])
+grid on
+%% RVRPI Rrs comparison
+
+RVRPIlat =	43.259925;
+RVRPIlon = -77.601587;
+
+dist2=sum(bsxfun(@minus, cat(3,RVRPIlat,RVRPIlon), cat(3,lat,lon)).^2,3);
+[I,J]=find(dist2==min(dist2(:)));
+
+figure('name',sitename)
+plot(lon(:),lat(:),'.')
+hold on
+plot(RVRPIlon,RVRPIlat,'r*')
+plot(lon(I,J),lat(I,J),'g*')
+
+RVRPI_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RVRPI_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RVRPI_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RVRPI_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+
+figure('name',sitename)
+fs = 15;
+lw = 1.5;
+set(gcf,'color','white')
+plot(L8bands(1:4).*1E3,RrsRVRPI130919L8corr(1:4),'--b','LineWidth',lw)
+hold on
+plot(L8bands(1:4).*1E3,RVRPI_ACO(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RVRPI_SEA(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RVRPI_MOB(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RVRPI_MUM(1:4),'k','LineWidth',lw)
+legend('Field','Acolite','SeaDAS','MoB-ELM','MUMM')
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+set(gca,'fontsize',fs)
+xlim([400 700])
+% axis([400 1000 0 0.03])
+grid on
+
+%% RVRPL from the field
+sitename = 'RVRPL';
+wlrange = wavelengthSVC>=400 & wavelengthSVC<=2500;
+% wlzero = wavelengthSVC==2219.0;
+wlavg = wavelengthSVC>=2000 & wavelengthSVC<=2350;
+
+zeroavg = mean(RrsRVRPL130919(wlavg));
+
+RrsRVRPL130919corr = RrsRVRPL130919-zeroavg;
+
+RrsRVRPL130919L8 = spect_sampL8(RrsRVRPL130919corr(wlrange),wavelengthSVC(wlrange).*1E-3);
+
+RrsRVRPL130919L8corr = RrsRVRPL130919L8;
+RrsRVRPL130919L8corr(5:7)=0;
+
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+figure('name',sitename)
+fs = 15;
+set(gcf,'color','white')
+plot(wavelengthSVC,RrsRVRPL130919,'r')
+hold on
+plot(wavelengthSVC,RrsRVRPL130919corr,'--r')
+% plot(wavelengthSVC(wlzero),RrsRVRPL130919(wlzero),'.g')
+plot(L8bands.*1E3,RrsRVRPL130919L8,'.-b')
+plot(L8bands.*1E3,RrsRVRPL130919L8corr,'.-k')
+legend('RrsRVRPL130919','RrsRVRPL130919corr','RrsRVRPL130919L8','RrsRVRPL130919L8corr')
+title('R_{rs} -- 09/19/13 ','fontsize',fs)
+xlabel('wavelengthSVC [nm]','fontsize',fs)
+ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
+set(gca,'fontsize',fs)
+% axis([400 1000 0 0.03])
+grid on
+%% RVRPL Rrs comparison
+
+RVRPLlat =	43.270990;
+RVRPLlon = -77.592282;
+
+dist2=sum(bsxfun(@minus, cat(3,RVRPLlat,RVRPLlon), cat(3,lat,lon)).^2,3);
+[I,J]=find(dist2==min(dist2(:)));
+
+figure('name',sitename)
+plot(lon(:),lat(:),'.')
+hold on
+plot(RVRPLlon,RVRPLlat,'r*')
+plot(lon(I,J),lat(I,J),'g*')
+
+RVRPL_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RVRPL_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RVRPL_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RVRPL_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+
+figure('name',sitename)
+fs = 15;
+lw = 1.5;
+set(gcf,'color','white')
+plot(L8bands(1:4).*1E3,RrsRVRPL130919L8corr(1:4),'--b','LineWidth',lw)
+hold on
+plot(L8bands(1:4).*1E3,RVRPL_ACO(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RVRPL_SEA(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RVRPL_MOB(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RVRPL_MUM(1:4),'k','LineWidth',lw)
+legend('Field','Acolite','SeaDAS','MoB-ELM','MUMM')
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+set(gca,'fontsize',fs)
+xlim([400 700])
+% axis([400 1000 0 0.03])
+grid on
+
