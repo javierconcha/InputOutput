@@ -934,23 +934,6 @@ ConcFieldCHL_CRANB;
 ConcFieldCHL_BRADI;
 ConcFieldCHL_BRADO];
 
-%% RMSE
-CHL_data = [...
-LongSconc130919(1),LongSconc130919ret(1);
-Cranbconc130919(1),Cranbconc130919ret(1);
-OntOSconc130919(1),OntOSconc130919ret(1);
-OntNSconc130919(1),OntNSconc130919ret(1);
-LongSconc140929(1),LongSconc140929ret(1);
-LongNconc140929(1),LongNconc140929ret(1);
-Cranbconc140929(1),Cranbconc140929ret(1);
-IBayNconc140929(1),IBayNconc140929ret(1);
-OntOSconc140929(1),OntOSconc140929ret(1)];	
-
-CHL_RMSE = sqrt(mean((CHL_data(:,1)-CHL_data(:,2)).^2));
-CHL_RMSErange = 100*CHL_RMSE/(max(CHL_data(:,1))-min(CHL_data(:,1)));
-
-CHL_std = 100*std(abs(CHL_data(:,1)-CHL_data(:,2)))/(max(CHL_data(:,1))-min(CHL_data(:,1)));
-
 %% Retrieved vs Measured
 % CHL
 figure
@@ -975,7 +958,7 @@ xlabel('measured C_a [mg m^{-3}] ','fontsize',fs,'Position',[80 -15])
 ylabel('L8 retrieved C_a [mg m^{-3}]','fontsize',fs)
 set(gca,'OuterPosition',[0 0.05 1 1])
 set(gca,'XMinorTick','on','YMinorTick','on')
-%%
+%% ZOOM
 figure
 fs = 60;
 ms = 40;
@@ -999,16 +982,63 @@ xlim([0 maxconcCHL])
 set(gca,'OuterPosition',[0 0.05 1 1])
 set(gca,'XMinorTick','on','YMinorTick','on')
 %%
-hold on % regression
-[a,b] = polyfit(CHL_data(:,1),CHL_data(:,2),1);
-x1=[0 maxconcChl];
-y1=a(1).*x1+a(2);
-plot(x1,y1,'r-','LineWidth',1)
-C = corrcoef([CHL_data(:,1),CHL_data(:,2)]);
-r2 = C(1,2)^2;
-str1 = sprintf('y: %2.2f x + %2.2f \n R^2: %2.2f; N: %i \n RMSE: %2.2f',a(1),a(2),r2,size(CHL_data,1),CHL_RMSE);
-xLimits = get(gca,'XLim');
-yLimits = get(gca,'YLim');
-xLoc = xLimits(1)+0.1*(xLimits(2)-xLimits(1));
-yLoc = yLimits(1)+0.85*(yLimits(2)-yLimits(1));
-h = text(xLoc,yLoc,str1,'FontSize',16,'FontWeight','bold');
+% hold on % regression
+% [a,b] = polyfit(CHL_data(:,1),CHL_data(:,2),1);
+% x1=[0 maxconcChl];
+% y1=a(1).*x1+a(2);
+% plot(x1,y1,'r-','LineWidth',1)
+% C = corrcoef([CHL_data(:,1),CHL_data(:,2)]);
+% r2 = C(1,2)^2;
+% str1 = sprintf('y: %2.2f x + %2.2f \n R^2: %2.2f; N: %i \n RMSE: %2.2f',a(1),a(2),r2,size(CHL_data,1),CHL_RMSE);
+% xLimits = get(gca,'XLim');
+% yLimits = get(gca,'YLim');
+% xLoc = xLimits(1)+0.1*(xLimits(2)-xLimits(1));
+% yLoc = yLimits(1)+0.85*(yLimits(2)-yLimits(1));
+% h = text(xLoc,yLoc,str1,'FontSize',16,'FontWeight','bold');
+
+%% Stats
+
+CHL_ACO_RMSE = sqrt(mean((CHL_ACO_sites-ConcFieldCHL).^2));
+CHL_ACO_RMSErange = 100*CHL_ACO_RMSE/(max(ConcFieldCHL)-min(ConcFieldCHL));
+CHL_ACO_std = 100*std(abs(CHL_ACO_sites-ConcFieldCHL))/(max(ConcFieldCHL)-min(ConcFieldCHL));
+
+CHL_SEA_RMSE = sqrt(mean((CHL_SEA_sites-ConcFieldCHL).^2));
+CHL_SEA_RMSErange = 100*CHL_SEA_RMSE/(max(ConcFieldCHL)-min(ConcFieldCHL));
+CHL_SEA_std = 100*std(abs(CHL_SEA_sites-ConcFieldCHL))/(max(ConcFieldCHL)-min(ConcFieldCHL));
+
+CHL_MOB_RMSE = sqrt(mean((CHL_MOB_sites-ConcFieldCHL).^2));
+CHL_MOB_RMSErange = 100*CHL_MOB_RMSE/(max(ConcFieldCHL)-min(ConcFieldCHL));
+CHL_MOB_std = 100*std(abs(CHL_MOB_sites-ConcFieldCHL))/(max(ConcFieldCHL)-min(ConcFieldCHL));
+
+CHL_MUM_RMSE = sqrt(mean((CHL_MUM_sites-ConcFieldCHL).^2));
+CHL_MUM_RMSErange = 100*CHL_MUM_RMSE/(max(ConcFieldCHL)-min(ConcFieldCHL));
+CHL_MUM_std = 100*std(abs(CHL_MUM_sites-ConcFieldCHL))/(max(ConcFieldCHL)-min(ConcFieldCHL));
+
+error = [CHL_ACO_RMSErange CHL_SEA_RMSErange CHL_MOB_RMSErange CHL_MUM_RMSErange];
+% error = [CHL_RMSE    TSS_RMSE    CDO_RMSE];
+
+figure
+set(gcf,'color','white')
+fs = 20;
+bar(error,0.5)
+% hold on
+% errorbar(error,[CHL_std TSS_std CDO_std],'kx')
+Labels = {'Acolite','SeaDAS','MOB-ELM','MUMM'};
+
+set(gca,'FontSize',fs);
+ylabel('RMSE [%]','FontSize',fs)
+barmap=[0.7 0.7 0.7];
+colormap(barmap)
+ylim([0 50])
+grid on
+
+addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
+%
+[hx,hy] = format_ticks(gca,Labels);
+
+for i=1:size(error,2)
+    
+    text(i,error(i),[num2str(error(i),'%0.1f') '%'],...
+    'HorizontalAlignment','center',...
+    'VerticalAlignment','bottom','FontSize',16)
+end
