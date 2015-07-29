@@ -8,10 +8,15 @@ cond4 = x(:)<0;
 cond5 = y(:)<0;
 x_used = x(cond3);
 y_used = y(cond3);
+cond6  = isfinite(x(:))&isfinite(y(:));
+
+
+disp('---------------------------------------')
+display([labelx ' ' labely])
 
 str0 = sprintf('Band %s: x Neg: %2.2f%%; y Neg: %2.2f%%;usable: %2.0f%%',...
-    bandname,100*sum(cond4)/sum(isfinite(x(:))),100*sum(cond5)/sum(isfinite(y(:))),...
-    100*sum(cond3)/sum(isfinite(y(:))));
+    bandname,100*sum(cond4)/sum(cond6),100*sum(cond5)/sum(cond6),...
+    100*sum(cond3)/sum(cond6));
 disp(str0)
 
 h = figure;
@@ -87,17 +92,17 @@ plot(x1,y1,'r-','LineWidth',1.2)
 %% Statistics: r-squared (or coefficient of determination) 
 SStot = sum((y_used-mean(y_used)).^2);
 SSres = sum((y_used-polyval(a,x_used)).^2);
-rsq = 1-(SSres/SStot)
-corr(x_used,y_used)^2
+rsq_SS = 1-(SSres/SStot)
+rsq_corr = corr(x_used,y_used)^2
 
 RMSE = sqrt(mean((x_used-y_used).^2));
 
 if a(2)>=0
     str1 = sprintf('y: %2.4f x + %2.4f \n R^2: %2.4f; N: %i \n RMSE: %2.4f',...
-        a(1),abs(a(2)),rsq,size(x_used,1),RMSE);
+        a(1),abs(a(2)),rsq_SS,size(x_used,1),RMSE);
 else
     str1 = sprintf('y: %2.4f x - %2.4f \n R^2: %2.4f; N: %i \n RMSE: %2.4f',...
-        a(1),abs(a(2)),rsq,size(x_used,1),RMSE);
+        a(1),abs(a(2)),rsq_SS,size(x_used,1),RMSE);
 end
 
 axis([0 maxref 0 maxref])
@@ -169,8 +174,7 @@ xlabh = get(gca,'XLabel');
 set(xlabh,'Position',get(xlabh,'Position') - [0 1 0])
 
 %% Save figure
-str3 = sprintf('%s_ACOMOBSEAMUM_%s_%s_%s.eps',date,bandname,labelx,labely);
-dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
-saveas(gcf,[dirname str3],'epsc')
+% str3 = sprintf('%s_ACOMOBSEAMUM_%s_%s_%s.eps',date,bandname,labelx,labely);
+% dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
+% saveas(gcf,[dirname str3],'epsc')
 
