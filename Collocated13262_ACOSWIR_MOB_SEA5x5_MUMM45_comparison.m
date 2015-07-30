@@ -114,39 +114,39 @@ date = '2013262';
 
 % Band 1: 443nm
 
-denscatplot(Rrs_443A,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'Acolite','MoB-ELM')
-denscatplot(Rrs_443A,Rrs_443S,regressiontype,densityflag,'443',maxref,date,'Acolite','SeaDAS')
-denscatplot(Rrs_443A,Rrs_443M,regressiontype,densityflag,'443',maxref,date,'Acolite','MUMM')
-denscatplot(Rrs_443S,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'SeaDAS','MoB-ELM')
-denscatplot(Rrs_443S,Rrs_443M,regressiontype,densityflag,'443',maxref,date,'SeaDAS','MUMM')
-denscatplot(Rrs_443M,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'MUMM','MoB-ELM')
+denscatplot(Rrs_443A,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'Acolite-SWIR','MoB-ELM')
+denscatplot(Rrs_443A,Rrs_443S,regressiontype,densityflag,'443',maxref,date,'Acolite-SWIR','SeaDAS-SWIR')
+denscatplot(Rrs_443A,Rrs_443M,regressiontype,densityflag,'443',maxref,date,'Acolite-SWIR','SeaDAS-MUMM')
+denscatplot(Rrs_443S,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'SeaDAS-SWIR','MoB-ELM')
+denscatplot(Rrs_443S,Rrs_443M,regressiontype,densityflag,'443',maxref,date,'SeaDAS-SWIR','SeaDAS-MUMM')
+denscatplot(Rrs_443M,Rrs_443E,regressiontype,densityflag,'443',maxref,date,'SeaDAS-MUMM','MoB-ELM')
 
 % Band 2: 483nm
 
-denscatplot(Rrs_483A,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'Acolite','MoB-ELM')
-denscatplot(Rrs_483A,Rrs_483S,regressiontype,densityflag,'483',maxref,date,'Acolite','SeaDAS')
-denscatplot(Rrs_483A,Rrs_483M,regressiontype,densityflag,'483',maxref,date,'Acolite','MUMM')
-denscatplot(Rrs_483S,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'SeaDAS','MoB-ELM')
-denscatplot(Rrs_483S,Rrs_483M,regressiontype,densityflag,'483',maxref,date,'SeaDAS','MUMM')
-denscatplot(Rrs_483M,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'MUMM','MoB-ELM')
+denscatplot(Rrs_483A,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'Acolite-SWIR','MoB-ELM')
+denscatplot(Rrs_483A,Rrs_483S,regressiontype,densityflag,'483',maxref,date,'Acolite-SWIR','SeaDAS-SWIR')
+denscatplot(Rrs_483A,Rrs_483M,regressiontype,densityflag,'483',maxref,date,'Acolite-SWIR','SeaDAS-MUMM')
+denscatplot(Rrs_483S,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'SeaDAS-SWIR','MoB-ELM')
+denscatplot(Rrs_483S,Rrs_483M,regressiontype,densityflag,'483',maxref,date,'SeaDAS-SWIR','SeaDAS-MUMM')
+denscatplot(Rrs_483M,Rrs_483E,regressiontype,densityflag,'483',maxref,date,'SeaDAS-MUMM','MoB-ELM')
 
 % Band 3: 561nm
 
-denscatplot(Rrs_561A,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'Acolite','MoB-ELM')
-denscatplot(Rrs_561A,Rrs_561S,regressiontype,densityflag,'561',maxref,date,'Acolite','SeaDAS')
-denscatplot(Rrs_561A,Rrs_561M,regressiontype,densityflag,'561',maxref,date,'Acolite','MUMM')
-denscatplot(Rrs_561S,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'SeaDAS','MoB-ELM')
-denscatplot(Rrs_561S,Rrs_561M,regressiontype,densityflag,'561',maxref,date,'SeaDAS','MUMM')
-denscatplot(Rrs_561M,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'MUMM','MoB-ELM')
+denscatplot(Rrs_561A,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'Acolite-SWIR','MoB-ELM')
+denscatplot(Rrs_561A,Rrs_561S,regressiontype,densityflag,'561',maxref,date,'Acolite-SWIR','SeaDAS-SWIR')
+denscatplot(Rrs_561A,Rrs_561M,regressiontype,densityflag,'561',maxref,date,'Acolite-SWIR','SeaDAS-MUMM')
+denscatplot(Rrs_561S,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'SeaDAS-SWIR','MoB-ELM')
+denscatplot(Rrs_561S,Rrs_561M,regressiontype,densityflag,'561',maxref,date,'SeaDAS-SWIR','SeaDAS-MUMM')
+denscatplot(Rrs_561M,Rrs_561E,regressiontype,densityflag,'561',maxref,date,'SeaDAS-MUMM','MoB-ELM')
 
 % Band 4: 655nm
 
-denscatplot(Rrs_655A,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'Acolite','MoB-ELM')
-denscatplot(Rrs_655A,Rrs_655S,regressiontype,densityflag,'655',maxref,date,'Acolite','SeaDAS')
-denscatplot(Rrs_655A,Rrs_655M,regressiontype,densityflag,'655',maxref,date,'Acolite','MUMM')
-denscatplot(Rrs_655S,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'SeaDAS','MoB-ELM')
-denscatplot(Rrs_655S,Rrs_655M,regressiontype,densityflag,'655',maxref,date,'SeaDAS','MUMM')
-denscatplot(Rrs_655M,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'MUMM','MoB-ELM')
+denscatplot(Rrs_655A,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'Acolite-SWIR','MoB-ELM')
+denscatplot(Rrs_655A,Rrs_655S,regressiontype,densityflag,'655',maxref,date,'Acolite-SWIR','SeaDAS-SWIR')
+denscatplot(Rrs_655A,Rrs_655M,regressiontype,densityflag,'655',maxref,date,'Acolite-SWIR','SeaDAS-MUMM')
+denscatplot(Rrs_655S,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'SeaDAS-SWIR','MoB-ELM')
+denscatplot(Rrs_655S,Rrs_655M,regressiontype,densityflag,'655',maxref,date,'SeaDAS-SWIR','SeaDAS-MUMM')
+denscatplot(Rrs_655M,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'SeaDAS-MUMM','MoB-ELM')
 
 %% Chl
 densityflag = 1;
@@ -161,17 +161,17 @@ CHL_SEA(CHL_SEA>150)=NaN;
 CHL_MUM(CHL_MUM>150)=NaN;
 % sum(sum(CHL_ACO>150))
 
-% denscatplot(CHL_ACO,CHL_MOB,regressiontype,densityflag,'C_a',maxref,date,'Acolite','MoB-ELM')
-% 
-% denscatplot(CHL_ACO,CHL_SEA,regressiontype,densityflag,'C_a',maxref,date,'Acolite','SeaDAS')
-% 
-% denscatplot(CHL_ACO,CHL_MUM,regressiontype,densityflag,'C_a',maxref,date,'Acolite','MUMM')
-% 
-% denscatplot(CHL_SEA,CHL_MOB,regressiontype,densityflag,'C_a',maxref,date,'SeaDAS','MoB-ELM')
-% 
-% denscatplot(CHL_SEA,CHL_MUM,regressiontype,densityflag,'C_a',maxref,date,'SeaDAS','MUMM')
-% 
-% denscatplot(CHL_MUM,CHL_MOB,regressiontype,densityflag,'C_a',maxref,date,'MUMM','MoB-ELM')
+denscatplot(CHL_ACO,CHL_MOB,regressiontype,densityflag,'C_a',maxref,date,'Acolite-SWIR','MoB-ELM')
+
+denscatplot(CHL_ACO,CHL_SEA,regressiontype,densityflag,'C_a',maxref,date,'Acolite-SWIR','SeaDAS-SWIR')
+
+denscatplot(CHL_ACO,CHL_MUM,regressiontype,densityflag,'C_a',maxref,date,'Acolite-SWIR','SeaDAS-MUMM')
+
+denscatplot(CHL_SEA,CHL_MOB,regressiontype,densityflag,'C_a',maxref,date,'SeaDAS-SWIR','MoB-ELM')
+
+denscatplot(CHL_SEA,CHL_MUM,regressiontype,densityflag,'C_a',maxref,date,'SeaDAS-SWIR','SeaDAS-MUMM')
+
+denscatplot(CHL_MUM,CHL_MOB,regressiontype,densityflag,'C_a',maxref,date,'SeaDAS-MUMM','MoB-ELM')
 
 %if (rhos_469 != NaN and rhos_555 != NaN and rhos_645 != NaN)  then (       if (LAND)        then            (.091935692 + .61788 * atan(10*(rhos_645-.015)) )       else           (0.29319407 + 0.45585 * atan(50*(rhos_645-.015)) ) ) else NaN
 
@@ -183,7 +183,7 @@ load Rrs130919AllSites.mat
 
 ConcFieldCHL_ONTNS = 0.48;
 ConcFieldCHL_ONTOS = 0.96;
-ConcFieldCHL_ONTEX = 3.12;
+ConcFieldCHL_ONTEX = 1.68;
 ConcFieldCHL_RVRPI = 2.88;
 ConcFieldCHL_RVRPL = 0.48;
 ConcFieldCHL_LONGN = 123.85;
@@ -267,7 +267,7 @@ grid on
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
-saveas(gcf,[dirname str3],'epsc')
+% saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -352,7 +352,7 @@ grid on
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
-saveas(gcf,[dirname str3],'epsc')
+% saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -423,7 +423,7 @@ plot(L8bands(1:4).*1E3,ONTEX_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTEX_SEA(1:4),'g','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTEX_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTEX_MUM(1:4),'k','LineWidth',lw)
-legend('Field','Acolite','SeaDAS','MoB-ELM','MUMM')
+legend('Field','Acolite-SWIR','SeaDAS-SWIR','MoB-ELM','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -434,7 +434,6 @@ grid on
 
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
 saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
@@ -518,7 +517,7 @@ grid on
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
-saveas(gcf,[dirname str3],'epsc')
+% saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -602,7 +601,7 @@ grid on
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
-saveas(gcf,[dirname str3],'epsc')
+% saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -654,7 +653,7 @@ grid on
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
-saveas(gcf,[dirname str3],'epsc')
+% saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -706,7 +705,7 @@ grid on
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
-saveas(gcf,[dirname str3],'epsc')
+% saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -758,7 +757,7 @@ grid on
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
-saveas(gcf,[dirname str3],'epsc')
+% saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -810,7 +809,7 @@ grid on
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
-saveas(gcf,[dirname str3],'epsc')
+% saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -823,8 +822,8 @@ CHL_MUM_BRADI = CHL_MUM(I,J);
 
 sitename = 'BRADONT';
 
-BRADONTlat =	43.313675;
-BRADONTlon = -77.717531;
+BRADONTlat =  43.32578;
+BRADONTlon = -77.706432;
 
 dist2=sum(bsxfun(@minus, cat(3,BRADONTlat,BRADONTlon), cat(3,lat,lon)).^2,3);
 [I,J]=find(dist2==min(dist2(:)));
@@ -862,6 +861,7 @@ grid on
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
 % print(h,[dirname str3],'-depsc')
+% saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -870,7 +870,7 @@ CHL_SEA_BRADO = CHL_SEA(I,J);
 CHL_MOB_BRADO = CHL_MOB(I,J);
 CHL_MUM_BRADO = CHL_MUM(I,J);
 
-saveas(gcf,[dirname str3],'epsc')
+
 
 %% CHL comparison
 
@@ -948,7 +948,7 @@ hold on
 plot(ConcFieldCHL,CHL_SEA_sites,'og','MarkerSize', ms,'LineWidth',lw);
 plot(ConcFieldCHL,CHL_MOB_sites,'^b','MarkerSize', ms,'LineWidth',lw);
 plot(ConcFieldCHL,CHL_MUM_sites,'xk','MarkerSize', ms,'LineWidth',lw);
-legend('Acolite','SeaDAS','MoB-ELM','MUMM')
+legend('Acolite-SWIR','SeaDAS-SWIR','MoB-ELM','SeaDAS-MUMM')
 maxconcCHL = 150;
 plot([0 maxconcCHL],[0 maxconcCHL],'--k')
 axis equal
@@ -1019,11 +1019,11 @@ error = [CHL_ACO_RMSErange CHL_SEA_RMSErange CHL_MOB_RMSErange CHL_MUM_RMSErange
 
 figure
 set(gcf,'color','white')
-fs = 20;
+fs = 25;
 bar(error,0.5)
 % hold on
 % errorbar(error,[CHL_std TSS_std CDO_std],'kx')
-Labels = {'Acolite','SeaDAS','MOB-ELM','MUMM'};
+Labels = {'Acolite-SWIR','SeaDAS-SWIR','MOB-ELM','SeaDAS-MUMM'};
 
 set(gca,'FontSize',fs);
 ylabel('NRMSE [%]','FontSize',fs)
@@ -1040,5 +1040,5 @@ for i=1:size(error,2)
     
     text(i,error(i),[num2str(error(i),'%0.1f') '%'],...
     'HorizontalAlignment','center',...
-    'VerticalAlignment','bottom','FontSize',16)
+    'VerticalAlignment','bottom','FontSize',18)
 end

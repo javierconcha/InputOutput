@@ -52,11 +52,6 @@ elseif densityflag == 1
 end
 
 figure(h)
-hold on
-str1 = sprintf('R_{rs} %s nm (%s) [1/sr]',bandname,labelx);
-str2 = sprintf('R_{rs} %s nm (%s) [1/sr]',bandname,labely);
-xlabel(str1)
-ylabel(str2)
 % grid on
 axis equal
 % axis([0 maxref 0 maxref])
@@ -115,6 +110,7 @@ figure(h)
 hold on
 text(xLoc,yLoc,str1,'FontSize',fs,'FontWeight','normal');
 disp(str1)
+
 % %% cell mean
 % N = 101;
 % x_interval = linspace(0,max(x_used),N);
@@ -162,19 +158,30 @@ disp(str1)
 % 
 % plot(x2,y2,'c-','LineWidth',2)
 
+figure(h)
+hold on
+str1 = sprintf('R_{rs} %s nm (%s) [1/sr]',bandname,labelx);
+str2 = sprintf('R_{rs} %s nm (%s) [1/sr]',bandname,labely);
+xlabel(str1)
+ylabel(str2)
+
 if strcmp(bandname,'C_a')
     strx = sprintf('C_a (%s) [mg/m^3]',labelx);
     xlabel(strx)
     stry = sprintf('C_a (%s) [mg/m^3]',labely);
     ylabel(stry)
+    xlabh = get(gca,'XLabel'); % Increase position of X-axis label
+    set(xlabh,'Position',get(xlabh,'Position') - [0 1 0])
     
 end
 
-xlabh = get(gca,'XLabel');
-set(xlabh,'Position',get(xlabh,'Position') - [0 1 0])
+
+
+
+
 
 %% Save figure
-% str3 = sprintf('%s_ACOMOBSEAMUM_%s_%s_%s.eps',date,bandname,labelx,labely);
-% dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% saveas(gcf,[dirname str3],'epsc')
+str3 = sprintf('%s_ACOMOBSEAMUM_%s_%s_%s.eps',date,bandname,labelx,labely);
+dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
+saveas(gcf,[dirname str3],'epsc')
 
