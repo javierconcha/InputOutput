@@ -149,7 +149,7 @@ denscatplot(Rrs_655S,Rrs_655M,regressiontype,densityflag,'655',maxref,date,'SeaD
 denscatplot(Rrs_655M,Rrs_655E,regressiontype,densityflag,'655',maxref,date,'SeaDAS-MUMM','MoB-ELM')
 
 %% Chl
-densityflag = 1;
+densityflag = 0;
 regressiontype = 'RMA';
 maxref = 150;
 date = '2013262';
@@ -251,11 +251,11 @@ lw = 1.5;
 set(gcf,'color','white')
 plot(L8bands(1:4).*1E3,RrsONTNS130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
+plot(L8bands(1:4).*1E3,ONTNS_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTNS_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTNS_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTNS_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTNS_MUM(1:4),'k','LineWidth',lw)
-% legend('Field','Acolite','SeaDAS','MoB-ELM','MUMM')
+% legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -266,8 +266,7 @@ grid on
 
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
-% saveas(gcf,[dirname str3],'epsc')
+saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -336,11 +335,11 @@ lw = 1.5;
 set(gcf,'color','white')
 plot(L8bands(1:4).*1E3,RrsONTOS130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
+plot(L8bands(1:4).*1E3,ONTOS_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTOS_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTOS_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTOS_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTOS_MUM(1:4),'k','LineWidth',lw)
-% legend('Field','Acolite','SeaDAS','MoB-ELM','MUMM')
+% legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -351,8 +350,7 @@ grid on
 
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
-% saveas(gcf,[dirname str3],'epsc')
+saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -419,11 +417,11 @@ lw = 1.5;
 set(gcf,'color','white')
 plot(L8bands(1:4).*1E3,RrsONTEX130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
+plot(L8bands(1:4).*1E3,ONTEX_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTEX_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTEX_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTEX_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,ONTEX_MUM(1:4),'k','LineWidth',lw)
-legend('Field','Acolite-SWIR','SeaDAS-SWIR','MoB-ELM','SeaDAS-MUMM')
+legend('Field','MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -501,11 +499,11 @@ lw = 1.5;
 set(gcf,'color','white')
 plot(L8bands(1:4).*1E3,RrsRVRPI130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
+plot(L8bands(1:4).*1E3,RVRPI_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RVRPI_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RVRPI_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,RVRPI_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RVRPI_MUM(1:4),'k','LineWidth',lw)
-% legend('Field','Acolite','SeaDAS','MoB-ELM','MUMM')
+% legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -516,8 +514,7 @@ grid on
 
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
-% saveas(gcf,[dirname str3],'epsc')
+saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -585,11 +582,11 @@ lw = 1.5;
 set(gcf,'color','white')
 plot(L8bands(1:4).*1E3,RrsRVRPL130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
+plot(L8bands(1:4).*1E3,RVRPL_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RVRPL_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RVRPL_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,RVRPL_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RVRPL_MUM(1:4),'k','LineWidth',lw)
-% legend('Field','Acolite','SeaDAS','MoB-ELM','MUMM')
+% legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -600,8 +597,7 @@ grid on
 
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
-% saveas(gcf,[dirname str3],'epsc')
+saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -637,11 +633,11 @@ lw = 1.5;
 set(gcf,'color','white')
 % plot(L8bands(1:4).*1E3,RrsLONGN130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
+plot(L8bands(1:4).*1E3,LONGN_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,LONGN_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,LONGN_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,LONGN_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,LONGN_MUM(1:4),'k','LineWidth',lw)
-% legend('Acolite','SeaDAS','MoB-ELM','MUMM')
+% legend('MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -652,8 +648,7 @@ grid on
 
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
-% saveas(gcf,[dirname str3],'epsc')
+saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -689,11 +684,11 @@ lw = 1.5;
 set(gcf,'color','white')
 % plot(L8bands(1:4).*1E3,RrsLONGS130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
+plot(L8bands(1:4).*1E3,LONGS_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,LONGS_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,LONGS_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,LONGS_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,LONGS_MUM(1:4),'k','LineWidth',lw)
-% legend('Acolite','SeaDAS','MoB-ELM','MUMM')
+% legend('MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -704,8 +699,7 @@ grid on
 
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
-% saveas(gcf,[dirname str3],'epsc')
+saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -741,11 +735,11 @@ lw = 1.5;
 set(gcf,'color','white')
 % plot(L8bands(1:4).*1E3,RrsCRANB130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
+plot(L8bands(1:4).*1E3,CRANB_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,CRANB_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,CRANB_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,CRANB_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,CRANB_MUM(1:4),'k','LineWidth',lw)
-% legend('Acolite','SeaDAS','MoB-ELM','MUMM')
+% legend('MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -756,8 +750,7 @@ grid on
 
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
-% saveas(gcf,[dirname str3],'epsc')
+saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -793,11 +786,11 @@ lw = 1.5;
 set(gcf,'color','white')
 % plot(L8bands(1:4).*1E3,RrsBRADIN130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
+plot(L8bands(1:4).*1E3,BRADIN_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,BRADIN_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,BRADIN_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,BRADIN_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,BRADIN_MUM(1:4),'k','LineWidth',lw)
-% legend('Acolite','SeaDAS','MoB-ELM','MUMM')
+% legend('MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -808,8 +801,7 @@ grid on
 
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
-% saveas(gcf,[dirname str3],'epsc')
+saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -845,11 +837,11 @@ lw = 1.5;
 set(gcf,'color','white')
 % plot(L8bands(1:4).*1E3,RrsBRADONT130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
+plot(L8bands(1:4).*1E3,BRADONT_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,BRADONT_ACO(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,BRADONT_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,BRADONT_MOB(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,BRADONT_MUM(1:4),'k','LineWidth',lw)
-% legend('Acolite','SeaDAS','MoB-ELM','MUMM')
+% legend('MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -860,8 +852,7 @@ grid on
 
 str3 = sprintf('RrsComp%s.eps',sitename);
 dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
-% print(h,[dirname str3],'-depsc')
-% saveas(gcf,[dirname str3],'epsc')
+saveas(gcf,[dirname str3],'epsc')
 
 % CHL comparison
 
@@ -942,13 +933,12 @@ ms = 15;
 lw = 3.0;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-
-plot(ConcFieldCHL,CHL_ACO_sites,'*r','MarkerSize', ms,'LineWidth',lw);
-hold on
-plot(ConcFieldCHL,CHL_SEA_sites,'og','MarkerSize', ms,'LineWidth',lw);
 plot(ConcFieldCHL,CHL_MOB_sites,'^b','MarkerSize', ms,'LineWidth',lw);
+hold on
+plot(ConcFieldCHL,CHL_ACO_sites,'*r','MarkerSize', ms,'LineWidth',lw);
+plot(ConcFieldCHL,CHL_SEA_sites,'og','MarkerSize', ms,'LineWidth',lw);
 plot(ConcFieldCHL,CHL_MUM_sites,'xk','MarkerSize', ms,'LineWidth',lw);
-legend('Acolite-SWIR','SeaDAS-SWIR','MoB-ELM','SeaDAS-MUMM')
+legend('MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 maxconcCHL = 150;
 plot([0 maxconcCHL],[0 maxconcCHL],'--k')
 axis equal
@@ -966,12 +956,12 @@ lw = 6.0;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
 set(gca,'XMinorTick','on','YMinorTick','on')
-plot(ConcFieldCHL,CHL_ACO_sites,'*r','MarkerSize', ms,'LineWidth',lw);
-hold on
-plot(ConcFieldCHL,CHL_SEA_sites,'og','MarkerSize', ms,'LineWidth',lw);
 plot(ConcFieldCHL,CHL_MOB_sites,'^b','MarkerSize', ms,'LineWidth',lw);
+hold on
+plot(ConcFieldCHL,CHL_ACO_sites,'*r','MarkerSize', ms,'LineWidth',lw);
+plot(ConcFieldCHL,CHL_SEA_sites,'og','MarkerSize', ms,'LineWidth',lw);
 plot(ConcFieldCHL,CHL_MUM_sites,'xk','MarkerSize', ms,'LineWidth',lw);
-% legend('Acolite','SeaDAS','MoB-ELM','MUMM')
+% legend('MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 maxconcCHL = 4;
 plot([0 maxconcCHL],[0 maxconcCHL],'--k','LineWidth',2.0)
 axis equal
@@ -1014,7 +1004,7 @@ CHL_MUM_RMSE = sqrt(mean((CHL_MUM_sites-ConcFieldCHL).^2));
 CHL_MUM_RMSErange = 100*CHL_MUM_RMSE/(max(ConcFieldCHL)-min(ConcFieldCHL));
 CHL_MUM_std = 100*std(abs(CHL_MUM_sites-ConcFieldCHL))/(max(ConcFieldCHL)-min(ConcFieldCHL));
 
-error = [CHL_ACO_RMSErange CHL_SEA_RMSErange CHL_MOB_RMSErange CHL_MUM_RMSErange];
+error = [CHL_MOB_RMSErange CHL_ACO_RMSErange CHL_SEA_RMSErange CHL_MUM_RMSErange];
 % error = [CHL_RMSE    TSS_RMSE    CDO_RMSE];
 
 figure
@@ -1023,7 +1013,7 @@ fs = 25;
 bar(error,0.5)
 % hold on
 % errorbar(error,[CHL_std TSS_std CDO_std],'kx')
-Labels = {'Acolite-SWIR','SeaDAS-SWIR','MOB-ELM','SeaDAS-MUMM'};
+Labels = {'MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM'};
 
 set(gca,'FontSize',fs);
 ylabel('NRMSE [%]','FontSize',fs)
