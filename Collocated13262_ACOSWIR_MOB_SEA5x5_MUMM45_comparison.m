@@ -240,10 +240,10 @@ dist2=sum(bsxfun(@minus, cat(3,ONTNSlat,ONTNSlon), cat(3,lat,lon)).^2,3);
 % plot(ONTNSlon,ONTNSlat,'r*')
 % plot(lon(I,J),lat(I,J),'g*')
 
-ONTNS_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
-ONTNS_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
-ONTNS_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
-ONTNS_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+RRS_MOB_ONTNS = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RRS_ACO_ONTNS = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RRS_SEA_ONTNS = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RRS_MUM_ONTNS = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
 figure('name',sitename)
 fs = 20;
@@ -251,10 +251,10 @@ lw = 1.5;
 set(gcf,'color','white')
 plot(L8bands(1:4).*1E3,RrsONTNS130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
-plot(L8bands(1:4).*1E3,ONTNS_MOB(1:4),'b','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTNS_ACO(1:4),'r','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTNS_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTNS_MUM(1:4),'k','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MOB_ONTNS(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_ACO_ONTNS(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_SEA_ONTNS(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MUM_ONTNS(1:4),'k','LineWidth',lw)
 % legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
@@ -324,10 +324,10 @@ dist2=sum(bsxfun(@minus, cat(3,ONTOSlat,ONTOSlon), cat(3,lat,lon)).^2,3);
 % plot(ONTOSlon,ONTOSlat,'r*')
 % plot(lon(I,J),lat(I,J),'g*')
 
-ONTOS_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
-ONTOS_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
-ONTOS_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
-ONTOS_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+RRS_MOB_ONTOS = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RRS_ACO_ONTOS = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RRS_SEA_ONTOS = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RRS_MUM_ONTOS = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
 figure('name',sitename)
 fs = 20;
@@ -335,10 +335,10 @@ lw = 1.5;
 set(gcf,'color','white')
 plot(L8bands(1:4).*1E3,RrsONTOS130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
-plot(L8bands(1:4).*1E3,ONTOS_MOB(1:4),'b','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTOS_ACO(1:4),'r','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTOS_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTOS_MUM(1:4),'k','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MOB_ONTOS(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_ACO_ONTOS(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_SEA_ONTOS(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MUM_ONTOS(1:4),'k','LineWidth',lw)
 % legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
@@ -406,10 +406,10 @@ hold on
 plot(ONTEXlon,ONTEXlat,'r*')
 plot(lon(I,J),lat(I,J),'g*')
 
-ONTEX_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
-ONTEX_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
-ONTEX_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
-ONTEX_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+RRS_MOB_ONTEX = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RRS_ACO_ONTEX = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RRS_SEA_ONTEX = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RRS_MUM_ONTEX = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
 figure('name',sitename)
 fs = 20;
@@ -417,10 +417,10 @@ lw = 1.5;
 set(gcf,'color','white')
 plot(L8bands(1:4).*1E3,RrsONTEX130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
-plot(L8bands(1:4).*1E3,ONTEX_MOB(1:4),'b','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTEX_ACO(1:4),'r','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTEX_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,ONTEX_MUM(1:4),'k','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MOB_ONTEX(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_ACO_ONTEX(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_SEA_ONTEX(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MUM_ONTEX(1:4),'k','LineWidth',lw)
 legend('Field','MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
@@ -476,8 +476,12 @@ set(gca,'fontsize',fs)
 grid on
 %% RVRPI Rrs comparison
 
-RVRPIlat =	43.259925;
-RVRPIlon = -77.601587;
+% RVRPIlat =	43.259925;
+% RVRPIlon = -77.601587;
+
+
+RVRPIlat =	43.2598; % Change location for being more fair with Acolite
+RVRPIlon = -77.6012;
 
 dist2=sum(bsxfun(@minus, cat(3,RVRPIlat,RVRPIlon), cat(3,lat,lon)).^2,3);
 [I,J]=find(dist2==min(dist2(:)));
@@ -488,10 +492,10 @@ hold on
 plot(RVRPIlon,RVRPIlat,'r*')
 plot(lon(I,J),lat(I,J),'g*')
 
-RVRPI_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
-RVRPI_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
-RVRPI_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
-RVRPI_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+RRS_MOB_RVRPI = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RRS_ACO_RVRPI = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RRS_SEA_RVRPI = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RRS_MUM_RVRPI = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
 figure('name',sitename)
 fs = 20;
@@ -499,16 +503,16 @@ lw = 1.5;
 set(gcf,'color','white')
 plot(L8bands(1:4).*1E3,RrsRVRPI130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
-plot(L8bands(1:4).*1E3,RVRPI_MOB(1:4),'b','LineWidth',lw)
-plot(L8bands(1:4).*1E3,RVRPI_ACO(1:4),'r','LineWidth',lw)
-plot(L8bands(1:4).*1E3,RVRPI_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,RVRPI_MUM(1:4),'k','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MOB_RVRPI(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_ACO_RVRPI(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_SEA_RVRPI(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MUM_RVRPI(1:4),'k','LineWidth',lw)
 % legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
 xlim([400 700])
-ylim([0 0.016])
+% ylim([0 0.016])
 % axis([400 1000 0 0.03])
 grid on
 
@@ -571,10 +575,10 @@ hold on
 plot(RVRPLlon,RVRPLlat,'r*')
 plot(lon(I,J),lat(I,J),'g*')
 
-RVRPL_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
-RVRPL_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
-RVRPL_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
-RVRPL_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+RRS_MOB_RVRPL = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RRS_ACO_RVRPL = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RRS_SEA_RVRPL = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RRS_MUM_RVRPL = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
 figure('name',sitename)
 fs = 20;
@@ -582,10 +586,10 @@ lw = 1.5;
 set(gcf,'color','white')
 plot(L8bands(1:4).*1E3,RrsRVRPL130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
-plot(L8bands(1:4).*1E3,RVRPL_MOB(1:4),'b','LineWidth',lw)
-plot(L8bands(1:4).*1E3,RVRPL_ACO(1:4),'r','LineWidth',lw)
-plot(L8bands(1:4).*1E3,RVRPL_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,RVRPL_MUM(1:4),'k','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MOB_RVRPL(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_ACO_RVRPL(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_SEA_RVRPL(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MUM_RVRPL(1:4),'k','LineWidth',lw)
 % legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
@@ -622,10 +626,10 @@ hold on
 plot(LONGNlon,LONGNlat,'r*')
 plot(lon(I,J),lat(I,J),'g*')
 
-LONGN_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
-LONGN_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
-LONGN_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
-LONGN_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+RRS_MOB_LONGN = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RRS_ACO_LONGN = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RRS_SEA_LONGN = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RRS_MUM_LONGN = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
 figure('name',sitename)
 fs = 20;
@@ -633,10 +637,10 @@ lw = 1.5;
 set(gcf,'color','white')
 % plot(L8bands(1:4).*1E3,RrsLONGN130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
-plot(L8bands(1:4).*1E3,LONGN_MOB(1:4),'b','LineWidth',lw)
-plot(L8bands(1:4).*1E3,LONGN_ACO(1:4),'r','LineWidth',lw)
-plot(L8bands(1:4).*1E3,LONGN_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,LONGN_MUM(1:4),'k','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MOB_LONGN(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_ACO_LONGN(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_SEA_LONGN(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MUM_LONGN(1:4),'k','LineWidth',lw)
 % legend('MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
@@ -673,10 +677,10 @@ hold on
 plot(LONGSlon,LONGSlat,'r*')
 plot(lon(I,J),lat(I,J),'g*')
 
-LONGS_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
-LONGS_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
-LONGS_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
-LONGS_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+RRS_MOB_LONGS = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RRS_ACO_LONGS = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RRS_SEA_LONGS = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RRS_MUM_LONGS = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
 figure('name',sitename)
 fs = 20;
@@ -684,10 +688,10 @@ lw = 1.5;
 set(gcf,'color','white')
 % plot(L8bands(1:4).*1E3,RrsLONGS130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
-plot(L8bands(1:4).*1E3,LONGS_MOB(1:4),'b','LineWidth',lw)
-plot(L8bands(1:4).*1E3,LONGS_ACO(1:4),'r','LineWidth',lw)
-plot(L8bands(1:4).*1E3,LONGS_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,LONGS_MUM(1:4),'k','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MOB_LONGS(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_ACO_LONGS(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_SEA_LONGS(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MUM_LONGS(1:4),'k','LineWidth',lw)
 % legend('MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
@@ -724,10 +728,10 @@ hold on
 plot(CRANBlon,CRANBlat,'r*')
 plot(lon(I,J),lat(I,J),'g*')
 
-CRANB_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
-CRANB_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
-CRANB_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
-CRANB_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+RRS_MOB_CRANB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RRS_ACO_CRANB = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RRS_SEA_CRANB = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RRS_MUM_CRANB = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
 figure('name',sitename)
 fs = 20;
@@ -735,10 +739,10 @@ lw = 1.5;
 set(gcf,'color','white')
 % plot(L8bands(1:4).*1E3,RrsCRANB130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
-plot(L8bands(1:4).*1E3,CRANB_MOB(1:4),'b','LineWidth',lw)
-plot(L8bands(1:4).*1E3,CRANB_ACO(1:4),'r','LineWidth',lw)
-plot(L8bands(1:4).*1E3,CRANB_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,CRANB_MUM(1:4),'k','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MOB_CRANB(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_ACO_CRANB(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_SEA_CRANB(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MUM_CRANB(1:4),'k','LineWidth',lw)
 % legend('MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
@@ -759,37 +763,37 @@ CHL_SEA_CRANB = CHL_SEA(I,J);
 CHL_MOB_CRANB = CHL_MOB(I,J);
 CHL_MUM_CRANB = CHL_MUM(I,J);
 
-%% BRADIN Rrs comparison
+%% BRADI Rrs comparison
 
-sitename = 'BRADIN';
+sitename = 'BRADI';
 
-BRADINlat =	43.313675;
-BRADINlon = -77.717531;
+BRADIlat =	43.313675;
+BRADIlon = -77.717531;
 
-dist2=sum(bsxfun(@minus, cat(3,BRADINlat,BRADINlon), cat(3,lat,lon)).^2,3);
+dist2=sum(bsxfun(@minus, cat(3,BRADIlat,BRADIlon), cat(3,lat,lon)).^2,3);
 [I,J]=find(dist2==min(dist2(:)));
 
 figure('name',sitename)
 plot(lon(:),lat(:),'.')
 hold on
-plot(BRADINlon,BRADINlat,'r*')
+plot(BRADIlon,BRADIlat,'r*')
 plot(lon(I,J),lat(I,J),'g*')
 
-BRADIN_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
-BRADIN_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
-BRADIN_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
-BRADIN_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+RRS_MOB_BRADI = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RRS_ACO_BRADI = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RRS_SEA_BRADI = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RRS_MUM_BRADI = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
 figure('name',sitename)
 fs = 20;
 lw = 1.5;
 set(gcf,'color','white')
-% plot(L8bands(1:4).*1E3,RrsBRADIN130919L8corr(1:4),'--b','LineWidth',lw)
+% plot(L8bands(1:4).*1E3,RrsBRADI130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
-plot(L8bands(1:4).*1E3,BRADIN_MOB(1:4),'b','LineWidth',lw)
-plot(L8bands(1:4).*1E3,BRADIN_ACO(1:4),'r','LineWidth',lw)
-plot(L8bands(1:4).*1E3,BRADIN_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,BRADIN_MUM(1:4),'k','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MOB_BRADI(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_ACO_BRADI(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_SEA_BRADI(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MUM_BRADI(1:4),'k','LineWidth',lw)
 % legend('MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
@@ -810,37 +814,40 @@ CHL_SEA_BRADI = CHL_SEA(I,J);
 CHL_MOB_BRADI = CHL_MOB(I,J);
 CHL_MUM_BRADI = CHL_MUM(I,J);
 
-%% BRADONT Rrs comparison
+%% BRADO Rrs comparison
 
-sitename = 'BRADONT';
+sitename = 'BRADO';
 
-BRADONTlat =  43.32578;
-BRADONTlon = -77.706432;
+% BRADOlat =  43.32578;%real
+% BRADOlon = -77.706432;
 
-dist2=sum(bsxfun(@minus, cat(3,BRADONTlat,BRADONTlon), cat(3,lat,lon)).^2,3);
+BRADOlat =  43.3206; % change to be inside scene
+BRADOlon = -77.7063;
+
+dist2=sum(bsxfun(@minus, cat(3,BRADOlat,BRADOlon), cat(3,lat,lon)).^2,3);
 [I,J]=find(dist2==min(dist2(:)));
 
 figure('name',sitename)
 plot(lon(:),lat(:),'.')
 hold on
-plot(BRADONTlon,BRADONTlat,'r*')
+plot(BRADOlon,BRADOlat,'r*')
 plot(lon(I,J),lat(I,J),'g*')
 
-BRADONT_ACO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
-BRADONT_SEA = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
-BRADONT_MOB = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
-BRADONT_MUM = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
+RRS_MOB_BRADO = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
+RRS_ACO_BRADO = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
+RRS_SEA_BRADO = [Rrs_443S(I,J),Rrs_483S(I,J),Rrs_561S(I,J),Rrs_655S(I,J)];
+RRS_MUM_BRADO = [Rrs_443M(I,J),Rrs_483M(I,J),Rrs_561M(I,J),Rrs_655M(I,J)];
 
 figure('name',sitename)
 fs = 20;
 lw = 1.5;
 set(gcf,'color','white')
-% plot(L8bands(1:4).*1E3,RrsBRADONT130919L8corr(1:4),'--b','LineWidth',lw)
+% plot(L8bands(1:4).*1E3,RrsBRADO130919L8corr(1:4),'--b','LineWidth',lw)
 hold on
-plot(L8bands(1:4).*1E3,BRADONT_MOB(1:4),'b','LineWidth',lw)
-plot(L8bands(1:4).*1E3,BRADONT_ACO(1:4),'r','LineWidth',lw)
-plot(L8bands(1:4).*1E3,BRADONT_SEA(1:4),'g','LineWidth',lw)
-plot(L8bands(1:4).*1E3,BRADONT_MUM(1:4),'k','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MOB_BRADO(1:4),'b','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_ACO_BRADO(1:4),'r','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_SEA_BRADO(1:4),'g','LineWidth',lw)
+plot(L8bands(1:4).*1E3,RRS_MUM_BRADO(1:4),'k','LineWidth',lw)
 % legend('MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
@@ -986,7 +993,7 @@ set(gca,'XMinorTick','on','YMinorTick','on')
 % yLoc = yLimits(1)+0.85*(yLimits(2)-yLimits(1));
 % h = text(xLoc,yLoc,str1,'FontSize',16,'FontWeight','bold');
 
-%% Stats
+%% CHL Stats
 
 CHL_ACO_RMSE = sqrt(mean((CHL_ACO_sites-ConcFieldCHL).^2));
 CHL_ACO_RMSErange = 100*CHL_ACO_RMSE/(max(ConcFieldCHL)-min(ConcFieldCHL));
@@ -1004,7 +1011,7 @@ CHL_MUM_RMSE = sqrt(mean((CHL_MUM_sites-ConcFieldCHL).^2));
 CHL_MUM_RMSErange = 100*CHL_MUM_RMSE/(max(ConcFieldCHL)-min(ConcFieldCHL));
 CHL_MUM_std = 100*std(abs(CHL_MUM_sites-ConcFieldCHL))/(max(ConcFieldCHL)-min(ConcFieldCHL));
 
-error = [CHL_MOB_RMSErange CHL_ACO_RMSErange CHL_SEA_RMSErange CHL_MUM_RMSErange];
+error = [CHL_MOB_RMSErange CHL_SEA_RMSErange CHL_ACO_RMSErange CHL_MUM_RMSErange];
 % error = [CHL_RMSE    TSS_RMSE    CDO_RMSE];
 
 figure
@@ -1013,7 +1020,7 @@ fs = 25;
 bar(error,0.5)
 % hold on
 % errorbar(error,[CHL_std TSS_std CDO_std],'kx')
-Labels = {'MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM'};
+Labels = {'MoB-ELM','SeaDAS-SWIR','Acolite-SWIR','SeaDAS-MUMM'};
 
 set(gca,'FontSize',fs);
 ylabel('NRMSE [%]','FontSize',fs)
@@ -1032,3 +1039,170 @@ for i=1:size(error,2)
     'HorizontalAlignment','center',...
     'VerticalAlignment','bottom','FontSize',18)
 end
+
+
+%% RRS comparison
+
+RRS_MOB_sites = [...
+RRS_MOB_ONTNS;
+RRS_MOB_ONTOS;
+RRS_MOB_ONTEX;
+RRS_MOB_RVRPI;
+RRS_MOB_RVRPL];
+
+RRS_ACO_sites = [...
+RRS_ACO_ONTNS;
+RRS_ACO_ONTOS;
+RRS_ACO_ONTEX;
+RRS_ACO_RVRPI;
+RRS_ACO_RVRPL];
+
+RRS_SEA_sites = [...
+RRS_SEA_ONTNS;
+RRS_SEA_ONTOS;
+RRS_SEA_ONTEX;
+RRS_SEA_RVRPI;
+RRS_SEA_RVRPL];
+
+RRS_MUM_sites = [...
+RRS_MUM_ONTNS;
+RRS_MUM_ONTOS;
+RRS_MUM_ONTEX;
+RRS_MUM_RVRPI;
+RRS_MUM_RVRPL];
+
+
+ConcFieldRRS = [...
+RrsONTNS130919L8corr;
+RrsONTOS130919L8corr;
+RrsONTEX130919L8corr;
+RrsRVRPI130919L8corr;
+RrsRVRPL130919L8corr];
+
+%% RRS Stats
+
+RRS_MOB_RMSE = sqrt(mean((RRS_MOB_sites-ConcFieldRRS(:,1:4)).^2));
+RRS_MOB_RMSErange = 100*RRS_MOB_RMSE./(max(ConcFieldRRS(:,1:4))-min(ConcFieldRRS(:,1:4)));
+% RRS_MOB_std = 100*std(abs(RRS_MOB_sites-ConcFieldRRS(:,1:4)))/(max(ConcFieldRRS(:,1:4))-min(ConcFieldRRS(:,1:4)));
+
+RRS_ACO_RMSE = sqrt(mean((RRS_ACO_sites-ConcFieldRRS(:,1:4)).^2));
+RRS_ACO_RMSErange = 100*RRS_ACO_RMSE./(max(ConcFieldRRS(:,1:4))-min(ConcFieldRRS(:,1:4)));
+% RRS_ACO_std = 100*std(abs(RRS_ACO_sites-ConcFieldRRS(:,1:4)))/(max(ConcFieldRRS(:,1:4))-min(ConcFieldRRS(:,1:4)));
+
+RRS_SEA_RMSE = sqrt(mean((RRS_SEA_sites-ConcFieldRRS(:,1:4)).^2));
+RRS_SEA_RMSErange = 100*RRS_SEA_RMSE./(max(ConcFieldRRS(:,1:4))-min(ConcFieldRRS(:,1:4)));
+% RRS_SEA_std = 100*std(abs(RRS_SEA_sites-ConcFieldRRS(:,1:4)))/(max(ConcFieldRRS(:,1:4))-min(ConcFieldRRS(:,1:4)));
+
+RRS_MUM_RMSE = sqrt(mean((RRS_MUM_sites-ConcFieldRRS(:,1:4)).^2));
+RRS_MUM_RMSErange = 100*RRS_MUM_RMSE./(max(ConcFieldRRS(:,1:4))-min(ConcFieldRRS(:,1:4)));
+% RRS_MUM_std = 100*std(abs(RRS_MUM_sites-ConcFieldRRS(:,1:4)))/(max(ConcFieldRRS(:,1:4))-min(ConcFieldRRS(:,1:4)));
+
+errorB1 = [RRS_MOB_RMSErange(1) RRS_SEA_RMSErange(1) RRS_ACO_RMSErange(1) RRS_MUM_RMSErange(1)];
+errorB2 = [RRS_MOB_RMSErange(2) RRS_SEA_RMSErange(2) RRS_ACO_RMSErange(2) RRS_MUM_RMSErange(2)];
+errorB3 = [RRS_MOB_RMSErange(3) RRS_SEA_RMSErange(3) RRS_ACO_RMSErange(3) RRS_MUM_RMSErange(3)];
+errorB4 = [RRS_MOB_RMSErange(4) RRS_SEA_RMSErange(4) RRS_ACO_RMSErange(4) RRS_MUM_RMSErange(4)];
+%% B1
+figure('name','B1')
+set(gcf,'color','white')
+fs = 25;
+bar(errorB1,0.5)
+% hold on
+% errorbar(error,[RRS_std TSS_std CDO_std],'kx')
+Labels = {'MoB-ELM','SeaDAS-SWIR','Acolite-SWIR','SeaDAS-MUMM'};
+
+set(gca,'FontSize',fs);
+ylabel('NRMSE [%]','FontSize',fs)
+barmap=[0.7 0.7 0.7];
+colormap(barmap)
+ylim([0 200])
+grid on
+
+addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
+%
+[hx,hy] = format_ticks(gca,Labels);
+
+for i=1:size(errorB1,2)
+    
+    text(i,errorB1(i),[num2str(errorB1(i),'%0.1f') '%'],...
+    'HorizontalAlignment','center',...
+    'VerticalAlignment','bottom','FontSize',18)
+end
+%% B2
+figure('name','B2')
+set(gcf,'color','white')
+fs = 25;
+bar(errorB2,0.5)
+% hold on
+% errorbar(error,[RRS_std TSS_std CDO_std],'kx')
+Labels = {'MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM'};
+
+set(gca,'FontSize',fs);
+ylabel('NRMSE [%]','FontSize',fs)
+barmap=[0.7 0.7 0.7];
+colormap(barmap)
+ylim([0 200])
+grid on
+
+addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
+%
+[hx,hy] = format_ticks(gca,Labels);
+
+for i=1:size(errorB2,2)
+    
+    text(i,errorB2(i),[num2str(errorB2(i),'%0.1f') '%'],...
+    'HorizontalAlignment','center',...
+    'VerticalAlignment','bottom','FontSize',18)
+end
+%% B3
+figure('name','B3')
+set(gcf,'color','white')
+fs = 25;
+bar(errorB3,0.5)
+% hold on
+% errorbar(error,[RRS_std TSS_std CDO_std],'kx')
+Labels = {'MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM'};
+
+set(gca,'FontSize',fs);
+ylabel('NRMSE [%]','FontSize',fs)
+barmap=[0.7 0.7 0.7];
+colormap(barmap)
+ylim([0 200])
+grid on
+
+addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
+%
+[hx,hy] = format_ticks(gca,Labels);
+
+for i=1:size(errorB3,2)
+    
+    text(i,errorB3(i),[num2str(errorB3(i),'%0.1f') '%'],...
+    'HorizontalAlignment','center',...
+    'VerticalAlignment','bottom','FontSize',18)
+end
+%% B4
+figure('name','B4')
+set(gcf,'color','white')
+fs = 25;
+bar(errorB4,0.5)
+% hold on
+% errorbar(error,[RRS_std TSS_std CDO_std],'kx')
+Labels = {'MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM'};
+
+set(gca,'FontSize',fs);
+ylabel('NRMSE [%]','FontSize',fs)
+barmap=[0.7 0.7 0.7];
+colormap(barmap)
+ylim([0 200])
+grid on
+
+addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
+%
+[hx,hy] = format_ticks(gca,Labels);
+
+for i=1:size(errorB4,2)
+    
+    text(i,errorB4(i),[num2str(errorB4(i),'%0.1f') '%'],...
+    'HorizontalAlignment','center',...
+    'VerticalAlignment','bottom','FontSize',18)
+end
+
