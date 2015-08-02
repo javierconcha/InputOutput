@@ -234,11 +234,11 @@ ONTNSlon = -77.538274;
 dist2=sum(bsxfun(@minus, cat(3,ONTNSlat,ONTNSlon), cat(3,lat,lon)).^2,3);
 [I,J]=find(dist2==min(dist2(:)));
 
-% figure
-% plot(lon(:),lat(:),'.')
-% hold on
-% plot(ONTNSlon,ONTNSlat,'r*')
-% plot(lon(I,J),lat(I,J),'g*')
+figure
+plot(lon(:),lat(:),'.')
+hold on
+plot(ONTNSlon,ONTNSlat,'r*')
+plot(lon(I,J),lat(I,J),'g*')
 
 RRS_MOB_ONTNS = [Rrs_443E(I,J),Rrs_483E(I,J),Rrs_561E(I,J),Rrs_655E(I,J)];
 RRS_ACO_ONTNS = [Rrs_443A(I,J),Rrs_483A(I,J),Rrs_561A(I,J),Rrs_655A(I,J)];
@@ -255,7 +255,7 @@ plot(L8bands(1:4).*1E3,RRS_MOB_ONTNS(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_ACO_ONTNS(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_SEA_ONTNS(1:4),'g','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_MUM_ONTNS(1:4),'k','LineWidth',lw)
-% legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
+legend('Field','MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -339,7 +339,7 @@ plot(L8bands(1:4).*1E3,RRS_MOB_ONTOS(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_ACO_ONTOS(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_SEA_ONTOS(1:4),'g','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_MUM_ONTOS(1:4),'k','LineWidth',lw)
-% legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
+% legend('Field','MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -421,7 +421,7 @@ plot(L8bands(1:4).*1E3,RRS_MOB_ONTEX(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_ACO_ONTEX(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_SEA_ONTEX(1:4),'g','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_MUM_ONTEX(1:4),'k','LineWidth',lw)
-legend('Field','MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
+% legend('Field','MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -507,12 +507,12 @@ plot(L8bands(1:4).*1E3,RRS_MOB_RVRPI(1:4),'b','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_ACO_RVRPI(1:4),'r','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_SEA_RVRPI(1:4),'g','LineWidth',lw)
 plot(L8bands(1:4).*1E3,RRS_MUM_RVRPI(1:4),'k','LineWidth',lw)
-% legend('Field','MoB-ELM',Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
+% legend('Field','MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('R_{rs} [1/sr]','fontsize',fs)
 set(gca,'fontsize',fs)
 xlim([400 700])
-% ylim([0 0.016])
+ylim([0 0.016])
 % axis([400 1000 0 0.03])
 grid on
 
@@ -957,7 +957,7 @@ set(gca,'OuterPosition',[0 0.05 1 1])
 set(gca,'XMinorTick','on','YMinorTick','on')
 %% ZOOM
 figure
-fs = 60;
+fs = 70;
 ms = 40;
 lw = 6.0;
 set(gcf,'color','white')
@@ -969,7 +969,7 @@ plot(ConcFieldCHL,CHL_ACO_sites,'*r','MarkerSize', ms,'LineWidth',lw);
 plot(ConcFieldCHL,CHL_SEA_sites,'og','MarkerSize', ms,'LineWidth',lw);
 plot(ConcFieldCHL,CHL_MUM_sites,'xk','MarkerSize', ms,'LineWidth',lw);
 % legend('MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM')
-maxconcCHL = 4;
+maxconcCHL = 3.1;
 plot([0 maxconcCHL],[0 maxconcCHL],'--k','LineWidth',2.0)
 axis equal
 ylim([0 maxconcCHL])
@@ -1102,9 +1102,11 @@ errorB2 = [RRS_MOB_RMSErange(2) RRS_SEA_RMSErange(2) RRS_ACO_RMSErange(2) RRS_MU
 errorB3 = [RRS_MOB_RMSErange(3) RRS_SEA_RMSErange(3) RRS_ACO_RMSErange(3) RRS_MUM_RMSErange(3)];
 errorB4 = [RRS_MOB_RMSErange(4) RRS_SEA_RMSErange(4) RRS_ACO_RMSErange(4) RRS_MUM_RMSErange(4)];
 %% B1
-figure('name','B1')
+name = 'RRS_B1';
+figure('name',name)
+set(gcf, 'Position', get(0,'Screensize')); % Maximize figure.
 set(gcf,'color','white')
-fs = 25;
+fs = 35;
 bar(errorB1,0.5)
 % hold on
 % errorbar(error,[RRS_std TSS_std CDO_std],'kx')
@@ -1114,7 +1116,7 @@ set(gca,'FontSize',fs);
 ylabel('NRMSE [%]','FontSize',fs)
 barmap=[0.7 0.7 0.7];
 colormap(barmap)
-ylim([0 200])
+ylim([0 100])
 grid on
 
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
@@ -1125,22 +1127,28 @@ for i=1:size(errorB1,2)
     
     text(i,errorB1(i),[num2str(errorB1(i),'%0.1f') '%'],...
     'HorizontalAlignment','center',...
-    'VerticalAlignment','bottom','FontSize',18)
+    'VerticalAlignment','bottom','FontSize',fs-5)
 end
+
+str3 = sprintf('NRMSE_%s.eps',name);
+dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
+saveas(gcf,[dirname str3],'epsc')
 %% B2
-figure('name','B2')
+name = 'RRS_B2';
+figure('name',name)
+set(gcf, 'Position', get(0,'Screensize')); % Maximize figure.
 set(gcf,'color','white')
-fs = 25;
+fs = 35;
 bar(errorB2,0.5)
 % hold on
 % errorbar(error,[RRS_std TSS_std CDO_std],'kx')
-Labels = {'MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM'};
+Labels = {'MoB-ELM','SeaDAS-SWIR','Acolite-SWIR','SeaDAS-MUMM'};
 
 set(gca,'FontSize',fs);
 ylabel('NRMSE [%]','FontSize',fs)
 barmap=[0.7 0.7 0.7];
 colormap(barmap)
-ylim([0 200])
+ylim([0 100])
 grid on
 
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
@@ -1151,22 +1159,28 @@ for i=1:size(errorB2,2)
     
     text(i,errorB2(i),[num2str(errorB2(i),'%0.1f') '%'],...
     'HorizontalAlignment','center',...
-    'VerticalAlignment','bottom','FontSize',18)
+    'VerticalAlignment','bottom','FontSize',fs-5)
 end
+
+str3 = sprintf('NRMSE_%s.eps',name);
+dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
+saveas(gcf,[dirname str3],'epsc')
 %% B3
-figure('name','B3')
+name = 'RRS_B3';
+figure('name',name)
+set(gcf, 'Position', get(0,'Screensize')); % Maximize figure.
 set(gcf,'color','white')
-fs = 25;
+fs = 35;
 bar(errorB3,0.5)
 % hold on
 % errorbar(error,[RRS_std TSS_std CDO_std],'kx')
-Labels = {'MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM'};
+Labels = {'MoB-ELM','SeaDAS-SWIR','Acolite-SWIR','SeaDAS-MUMM'};
 
 set(gca,'FontSize',fs);
 ylabel('NRMSE [%]','FontSize',fs)
 barmap=[0.7 0.7 0.7];
 colormap(barmap)
-ylim([0 200])
+ylim([0 100])
 grid on
 
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
@@ -1177,22 +1191,28 @@ for i=1:size(errorB3,2)
     
     text(i,errorB3(i),[num2str(errorB3(i),'%0.1f') '%'],...
     'HorizontalAlignment','center',...
-    'VerticalAlignment','bottom','FontSize',18)
+    'VerticalAlignment','bottom','FontSize',fs-5)
 end
+
+str3 = sprintf('NRMSE_%s.eps',name);
+dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
+saveas(gcf,[dirname str3],'epsc')
 %% B4
-figure('name','B4')
+name = 'RRS_B4';
+figure('name',name)
+set(gcf, 'Position', get(0,'Screensize')); % Maximize figure.
 set(gcf,'color','white')
-fs = 25;
+fs = 35;
 bar(errorB4,0.5)
 % hold on
 % errorbar(error,[RRS_std TSS_std CDO_std],'kx')
-Labels = {'MoB-ELM','Acolite-SWIR','SeaDAS-SWIR','SeaDAS-MUMM'};
+Labels = {'MoB-ELM','SeaDAS-SWIR','Acolite-SWIR','SeaDAS-MUMM'};
 
 set(gca,'FontSize',fs);
 ylabel('NRMSE [%]','FontSize',fs)
 barmap=[0.7 0.7 0.7];
 colormap(barmap)
-ylim([0 200])
+ylim([0 100])
 grid on
 
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
@@ -1203,6 +1223,9 @@ for i=1:size(errorB4,2)
     
     text(i,errorB4(i),[num2str(errorB4(i),'%0.1f') '%'],...
     'HorizontalAlignment','center',...
-    'VerticalAlignment','bottom','FontSize',18)
+    'VerticalAlignment','bottom','FontSize',fs-5)
 end
 
+str3 = sprintf('NRMSE_%s.eps',name);
+dirname = '/Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_SPIE_SanDiego/Images/';
+saveas(gcf,[dirname str3],'epsc')
