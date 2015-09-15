@@ -11,11 +11,11 @@ cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/
 
 clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's variables are in Workspace
 
-% LUTfilename1 = 'Rvector140929_150420.txt'; % with more dpfs
-LUTfilename1 = 'RvectorLogScale.txt'; % with more dpfs
+LUTfilename1 = 'Rvector140929_150420.txt'; % with more dpfs
+% LUTfilename1 = 'RvectorLogScale.txt'; % with more dpfs
 
-% LUTconcfilename1 = 'concentration_list140929_150420.txt';
-LUTconcfilename1 = 'concentration_listLogScale.txt';
+LUTconcfilename1 = 'concentration_list140929_150420.txt';
+% LUTconcfilename1 = 'concentration_listLogScale.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/';
 
@@ -203,7 +203,9 @@ RGBdisplay(:,:,3) = RGBdisplay_B;
 % imshow(RGBdisplay)
 
 figure
+set(gcf,'color','white')
 image(RGBdisplay)
+axis off
 
 % figure
 % imagesc(RGBdisplay)
@@ -328,7 +330,9 @@ RGBdisplay(:,:,3) = RGBdisplay_B;
 % imshow(RGBdisplay)
 
 figure
+set(gcf,'color','white')
 image(RGBdisplay)
+axis off
 
 % figure
 % imagesc(RGBdisplay)
@@ -360,7 +364,9 @@ plot(wavelength,Rrsused')
 str1 = sprintf('C_a = %2.2f [ug/L]',CHconc);
 title(str1,'fontsize',fs)
 xlabel('wavelength [um]')
-ylabel('remote-sensing reflectance [1/sr]')
+ylabel('remote-sensing reflectance (R_{rs}) [1/sr]')
+ylim([0 0.07])
+grid on
 %% Standard Algorithms, no fixed
 
 % input = 'input140929LONGS';
