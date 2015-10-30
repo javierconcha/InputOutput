@@ -4,9 +4,10 @@ cd /Users/javier/Desktop/Javier/PHD_RIT/ConferencesAndApplications/2015_Landsat_
 % clc
 
 folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/';
-% filename = 'LC80170302014272LGN00/LC80170302014272LGN00_ROI_RGB.tif';
+% filename = 'LC80170302014272LGN00/MOBELM/LC80170302014272LGN00_ROI_RGB.tif';
 filename = 'LC80160302013262LGN00/MOBELM/LC80160302013262LGN00_ONelm140629.tif';
 % filename = 'LC80170302014272LGN00/MOBELM/LC80170302014272LGN00_ROI_Rrs_150418CRANB_ONTOS.tif';
+% filename = 'LC80170302015259LGN00/LC80170302015259LGN00_ROI_rad_tif.tif';
 
 % filename = 'LC80160302013262LGN00/LC80160302013262LGN00_WaterAndDTROC.tif';
 % filename = 'LC80160302013262LGN00/LC80160302013262LGN00_WholeImage.tif';
@@ -21,7 +22,7 @@ filepath = [folderpath filename];
 % filename = 'boston.tif';
 proj = geotiffinfo(filepath);
 
-% Convert the corner map coordinates to latitude and longitude.
+% Convert the corner map coordinates to latitude and longictude.
 x = proj.CornerCoords.X;
 y = proj.CornerCoords.Y;
 [latProj, lonProj] = projinv(proj, x, y);
@@ -66,25 +67,25 @@ RGB_B(RGB_B<0)=0;
 % Adjusting threshold for display
 CTE = 1.5; % constant
 
-threshold_Bpos = mean(RGB_B(:))+CTE*std(RGB_B(:));
+threshold_Bpos = mean(RGB_B(RGB_B>=0))+CTE*std(RGB_B(RGB_B>=0));
 RGB_B(RGB_B>threshold_Bpos)=threshold_Bpos;
-threshold_Bneg = mean(RGB_B(:))-CTE*std(RGB_B(:));
+threshold_Bneg = mean(RGB_B(RGB_B>=0))-CTE*std(RGB_B(RGB_B>=0));
 RGB_B(RGB_B<threshold_Bneg)=threshold_Bneg;
 
-threshold_Gpos = mean(RGB_G(:))+CTE*std(RGB_G(:));
+threshold_Gpos = mean(RGB_G(RGB_B>=0))+CTE*std(RGB_G(RGB_B>=0));
 RGB_G(RGB_G>threshold_Gpos)=threshold_Gpos;
-threshold_Gneg = mean(RGB_G(:))-CTE*std(RGB_G(:));
+threshold_Gneg = mean(RGB_G(RGB_B>=0))-CTE*std(RGB_G(RGB_B>=0));
 RGB_G(RGB_G<threshold_Gneg)=threshold_Gneg;
 
-threshold_Rpos = mean(RGB_R(:))+CTE*std(RGB_R(:));
+threshold_Rpos = mean(RGB_R(RGB_B>=0))+CTE*std(RGB_R(RGB_B>=0));
 RGB_R(RGB_R>threshold_Rpos)=threshold_Rpos;
-threshold_Rneg = mean(RGB_R(:))-CTE*std(RGB_R(:));
+threshold_Rneg = mean(RGB_R(RGB_B>=0))-CTE*std(RGB_R(RGB_B>=0));
 RGB_R(RGB_R<threshold_Rneg)=threshold_Rneg;
 
 % Convert values to [0 1] for display
-RGBdisplay_B = (RGB_B-min(RGB_B(:)))/(max(RGB_B(:))-min(RGB_B(:)));
-RGBdisplay_G = (RGB_G-min(RGB_G(:)))/(max(RGB_G(:))-min(RGB_G(:)));
-RGBdisplay_R = (RGB_R-min(RGB_R(:)))/(max(RGB_R(:))-min(RGB_R(:)));
+RGBdisplay_B = (RGB_B-min(RGB_B(RGB_B>=0)))/(max(RGB_B(RGB_B>=0))-min(RGB_B(RGB_B>=0)));
+RGBdisplay_G = (RGB_G-min(RGB_G(RGB_B>=0)))/(max(RGB_G(RGB_B>=0))-min(RGB_G(RGB_B>=0)));
+RGBdisplay_R = (RGB_R-min(RGB_R(RGB_B>=0)))/(max(RGB_R(:))-min(RGB_R(RGB_B>=0)));
 
 RGBdisplay(:,:,3) = RGBdisplay_B;
 RGBdisplay(:,:,2) = RGBdisplay_G;

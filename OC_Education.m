@@ -11,11 +11,11 @@ cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/
 
 clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's variables are in Workspace
 
-LUTfilename1 = 'Rvector140929_150420.txt'; % with more dpfs
-% LUTfilename1 = 'RvectorLogScale.txt'; % with more dpfs
+% LUTfilename1 = 'Rvector140929_150420.txt'; % with more dpfs
+LUTfilename1 = 'RvectorLogScale.txt'; % with more dpfs
 
-LUTconcfilename1 = 'concentration_list140929_150420.txt';
-% LUTconcfilename1 = 'concentration_listLogScale.txt';
+% LUTconcfilename1 = 'concentration_list140929_150420.txt';
+LUTconcfilename1 = 'concentration_listLogScale.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/';
 
@@ -440,7 +440,7 @@ ylim([0.001 100])
 input = 'input140929ONTOS';
 DPFconc = 0.5;
 SMconc = 0.0100;
-CDconc = 0.0954;
+CDconc = 0.0981;
 
 
 rule = strcmp(c{1}(:),input) & LUTconcDPF(:)==DPFconc & ...
@@ -577,7 +577,7 @@ set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(wavelength,Rrs(:,rule)','LineWidth',2.0)
 xlabel('wavelength [um]')
-ylabel('remote-sensing reflectance [1/sr]')
+ylabel('remote-sensing reflectance (R_{rs}) [1/sr]')
 legend('Chl-a = 5.0 ug/L','Chl-a = 10.0 ug/L','Chl-a = 60.0 ug/L','Chl-a = 65.0 ug/L')
 grid on
 

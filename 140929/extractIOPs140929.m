@@ -1,5 +1,6 @@
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/retrieval')
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929
+date = '09-29-2014';
 %% Loading
 % CHL
 CH219071 	= load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/CH219071.ASC');
@@ -25,7 +26,7 @@ SMBASE2 	= load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929/SM
 [a_SM_ONTOS,a_CH_ONTOS,~] = ParticleExtraction(SM230251,CH230251,250); % ONTOS
 [a_SM_IBAYN,a_CH_IBAYN,~] = ParticleExtraction(SM240091,CH240092,90); % IBAYN
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,a_SM_LONGN)
@@ -43,7 +44,7 @@ legend('LONGN','LONGS','CRANB','ONTOS','IBAYN');
 xlim([400 900])
 grid on
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,a_CH_LONGN)
@@ -106,7 +107,7 @@ astar_CH_CRANB = a_CH_CRANB/X_CH_CRANB;
 astar_CH_ONTOS = a_CH_ONTOS/X_CH_ONTOS;
 astar_CH_IBAYN = a_CH_IBAYN/X_CH_IBAYN;
 
-figure % in a*, [m^2/mg]
+figure('name',date) % in a*, [m^2/mg]
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,astar_CH_LONGN)
@@ -138,7 +139,7 @@ astar_CH_LONGS_corrected = sgolayfilt(astar_CH_LONGS_corrected,5,41);
 astar_CH_LONGS_corrected(astar_CH_LONGS_corrected<0)=0;
 
 
-figure % in a*, [m^2/mg]
+figure('name',date) % in a*, [m^2/mg]
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,astar_CH_LONGS_corrected,'r','linewidth',1.2)
@@ -186,7 +187,7 @@ astar_SM_CRANB = a_SM_CRANB/X_SM_CRANB;
 astar_SM_ONTOS = a_SM_ONTOS/X_SM_ONTOS;
 astar_SM_IBAYN = a_SM_IBAYN/X_SM_IBAYN;
 
-figure % in a*, [m^2/g]
+figure('name',date) % in a*, [m^2/g]
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,astar_SM_LONGN)
@@ -228,7 +229,7 @@ b =    -0.01036;
 
 SM_LONGS_fitted = a*exp(b.*wavelength);
 
-figure % in a*, [m^2/mg]
+figure('name',date) % in a*, [m^2/mg]
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,astar_SM_LONGS_corrected,'--r','linewidth',1)
@@ -269,7 +270,7 @@ astar_CD_CRANB =  CdomExtraction(CD2291);
 astar_CD_ONTOS =  CdomExtraction(CD2131);
 astar_CD_IBAYN =  CdomExtraction(CD2401);
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,astar_CD_LONGN,'k');
@@ -312,7 +313,7 @@ astar_CD_IBAYN_corrected(wavelength>=836)=0;
 astar_CD_IBAYN_corrected = sgolayfilt(astar_CD_IBAYN_corrected,5,41);
 astar_CD_IBAYN_corrected(astar_CD_IBAYN_corrected<0)=0;
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,astar_CD_LONGN_corrected,'k');
@@ -523,7 +524,7 @@ CD_IBAYN_fitted = a*exp(b*wavelength);
 %   RMSE: 0.004887
 
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,CD_LONGN_fitted,'k');
@@ -540,7 +541,7 @@ legend('LONGN','LONGS','CRANB','ONTOS','IBAYN');
 xlim([400 900])
 grid on
 
-% figure
+% figure('name',date)
 % fs = 15;
 % set(gcf,'color','white')
 % plot(wavelength,astar_CD_ONTOS ,'k');
@@ -556,7 +557,7 @@ grid on
 % xlim([400 900])
 % grid on
 % 
-% figure
+% figure('name',date)
 % fs = 15;
 % set(gcf,'color','white')
 % plot(wavelength,astar_CD_LONGS ,'k');
@@ -572,7 +573,7 @@ grid on
 % xlim([400 900])
 % grid on
 % 
-% figure
+% figure('name',date)
 % fs = 15;
 % set(gcf,'color','white')
 % plot(wavelength,astar_CD_LONGN ,'k');
@@ -588,7 +589,7 @@ grid on
 % xlim([400 900])
 % grid on
 % 
-% figure
+% figure('name',date)
 % fs = 15;
 % set(gcf,'color','white')
 % plot(wavelength,astar_CD_CRANB ,'k');
@@ -604,7 +605,7 @@ grid on
 % xlim([400 900])
 % grid on
 % 
-% figure
+% figure('name',date)
 % fs = 15;
 % set(gcf,'color','white')
 % plot(wavelength,astar_CD_IBAYN ,'k');
@@ -670,7 +671,7 @@ disp(CD_IBAYN_fitted(wavelength==440))
 %   RMSE: 6.016e-16
 
 
-figure
+figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,astar_CD_LONGN440,'k');
