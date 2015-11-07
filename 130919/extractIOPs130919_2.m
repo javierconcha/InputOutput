@@ -19,19 +19,6 @@ SM242042 = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols
 SM244042 = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919_2/SM244042.ASC');
 SMBASE1 = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919_2/SMBASE1.ASC');
 
-% CDOM
-CDIBAYN  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDIBAYN.ASC');
-CDONTEX  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDONTEX.ASC');
-CDONTNS  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDONTNS.ASC');
-CDONTOS  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDONTOS.ASC');
-CDRVRPIE = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDRVRPIE.ASC');
-CDRVRPLM = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDRVRPLM.ASC');
-CDBASE1  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDBASE1.ASC');
-CDBRADIN = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDBRADIN.ASC');
-CDBRADON = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDBRADON.ASC');
-CDCRANB  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDCRANB.ASC');
-CDLONGN  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDLONGN.ASC');
-CDLONGS  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDLONGS.ASC');
 %% SM and Chl Absorption Coefficients
 
 [a_SM_LONGN,a_CH_LONGN,wavelength] = ParticleExtraction(SM244042,CH244042,40); % LONGN
@@ -301,16 +288,30 @@ legend('LONGS')
 
 % astar = [wavelength(end:-1:1) astar_SM_LONGS_corrected(end:-1:1)];
 % save('astar_SM_LONGS091913.txt','-ascii','astar')
+
 %% CDOM absorption coefficient
+
+CDIBAYN  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDIBAYN.ASC');
+CDONTEX  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDONTEX.ASC');
+CDONTNS  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDONTNS.ASC');
+CDONTOS  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDONTOS.ASC');
+CDRVRPI  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDRVRPIE.ASC');
+CDRVRPL  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDRVRPLM.ASC');
+CDBASE1  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDBASE1.ASC');
+CDBRADI  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDBRADIN.ASC');
+CDBRADO  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDBRADON.ASC');
+CDCRANB  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDCRANB.ASC');
+CDLONGN  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDLONGN.ASC');
+CDLONGS  = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/130919/CDLONGS.ASC');
 
 a_CDIBAYN  = CdomExtraction(CDIBAYN);
 a_CDONTEX  = CdomExtraction(CDONTEX);
 a_CDONTNS  = CdomExtraction(CDONTNS);
 a_CDONTOS  = CdomExtraction(CDONTOS);
-a_CDRVRPIE = CdomExtraction(CDRVRPIE);
-a_CDRVRPLM = CdomExtraction(CDRVRPLM);
-a_CDBRADIN = CdomExtraction(CDBRADIN);
-a_CDBRADON = CdomExtraction(CDBRADON);
+a_CDRVRPI  = CdomExtraction(CDRVRPI);
+a_CDRVRPL  = CdomExtraction(CDRVRPL);
+a_CDBRADI  = CdomExtraction(CDBRADI);
+a_CDBRADO  = CdomExtraction(CDBRADO);
 a_CDCRANB  = CdomExtraction(CDCRANB);
 a_CDLONGN  = CdomExtraction(CDLONGN);
 a_CDLONGS  = CdomExtraction(CDLONGS);
@@ -324,10 +325,10 @@ hold on
 plot(wavelength,a_CDONTEX ,'r');
 plot(wavelength,a_CDONTNS ,'g');
 plot(wavelength,a_CDONTOS ,'c');
-plot(wavelength,a_CDRVRPIE,'k');
-plot(wavelength,a_CDRVRPLM,'--k');
-plot(wavelength,a_CDBRADIN,'--r');
-plot(wavelength,a_CDBRADON,'--g');
+plot(wavelength,a_CDRVRPI,'k');
+plot(wavelength,a_CDRVRPL,'--k');
+plot(wavelength,a_CDBRADI,'--r');
+plot(wavelength,a_CDBRADO,'--g');
 plot(wavelength,a_CDCRANB ,'--c');
 plot(wavelength,a_CDLONGN ,'.-k');
 plot(wavelength,a_CDLONGS ,'.-r');
@@ -337,8 +338,105 @@ title('CDOM Absorption Coefficient','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
 set(gca,'fontsize',fs)
-legend('CDIBAYN ','CDONTEX ','CDONTNS ','CDONTOS ','CDRVRPIE','CDRVRPLM','CDBRADIN','CDBRADON','CDCRANB ','CDLONGN ','CDLONGS ');
+legend('CDIBAYN ','CDONTEX ','CDONTNS ','CDONTOS ','CDRVRPIE','CDRVRPL','CDBRADI','CDBRADO','CDCRANB ','CDLONGN ','CDLONGS ');
 xlim([400 900])
+
+a_CDIBAYNoffset = a_CDIBAYN-min(a_CDIBAYN);
+a_CDONTEXoffset = a_CDONTEX-min(a_CDONTEX);
+a_CDONTNSoffset = a_CDONTNS-min(a_CDONTNS);
+a_CDONTOSoffset = a_CDONTOS-min(a_CDONTOS);
+a_CDRVRPIoffset = a_CDRVRPI-min(a_CDRVRPI);
+a_CDRVRPLoffset = a_CDRVRPL-min(a_CDRVRPL);
+a_CDBRADIoffset = a_CDBRADI-min(a_CDBRADI);
+a_CDBRADOoffset = a_CDBRADO-min(a_CDBRADO);
+a_CDCRANBoffset = a_CDCRANB-min(a_CDCRANB);
+a_CDLONGNoffset = a_CDLONGN-min(a_CDLONGN);
+a_CDLONGSoffset = a_CDLONGS-min(a_CDLONGS);
+
+a_CDIBAYN440 = a_CDIBAYNoffset./a_CDIBAYNoffset(wavelength==440);
+a_CDONTEX440 = a_CDONTEXoffset./a_CDONTEXoffset(wavelength==440);
+a_CDONTNS440 = a_CDONTNSoffset./a_CDONTNSoffset(wavelength==440);
+a_CDONTOS440 = a_CDONTOSoffset./a_CDONTOSoffset(wavelength==440);
+a_CDRVRPI440 = a_CDRVRPIoffset./a_CDRVRPIoffset(wavelength==440);
+a_CDRVRPL440 = a_CDRVRPLoffset./a_CDRVRPLoffset(wavelength==440);
+a_CDBRADI440 = a_CDBRADIoffset./a_CDBRADIoffset(wavelength==440);
+a_CDBRADO440 = a_CDBRADOoffset./a_CDBRADOoffset(wavelength==440);
+a_CDCRANB440 = a_CDCRANBoffset./a_CDCRANBoffset(wavelength==440);
+a_CDLONGN440 = a_CDLONGNoffset./a_CDLONGNoffset(wavelength==440);
+a_CDLONGS440 = a_CDLONGSoffset./a_CDLONGSoffset(wavelength==440);
+
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,a_CDIBAYNoffset,'r');
+hold on
+plot(wavelength,a_CDONTEXoffset,'g');
+plot(wavelength,a_CDONTNSoffset,'b');
+plot(wavelength,a_CDONTOSoffset,'--r');
+plot(wavelength,a_CDRVRPIoffset,'--g');
+plot(wavelength,a_CDRVRPLoffset,'--b');
+plot(wavelength,a_CDBRADIoffset,'.-r');
+plot(wavelength,a_CDBRADOoffset,'.-g');
+plot(wavelength,a_CDCRANBoffset,'.-b');
+plot(wavelength,a_CDLONGNoffset,'c');
+plot(wavelength,a_CDLONGSoffset,'m');
+% plot([wavelength(1) wavelength(end)],[0 0],'k')
+title('CDOM Absorption Coefficient ONTNS','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
+set(gca,'fontsize',fs)
+legend('a_CDIBAYNoffset','a_CDONTEXoffset','a_CDONTNSoffset','a_CDONTOSoffset','a_CDRVRPIoffset','a_CDRVRPLoffset','a_CDBRADIoffset','a_CDBRADOoffset','a_CDCRANBoffset','a_CDLONGNoffset','a_CDLONGSoffset');
+xlim([400 900])
+grid on
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,a_CDIBAYN440,'r');
+hold on
+plot(wavelength,a_CDONTEX440,'g');
+plot(wavelength,a_CDONTNS440,'b');
+plot(wavelength,a_CDONTOS440,'--r');
+plot(wavelength,a_CDRVRPI440,'--g');
+plot(wavelength,a_CDRVRPL440,'--b');
+plot(wavelength,a_CDBRADI440,'.-r');
+plot(wavelength,a_CDBRADO440,'.-g');
+plot(wavelength,a_CDCRANB440,'.-b');
+plot(wavelength,a_CDLONGN440,'c');
+plot(wavelength,a_CDLONGS440,'m');
+% plot([wavelength(1) wavelength(end)],[0 0],'k')
+title('CDOM Absorption Coefficient ONTNS','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
+set(gca,'fontsize',fs)
+legend('a_CDIBAYN440','a_CDONTEX440','a_CDONTNS440','a_CDONTOS440','a_CDRVRPI440','a_CDRVRPL440','a_CDBRADI440','a_CDBRADO440','a_CDCRANB440','a_CDLONGN440','a_CDLONGS440');
+xlim([400 900])
+grid on
+
+disp('a_CDIBAYN(440')
+disp(a_CDIBAYNoffset(wavelength==440))
+disp('a_CDONTEX(440')
+disp(a_CDONTEXoffset(wavelength==440))
+disp('a_CDONTNS(440')
+disp(a_CDONTNSoffset(wavelength==440))
+disp('a_CDONTOS(440')
+disp(a_CDONTOSoffset(wavelength==440))
+disp('a_CDRVRPI(440')
+disp(a_CDRVRPIoffset(wavelength==440))
+disp('a_CDRVRPL(440')
+disp(a_CDRVRPLoffset(wavelength==440))
+disp('a_CDBRADI(440')
+disp(a_CDBRADIoffset(wavelength==440))
+disp('a_CDBRADO(440')
+disp(a_CDBRADOoffset(wavelength==440))
+disp('a_CDCRANB(440')
+disp(a_CDCRANBoffset(wavelength==440))
+disp('a_CDLONGN(440')
+disp(a_CDLONGNoffset(wavelength==440))
+disp('a_CDLONGS(440')
+disp(a_CDLONGSoffset(wavelength==440))
+
 %% PLOT ONTNS
 figure
 fs = 15;
@@ -387,10 +485,10 @@ a_CDIBAYN440 =  a_CDIBAYN./a_CDIBAYN(wavelength==440);
 a_CDONTEX440 =  a_CDONTEX./a_CDONTEX(wavelength==440);
 a_CDONTNS440 =  a_CDONTNS./a_CDONTNS(wavelength==440);
 a_CDONTOS440 =  a_CDONTOS./a_CDONTOS(wavelength==440);
-a_CDRVRPIE440 = a_CDRVRPIE./a_CDRVRPIE(wavelength==440);
-a_CDRVRPLM440 = a_CDRVRPLM./a_CDRVRPLM(wavelength==440);
-a_CDBRADIN440 = a_CDBRADIN./a_CDBRADIN(wavelength==440);
-a_CDBRADON440 = a_CDBRADON./a_CDBRADON(wavelength==440);
+a_CDRVRPI440 = a_CDRVRPI./a_CDRVRPI(wavelength==440);
+a_CDRVRPL440 = a_CDRVRPL./a_CDRVRPL(wavelength==440);
+a_CDBRADI440 = a_CDBRADI./a_CDBRADI(wavelength==440);
+a_CDBRADO440 = a_CDBRADO./a_CDBRADO(wavelength==440);
 a_CDCRANB440 =  a_CDCRANB./a_CDCRANB(wavelength==440);
 a_CDLONGN440 =  a_CDLONGN./a_CDLONGN(wavelength==440);
 a_CDLONGS440 =  a_CDLONGS./a_CDLONGS(wavelength==440);
@@ -408,17 +506,17 @@ disp(a_CDONTNS(wavelength==440))
 disp('a_CDONTOS(440):')
 disp(a_CDONTOS(wavelength==440))
 
-disp('a_CDRVRPIE(440):')
-disp(a_CDRVRPIE(wavelength==440))
+disp('a_CDRVRPI(440):')
+disp(a_CDRVRPI(wavelength==440))
 
-disp('a_CDRVRPLM(440):')
-disp(a_CDRVRPLM(wavelength==440))
+disp('a_CDRVRPL(440):')
+disp(a_CDRVRPL(wavelength==440))
 
-disp('a_CDBRADIN(440):')
-disp(a_CDBRADIN(wavelength==440))
+disp('a_CDBRADI(440):')
+disp(a_CDBRADI(wavelength==440))
 
-disp('a_CDBRADON(440):')
-disp(a_CDBRADON(wavelength==440))
+disp('a_CDBRADO(440):')
+disp(a_CDBRADO(wavelength==440))
 
 disp('a_CDCRANB(440):')
 disp(a_CDCRANB(wavelength==440))
@@ -438,10 +536,10 @@ hold on
 plot(wavelength,a_CDONTEX440,'r');
 plot(wavelength,a_CDONTNS440,'g');
 plot(wavelength,a_CDONTOS440,'c');
-plot(wavelength,a_CDRVRPIE440,'k');
-plot(wavelength,a_CDRVRPLM440,'--k');
-plot(wavelength,a_CDBRADIN440,'--r');
-plot(wavelength,a_CDBRADON440,'--g');
+plot(wavelength,a_CDRVRPI440,'k');
+plot(wavelength,a_CDRVRPL440,'--k');
+plot(wavelength,a_CDBRADI440,'--r');
+plot(wavelength,a_CDBRADO440,'--g');
 plot(wavelength,a_CDCRANB440,'--c');
 plot(wavelength,a_CDLONGN440,'-.k');
 plot(wavelength,a_CDLONGS440,'-.r');
@@ -451,7 +549,7 @@ title('CDOM Absorption Coefficient','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
 set(gca,'fontsize',fs)
-legend('CDIBAYN ','CDONTEX ','CDONTNS ','CDONTOS ','CDRVRPIE','CDRVRPLM','CDBRADIN','CDBRADON','CDCRANB ','CDLONGN ','CDLONGS ');
+legend('CDIBAYN ','CDONTEX ','CDONTNS ','CDONTOS ','CDRVRPIE','CDRVRPL','CDBRADI','CDBRADO','CDCRANB ','CDLONGN ','CDLONGS ');
 % xlim([400 900])
 %% PLOT CDOM LONGS
 

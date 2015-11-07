@@ -286,6 +286,7 @@ set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTOS','IBAYN');
 xlim([400 900])
 grid on
+
 %% Correcting for NIR signal
 
 astar_CD_ONTOS_corrected = astar_CD_ONTOS-astar_CD_ONTOS(wavelength==726);

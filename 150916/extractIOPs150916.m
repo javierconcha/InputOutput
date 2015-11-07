@@ -459,23 +459,23 @@ grid on
 
 %% CDOM absorption coefficient normalized at a(440)=1
 astar_CD_ONTOS440 =  a_CD_ONTOSzero./a_CD_ONTOSzero(wavelength==440);
-% astar_CD_LONGN440 =  a_CD_LONGNzero./a_CD_LONGNzero(wavelength==440);
-% astar_CD_RVRPL440 =  a_CD_RVRPLzero./a_CD_RVRPLzero(wavelength==440);
-% astar_CD_IBAYN440 =  a_CD_IBAYNzero./a_CD_IBAYNzero(wavelength==440);
+astar_CD_LONGN440 =  a_CD_LONGNzero./a_CD_LONGNzero(wavelength==440);
+astar_CD_RVRPL440 =  a_CD_RVRPLzero./a_CD_RVRPLzero(wavelength==440);
+astar_CD_IBAYN440 =  a_CD_IBAYNzero./a_CD_IBAYNzero(wavelength==440);
 astar_CD_CRANB440 =  a_CD_CRANBzero./a_CD_CRANBzero(wavelength==440);
 
 
 disp('a_CD_ONTOS(440):')
 disp(a_CD_ONTOSzero(wavelength==440))
 
-% disp('a_CD_LONGN(440):')
-% disp(a_CD_LONGNzero(wavelength==440))
+disp('a_CD_LONGN(440):')
+disp(a_CD_LONGNzero(wavelength==440))
 
-% disp('a_CD_RVRPL(440):')
-% disp(a_CD_RVRPLzero(wavelength==440))
+disp('a_CD_RVRPL(440):')
+disp(a_CD_RVRPLzero(wavelength==440))
 
-% disp('a_CD_IBAYN(440):')
-% disp(a_CD_IBAYNzero(wavelength==440))
+disp('a_CD_IBAYN(440):')
+disp(a_CD_IBAYNzero(wavelength==440))
 
 disp('a_CD_CRANB(440):')
 disp(a_CD_CRANBzero(wavelength==440))
