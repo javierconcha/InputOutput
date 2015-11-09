@@ -1,7 +1,7 @@
 % Retrieve the concentration from a image using a LUT from HL for L8 image of 150916.
-% Version 3.0
+% Version 4.0
 % Created by Javier A. Concha
-% 03/02/15
+% 11/09/15
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/retrieval/')
 addpath('/Users/javier/Downloads/mtit')
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/150916

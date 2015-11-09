@@ -83,7 +83,7 @@ plot(wavelength,xxEd)
 %    6.50509E-002   3.60596E-002   1.41633E-002   4.92870E-003   1.95475E-003   1.09030E-003   8.51771E-004   8.28735E-004   9.30547E-004   0.00000E+000
 
 xxRAD0Ma = load('./Dfile_140929_RAD0Ma.txt');
-RAD0Ma_nadir = xxRADMa(1:24:end,10);
+RAD0Ma_nadir = xxRAD0Ma(1:24:end,10);
 
 figure
 fs = 15;

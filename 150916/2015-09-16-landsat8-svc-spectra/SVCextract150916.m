@@ -733,7 +733,8 @@ c5_test = c{5}(rule1);
 
 wl_nm = wavelength*1000;
 
-cond1 = wl_nm>500;
+% cond1 = wl_nm>500;
+cond1 = wl_nm>0;
 
 Rrs_test = Rrs(cond1,rule1);
 
