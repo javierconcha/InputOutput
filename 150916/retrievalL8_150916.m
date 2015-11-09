@@ -375,14 +375,14 @@ clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's va
 % LUTfilename1 = 'Rvector150916_150317.txt'; % with FFbb018.dpf for ONTOS
 % LUTfilename1 = 'Rvector150916_150407.txt'; % with FFbb012.dpf for ONTOS
 % LUTfilename1 = 'Rvector150916_150409.txt'; % with FFbb012.dpf for ONTOS
-LUTfilename1 = 'Rvector150916_150420.txt'; % with more dpfs
+LUTfilename1 = 'Rvector150916_151102.txt'; % with more dpfs
 
 
 % LUTconcfilename1 = 'concentration_list150916_150305_2.txt';
 % LUTconcfilename1 = 'concentration_list150916_150317.txt';
 % LUTconcfilename1 = 'concentration_list150916_150406.txt';
 % LUTconcfilename1 = 'concentration_list150916_150409.txt';
-LUTconcfilename1 = 'concentration_list150916_150420.txt';
+LUTconcfilename1 = 'concentration_list150916_151102.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/150916/';
 
@@ -477,15 +477,15 @@ end
 %     (strcmp(c{5}(:),'FFbb005.dpf')|strcmp(c{5}(:),'FFbb006.dpf')|strcmp(c{5}(:),'FFbb007.dpf')...
 %     |strcmp(c{5}(:),'FFbb008.dpf')|strcmp(c{5}(:),'FFbb009.dpf'));
 
-CHlimit = 28.30;
-SMlimit = 9.11;
-CDlimit = 0.9819;
-DPFlimit = 1.2;
+CHlimit = 2;
+SMlimit = 5;
+CDlimit = 1.2490;
+DPFlimit = 3;
 
 rule5 = strcmp(c{1}(:),'input150916ONTOS')& ...
     LUTconc(:,1)<CHlimit & LUTconc(:,2)<SMlimit & LUTconc(:,3)<CDlimit & ...
     LUTconcDPF(:)<DPFlimit;
-rule2 = strcmp(c{1}(:),'input150916LONGS')& ...
+rule2 = strcmp(c{1}(:),'input150916CRANB')& ...
     LUTconc(:,1)>=CHlimit & LUTconc(:,2)>=SMlimit & LUTconc(:,3)>=CDlimit & ...
     LUTconcDPF(:)>=DPFlimit;
 
@@ -504,7 +504,7 @@ LUTconcpond = LUTconc(rule2,:);
 Inputpond = c{1}(rule2);
 DPFpond = c{5}(rule2);
 
-WhichLUT =1;
+WhichLUT =2;
 
 switch WhichLUT
     case 0
@@ -558,6 +558,7 @@ fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(L8bands,LUTused)
+linkdata on
 % str1 = sprintf('Reflectance LUT from HydroLight -- %s',LUTname);
 % title(str1,'fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
@@ -566,6 +567,22 @@ xlim([0.4 2.5])
 grid on
 
 
+%% LUT Used
+
+LUTused=LUTused';
+
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(L8bands,LUTused)
+linkdata on
+% str1 = sprintf('Reflectance LUT from HydroLight -- %s',LUTname);
+% title(str1,'fontsize',fs)
+xlabel('wavelength [\mu m]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+xlim([0.4 2.5])
+grid on
 
 %% Retrieval Best Match %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 disp('--------------------------------------------------------------------------')
