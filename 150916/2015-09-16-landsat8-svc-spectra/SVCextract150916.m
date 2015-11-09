@@ -1,14 +1,14 @@
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/150916
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/retrieval/')
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/')
-%%
+%
 date = '150916';
 pathname = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/';
 pathdate = [date,'/2015-09-16-landsat8-svc-spectra/'];
 
 rho = 0.028;
 
-% IBAYN
+%% IBAYN
 
 % 150916_1225_R053_T054.sig dummy
 % 150916_1226_R055_T056.sig water
@@ -141,8 +141,6 @@ Rrs1b_1 = (Lt1-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs2b_1 = (Lt2-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs3b_1 = (Lt3-rho.*Lskyb)./(pi.*Lg./0.99);
 
-RrsON_1TOS150916 = Rrs2a_1;
-
 figure
 fs = 15;
 set(gcf,'color','white')
@@ -164,25 +162,25 @@ set(gca,'fontsize',fs)
 axis([400 1000 0 0.03])
 grid on
 
-%% Radiance Lsky
-figure
-fs = 15;
-set(gcf,'color','white')
-plot(wavelengthSVC,Lskya,'r')
-hold on
-plot(wavelengthSVC,Lskyb,'b')
-
-legend('Lskya','Lskyb')
-
-title('Lsky -- ONTOS 1','fontsize',fs)
-xlabel('wavelengthSVC [nm]','fontsize',fs)
-ylabel('radiance (10^{-10}*W/(cm^2*nm*sr))','fontsize',fs)
-set(gca,'fontsize',fs)
-% axis([400 1000 0 0.015])
-grid on
+% Radiance Lsky
+% figure
+% fs = 15;
+% set(gcf,'color','white')
+% plot(wavelengthSVC,Lskya,'r')
+% hold on
+% plot(wavelengthSVC,Lskyb,'b')
+% 
+% legend('Lskya','Lskyb')
+% 
+% title('Lsky -- ONTOS 1','fontsize',fs)
+% xlabel('wavelengthSVC [nm]','fontsize',fs)
+% ylabel('radiance (10^{-10}*W/(cm^2*nm*sr))','fontsize',fs)
+% set(gca,'fontsize',fs)
+% % axis([400 1000 0 0.015])
+% grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ONTOS 2
+% ONTOS 2
 % 150916_1312_R071_T072.sig water
 % 150916_1312_R071_T073.sig water
 % 150916_1313_R071_T074.sig water
@@ -219,7 +217,6 @@ Rrs1b_2 = (Lt1-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs2b_2 = (Lt2-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs3b_2 = (Lt3-rho.*Lskyb)./(pi.*Lg./0.99);
 
-% RrsON_2TOS2150916 = Rrs2a_2;
 
 % figure
 % fs = 15;
@@ -242,24 +239,24 @@ set(gca,'fontsize',fs)
 axis([400 1000 0 0.03])
 grid on
 
-%% Radiance Lsky
-figure
-fs = 15;
-set(gcf,'color','white')
-plot(wavelengthSVC,Lskya,'r')
-hold on
-plot(wavelengthSVC,Lskyb,'b')
-
-legend('Lskya','Lskyb')
-
-title('Lsky -- ONTOS 2','fontsize',fs)
-xlabel('wavelengthSVC [nm]','fontsize',fs)
-ylabel('radiance (10^{-10}*W/(cm^2*nm*sr))','fontsize',fs)
-set(gca,'fontsize',fs)
-% axis([400 1000 0 0.015])
-grid on
+% %% Radiance Lsky
+% figure
+% fs = 15;
+% set(gcf,'color','white')
+% plot(wavelengthSVC,Lskya,'r')
+% hold on
+% plot(wavelengthSVC,Lskyb,'b')
+% 
+% legend('Lskya','Lskyb')
+% 
+% title('Lsky -- ONTOS 2','fontsize',fs)
+% xlabel('wavelengthSVC [nm]','fontsize',fs)
+% ylabel('radiance (10^{-10}*W/(cm^2*nm*sr))','fontsize',fs)
+% set(gca,'fontsize',fs)
+% % axis([400 1000 0 0.015])
+% grid on
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ONTOS 3
+% %% ONTOS 3
 % 150916_1315_R077_T078.sig water
 % 150916_1315_R077_T079.sig water
 % 150916_1316_R077_T080.sig water
@@ -296,7 +293,6 @@ Rrs1b_3 = (Lt1-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs2b_3 = (Lt2-rho.*Lskyb)./(pi.*Lg./0.99);
 Rrs3b_3 = (Lt3-rho.*Lskyb)./(pi.*Lg./0.99);
 
-% RrsON_3TOS 3150916 = Rrs1a_3;
 
 % figure
 % fs = 15,
@@ -319,24 +315,24 @@ set(gca,'fontsize',fs)
 axis([400 1000 0 0.03])
 grid on
 
-%% Radiance Lsky
-figure
-fs = 15;
-set(gcf,'color','white')
-plot(wavelengthSVC,Lskya,'r')
-hold on
-plot(wavelengthSVC,Lskyb,'b')
-
-legend('Lskya','Lskyb')
-
-title('Lsky -- ONTOS 3','fontsize',fs)
-xlabel('wavelengthSVC [nm]','fontsize',fs)
-ylabel('radiance (10^{-10}*W/(cm^2*nm*sr))','fontsize',fs)
-set(gca,'fontsize',fs)
-% axis([400 1000 0 0.015])
-grid on
-
-%% ONTOS average
+% %% Radiance Lsky
+% figure
+% fs = 15;
+% set(gcf,'color','white')
+% plot(wavelengthSVC,Lskya,'r')
+% hold on
+% plot(wavelengthSVC,Lskyb,'b')
+% 
+% legend('Lskya','Lskyb')
+% 
+% title('Lsky -- ONTOS 3','fontsize',fs)
+% xlabel('wavelengthSVC [nm]','fontsize',fs)
+% ylabel('radiance (10^{-10}*W/(cm^2*nm*sr))','fontsize',fs)
+% set(gca,'fontsize',fs)
+% % axis([400 1000 0 0.015])
+% grid on
+% 
+% %% ONTOS average
 RrsONTOS150916=mean([...
 Rrs1a_1,...
 Rrs2a_1,...
@@ -359,6 +355,8 @@ Rrs3b_3],2);
 
 hold on
 plot(wavelengthSVC,RrsONTOS150916,'r','LineWidth',1.5)
+
+clearvars -except wavelengthSVC RrsONTOS150916
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% RVRPLM
