@@ -8,8 +8,8 @@ cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/150916
 %% L8 image cropped
 % From ELM using new L8 reflectance product
 % folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150408.tif';
-folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/MOBELM/';
-filename = 'LC80170302014272LGN00_ROI_Rrs_150418CRANB_ONTOS.tif';
+folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302015259LGN00/';
+filename = 'LC80170302015259LGN00_StudyArea_Rrs.tif';
 date = '150916';
 
 filepath = [folderpath filename];
@@ -20,7 +20,7 @@ INFO = imfinfo(filepath);
 
 %%%% Mask
 imL8cropmask = imread(...
-    '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/MOBELM/LC80170302014272LGN00_ROImask.tif');
+    '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302015259LGN00/LC80170302015259LGN00_LandBottomMask.tif');
 
 imL8cropmask(imL8cropmask>0)=1;
 
@@ -39,11 +39,11 @@ waterpixels = double(waterpixels);
 
 waterpixels(isnan(waterpixels))=0;
 
-% added 01-11-14. plot radiance curves
-% radiance image
-imL8radcrop = imread(...
-    '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images//LC80170302014272LGN00/MOBELM/LC80170302014272LGN00_ROItif.tif');
-imradnew = reshape(imL8radcrop,[size(imL8radcrop,1)*size(imL8radcrop,2) size(imL8radcrop,3)]);
+% % added 01-11-14. plot radiance curves
+% % radiance image
+% imL8radcrop = imread(...
+%     '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/MOBELM/LC80170302014272LGN00_ROItif.tif');
+% imradnew = reshape(imL8radcrop,[size(imL8radcrop,1)*size(imL8radcrop,2) size(imL8radcrop,3)]);
 
 waterradpixels = imradnew(masknew==1,:);
 waterradpixels = double(waterradpixels);
@@ -370,18 +370,8 @@ grid on
 
 clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's variables are in Workspace
 
-% % new 03/02/15, spectrally sampling made in matlab
-% LUTfilename1 = 'Rvector150916_150305_2.txt';
-% LUTfilename1 = 'Rvector150916_150317.txt'; % with FFbb018.dpf for ONTOS
-% LUTfilename1 = 'Rvector150916_150407.txt'; % with FFbb012.dpf for ONTOS
-% LUTfilename1 = 'Rvector150916_150409.txt'; % with FFbb012.dpf for ONTOS
 LUTfilename1 = 'Rvector150916_151102.txt'; % with more dpfs
 
-
-% LUTconcfilename1 = 'concentration_list150916_150305_2.txt';
-% LUTconcfilename1 = 'concentration_list150916_150317.txt';
-% LUTconcfilename1 = 'concentration_list150916_150406.txt';
-% LUTconcfilename1 = 'concentration_list150916_150409.txt';
 LUTconcfilename1 = 'concentration_list150916_151102.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/150916/';
@@ -438,158 +428,186 @@ Rrs = reshape(rr1(:,1),size(wavelength,1),nruns);
 
 LUT = spect_sampL8(Rrs,wavelength);
 
+LUTconcInput = zeros(size(LUT,1),1);
+LUTconcDPF = zeros(size(LUT,1),1);
+
+
 for index = 1:size(LUT,1) 
-    if strcmp(c1{5}(index),'FFbb005.dpf')
+    
+    if strcmp(c{1}(index),'input150916ONTOS')
+        LUTconcInput(index)= 1;
+    elseif strcmp(c{1}(index),'input150916CRANB')
+        LUTconcInput(index)= 2;     
+    end
+    
+    if strcmp(c{5}(index),'FFbb003.dpf')
+        LUTconcDPF(index)= 0.3;   
+    elseif strcmp(c{5}(index),'FFbb004.dpf')
+        LUTconcDPF(index)= 0.4;
+    elseif strcmp(c{5}(index),'FFbb005.dpf')
         LUTconcDPF(index)= 0.5;
-    elseif strcmp(c1{5}(index),'FFbb006.dpf')
+    elseif strcmp(c{5}(index),'FFbb006.dpf')
         LUTconcDPF(index)= 0.6; 
-    elseif strcmp(c1{5}(index),'FFbb007.dpf')
+    elseif strcmp(c{5}(index),'FFbb007.dpf')
         LUTconcDPF(index)= 0.7;
-    elseif strcmp(c1{5}(index),'FFbb008.dpf')
+    elseif strcmp(c{5}(index),'FFbb008.dpf')
         LUTconcDPF(index)= 0.8;
-    elseif strcmp(c1{5}(index),'FFbb009.dpf')
+    elseif strcmp(c{5}(index),'FFbb009.dpf')
         LUTconcDPF(index)= 0.9;
-    elseif strcmp(c1{5}(index),'FFbb010.dpf')
+    elseif strcmp(c{5}(index),'FFbb010.dpf')
         LUTconcDPF(index)= 1.0; 
-    elseif strcmp(c1{5}(index),'FFbb012.dpf')
+    elseif strcmp(c{5}(index),'FFbb012.dpf')
         LUTconcDPF(index)= 1.2;
-    elseif strcmp(c1{5}(index),'FFbb014.dpf')
+    elseif strcmp(c{5}(index),'FFbb014.dpf')
         LUTconcDPF(index)= 1.4;
-    elseif strcmp(c1{5}(index),'FFbb016.dpf')
+    elseif strcmp(c{5}(index),'FFbb016.dpf')
         LUTconcDPF(index)= 1.6;
-    elseif strcmp(c1{5}(index),'FFbb018.dpf')
+    elseif strcmp(c{5}(index),'FFbb018.dpf')
         LUTconcDPF(index)= 1.8;  
-    elseif strcmp(c1{5}(index),'FFbb020.dpf')
+    elseif strcmp(c{5}(index),'FFbb020.dpf')
         LUTconcDPF(index)= 2.0;     
-    elseif strcmp(c1{5}(index),'FFbb022.dpf')
+    elseif strcmp(c{5}(index),'FFbb022.dpf')
         LUTconcDPF(index)= 2.2;      
-    elseif strcmp(c1{5}(index),'FFbb024.dpf')
+    elseif strcmp(c{5}(index),'FFbb024.dpf')
         LUTconcDPF(index)= 2.4;  
-    elseif strcmp(c1{5}(index),'FFbb026.dpf')
+    elseif strcmp(c{5}(index),'FFbb026.dpf')
         LUTconcDPF(index)= 2.6;
     end
 end
 
+% Cleaning LUT from repeated values
+LUT_All = unique([LUT LUTconcInput LUTconc LUTconcDPF],'rows','stable');
+if size(LUT_All,1)~=size(LUT,1)
+    LUT             = LUT_All(:,1:7);
+    LUTconc         = LUT_All(:,9:11);
+    LUTconcInput    = LUT_All(:,8);
+    LUTconcDPF      = LUT_All(:,12);
+    disp('Repeated Values in LUT. They were deleted!')
+end
+%
+CHlimit = 15;
+CHlimitup = 120;
+SMlimit = 10;
+CDlimit = 0.20;
+% DPFlimitup = 1.9;
+% DPFlimitlo = 0.9;
 
-% rule5 = strcmp(c{1}(:),'input140408ONTNS')& LUTconc(:,1)<10&LUTconc(:,2)<10&LUTconc(:,3)<0.9 &...
-%     (strcmp(c{5}(:),'FFbb010.dpf')|strcmp(c{5}(:),'FFbb012.dpf'));
-% rule2 = strcmp(c{1}(:),'input140408LONGS')& LUTconc(:,1)>=10&LUTconc(:,2)>=10&LUTconc(:,3)>=0.9&...
-%     (strcmp(c{5}(:),'FFbb005.dpf')|strcmp(c{5}(:),'FFbb006.dpf')|strcmp(c{5}(:),'FFbb007.dpf')...
-%     |strcmp(c{5}(:),'FFbb008.dpf')|strcmp(c{5}(:),'FFbb009.dpf'));
+% input150916ONTNS
+rule5 = LUTconcInput==1 & ...
+    LUTconc(:,1)<CHlimit & LUTconc(:,2)<SMlimit & LUTconc(:,3)<CDlimit;% & ...
+%     LUTconcDPF(:)<0.7 & LUTconcDPF(:)>0.5;
 
-CHlimit = 2;
-SMlimit = 5;
-CDlimit = 1.2490;
-DPFlimit = 3;
-
-rule5 = strcmp(c{1}(:),'input150916ONTOS')& ...
-    LUTconc(:,1)<CHlimit & LUTconc(:,2)<SMlimit & LUTconc(:,3)<CDlimit & ...
-    LUTconcDPF(:)<DPFlimit;
-rule2 = strcmp(c{1}(:),'input150916CRANB')& ...
-    LUTconc(:,1)>=CHlimit & LUTconc(:,2)>=SMlimit & LUTconc(:,3)>=CDlimit & ...
-    LUTconcDPF(:)>=DPFlimit;
-
+% input150916CRANB
+rule2 = LUTconcInput==2 & ...
+    LUTconc(:,1)>=CHlimit & LUTconc(:,1)<CHlimitup & LUTconc(:,2)>=SMlimit & ...
+    LUTconc(:,3)>=CDlimit;% & ...
+%     LUTconcDPF(:)<0.9 &LUTconcDPF(:)>0.6;
+%
 LUTsmart = LUT(rule5|rule2,:);
 LUTconcsmart = LUTconc(rule5|rule2,:);
-Inputsmart = c{1}(rule5|rule2);
-DPFsmart = c{5}(rule5|rule2);
+Inputsmart = LUTconcInput(rule5|rule2);
+DPFsmart = LUTconcDPF(rule5|rule2);
 
 LUTlake = LUT(rule5,:);
 LUTconclake = LUTconc(rule5,:);
-Inputlake = c{1}(rule5);
-DPFlake = c{5}(rule5);
+Inputlake = LUTconcInput(rule5);
+DPFlake = LUTconcDPF(rule5);
 
 LUTpond = LUT(rule2,:);
 LUTconcpond = LUTconc(rule2,:);
-Inputpond = c{1}(rule2);
-DPFpond = c{5}(rule2);
+Inputpond = LUTconcInput(rule2);
+DPFpond = LUTconcDPF(rule2);
 
-WhichLUT =2;
-
+WhichLUT = 1;
+%
 switch WhichLUT
     case 0
         LUTused = LUT;
         LUTconcused = LUTconc;
-        Inputused = c{1};
-        DPFused = c{5};
+        LUTInputused = LUTconcInput;
+        LUTDPFused = LUTconcDPF;
         fprintf('Using full LUT\n');
-        LUTname = 'Full LUT';
         
     case 1
         LUTused = LUTsmart;
         LUTconcused = LUTconcsmart;
-        Inputused = Inputsmart;
-        DPFused = DPFsmart;     
+        LUTInputused = Inputsmart;
+        LUTDPFused = DPFsmart;     
         fprintf('Using smart LUT\n');
-        LUTname = 'Smart LUT';
         
     case 2
         LUTused = LUTlake;
         LUTconcused = LUTconclake;
-        Inputused = Inputlake;
-        DPFused = DPFlake;     
-        fprintf('Using lake LUT\n'); 
-        LUTname = 'Lake LUT';
-       
+        LUTInputused = Inputlake;
+        LUTDPFused = DPFlake;     
+        fprintf('Using lake LUT\n');     
         
     case 3
         LUTused = LUTpond;
         LUTconcused = LUTconcpond;
-        Inputused = Inputpond;
-        DPFused = DPFpond;     
-        fprintf('Using pond LUT\n');
-        LUTname = 'Pond LUT';
-        
+        LUTInputused = Inputpond;
+        LUTDPFused = DPFpond;     
+        fprintf('Using pond LUT\n');         
 end
+%% LUT Used
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(L8bands,LUTused)
+% str1 = sprintf('Reflectance LUT from HydroLight -- %s',LUTname);
+% title(str1,'fontsize',fs)
+xlabel('wavelength [\mu m]','fontsize',fs)
+ylabel('R_{rs} [1/sr]','fontsize',fs)
+xlim([0.4 2.5])
+grid on
 
 
+%% LUT Used linking data
 
-% rule3 =  strcmp(c{1}(:),'input140408LONGS');
-% LUTLONGS = LUT(rule3,:);
-% LUTconcLONGS = LUTconc(rule3,:);
+% LUTused=LUTused';
 % 
-% rule4 =  strcmp(c{1}(:),'input140408ONTNS');
-% LUTONTNS = LUT(rule4,:);
-% LUTconcONTNS = LUTconc(rule4,:);
-
-%% LUT Used
-figure
-fs = 15;
-set(gcf,'color','white')
-set(gca,'fontsize',fs)
-plot(L8bands,LUTused)
-linkdata on
-% str1 = sprintf('Reflectance LUT from HydroLight -- %s',LUTname);
-% title(str1,'fontsize',fs)
-xlabel('wavelength [\mu m]','fontsize',fs)
-ylabel('R_{rs} [1/sr]','fontsize',fs)
-xlim([0.4 2.5])
-grid on
-
-
-%% LUT Used
-
-LUTused=LUTused';
-
-figure
-fs = 15;
-set(gcf,'color','white')
-set(gca,'fontsize',fs)
-plot(L8bands,LUTused)
-linkdata on
-% str1 = sprintf('Reflectance LUT from HydroLight -- %s',LUTname);
-% title(str1,'fontsize',fs)
-xlabel('wavelength [\mu m]','fontsize',fs)
-ylabel('R_{rs} [1/sr]','fontsize',fs)
-xlim([0.4 2.5])
-grid on
-
+% figure
+% fs = 15;
+% set(gcf,'color','white')
+% set(gca,'fontsize',fs)
+% plot(L8bands,LUTused)
+% linkdata on
+% % str1 = sprintf('Reflectance LUT from HydroLight -- %s',LUTname);
+% % title(str1,'fontsize',fs)
+% xlabel('wavelength [\mu m]','fontsize',fs)
+% ylabel('R_{rs} [1/sr]','fontsize',fs)
+% xlim([0.4 2.5])
+% grid on
 %% Retrieval Best Match %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 disp('--------------------------------------------------------------------------')
 disp('Running Best Match Routine')
-    [XResults,IMatrix] = BestMatchRetrieval(waterpixels(:,1:5),LUTused(:,1:5),LUTconcused);
+    [XResultsLS,IMatrixLS] = BestMatchRetrieval(waterpixels(:,1:5),LUTused(:,1:5),LUTconcused);
 disp('Routine finished Successfully')
-% to see what kind of input (ONTNS or LONGS) and DPFs were retrieved
+
+XResults = XResultsLS;
+IMatrix = IMatrixLS;
+
+%% Retrieval using optimization
+
+format short
+CDconc = unique(LUTconcused(:,3))
+SMconc = unique(LUTconcused(:,2))
+CHconc = unique(LUTconcused(:,1))
+%
+disp('--------------------------------------------------------------------------')
+disp('Running Optimization Routine')
+    [XResultsOpt,residualOpt,IMatrixOpt] = opt(waterpixels(:,1:5),LUTused(:,1:5),LUTconcused,LUTInputused,LUTDPFused);
+disp('Optimization Routine finished Successfully')
+
+save LSQNONLIN_results.mat XResultsOpt residualOpt IMatrixOpt
+load LSQNONLIN_results.mat
+
+XResults = XResultsOpt;
+IMatrix = IMatrixOpt;
+
+
+%% to see what kind of input (ONTNS or LONGS) and DPFs were retrieved
 
 InputType = zeros(size(IMatrix,1),1);
 DPFType = zeros(size(IMatrix,1),1);
@@ -1362,114 +1380,196 @@ axis off
 % % tt = [L8bands LUTsmart];
 % save('LUTtest.txt','tt','-ascii')
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Test the optimization algorithm
+
+format short
+CDconc = unique(LUTconc(:,3))
+SMconc = unique(LUTconc(:,2))
+CHconc = unique(LUTconc(:,1))
+%
+disp('--------------------------------------------------------------------------')
+disp('Running Optimization Routine')
+    [XResultstest,residual] = opt(LUTused(:,1:5),LUTused(:,1:5),LUTconcused,LUTInputused,LUTDPFused);
+disp('Optimization Routine finished Successfully')
+
+%% E_RMS
+disp('--------------------------------------------------')
+E_CH = sqrt(sum((XResultstest(:,1)-LUTconcused(:,1)).^2)/size(XResultstest,1));
+E_CH = E_CH*100/max(CHconc);
+str = sprintf('E_CH = %2.2f %%',E_CH);
+disp(str)
+
+E_SM = sqrt(sum((XResultstest(:,2)-LUTconcused(:,2)).^2)/size(XResultstest,1));
+E_SM = E_SM*100/max(SMconc);
+str = sprintf('E_SM = %2.2f %%',E_SM);
+disp(str)
+
+E_CD = sqrt(sum((XResultstest(:,3)-LUTconcused(:,3)).^2)/size(XResultstest,1));
+E_CD = E_CD*100/max(CDconc);
+str = sprintf('E_CD = %2.2f %%',E_CD);
+disp(str)
+
+%% Residual Histogram
+figure
+fs = 15;
+set(gcf,'color','white')
+subplot(2,3,1)
+set(gca,'fontsize',fs)
+hist(residual(:,1),20)
+title('band 1')
+
+subplot(2,3,2)
+set(gca,'fontsize',fs)
+hist(residual(:,2),20)
+title('band 2')
+
+subplot(2,3,3)
+set(gca,'fontsize',fs)
+hist(residual(:,3),20)
+title('band 3')
+
+subplot(2,3,4)
+set(gca,'fontsize',fs)
+hist(residual(:,4),20)
+title('band 4')
+
+subplot(2,3,5)
+set(gca,'fontsize',fs)
+hist(residual(:,5),20)
+title('band 5')
+
+%% Display data vs retrieved
+% CHL
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(LUTconcused(:,1),XResultstest(:,1),'.')
+hold on
+maxconcCHL = 150;
+plot([0 maxconcCHL],[0 maxconcCHL],'--k')
+axis equal
+ylim([0 maxconcCHL])
+xlim([0 maxconcCHL])
+title('CHL Real vs retrieved','fontsize',fs)
+xlabel('real','fontsize',fs)
+ylabel('retrieved','fontsize',fs)
+set(gca,'fontsize',fs)
 
 
+% SM
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(LUTconcused(:,2),XResultstest(:,2),'.')
+hold on
+maxconcSM = 60;
+plot([0 maxconcSM],[0 maxconcSM],'--k')
+axis equal
+ylim([0 maxconcSM])
+xlim([0 maxconcSM])
+title('SM Real vs retrieved','fontsize',fs)
+xlabel('real','fontsize',fs)
+ylabel('retrieved','fontsize',fs)
+set(gca,'fontsize',fs)
+
+% CDOM
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(LUTconcused(:,3),XResultstest(:,3),'.')
+hold on
+maxconcCD = 1.4;
+plot([0 maxconcCD],[0 maxconcCD],'--k')
+axis equal
+ylim([0 maxconcCD])
+xlim([0 maxconcCD])
+title('CDOM Real vs retrieved','fontsize',fs)
+xlabel('real','fontsize',fs)
+ylabel('retrieved','fontsize',fs)
+set(gca,'fontsize',fs)
+%% Display data vs retrieved
+% CHL
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LUTconcused(:,1))
+hold on
+plot(XResultstest(:,1),'--r')
+title('CHL')
+legend('real','retrieved')
+xlabel('ith element')
+ylabel('C_a')
+grid on
+
+% SM
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LUTconcused(:,2))
+hold on
+plot(XResultstest(:,2),'--r')
+title('SM')
+legend('real','retrieved')
+xlabel('ith element')
+ylabel('TSS')
+grid on
+
+% CDOM
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LUTconcused(:,3))
+hold on
+plot(XResultstest(:,3),'--r')
+title('CDOM')
+legend('real','retrieved')
+xlabel('ith element')
+ylabel('a_{CDOM}(440)')
+grid on
 %%
-% % %% Test the optimization algorhythm
-% % LUTconc = LUTconc;
-% % CDOMconc = unique(LUTconc(:,3))
-% % SMconc   = unique(LUTconc(:,2))
-% % CHLconc  = unique(LUTconc(:,1))
-% % 
-% % disp('--------------------------------------------------------------------------')
-% % disp('Running Optimization Routine')
-% %     [XResultstest,residual] = opt(LUT(:,1:5),LUT(:,1:5),LUTconc);
-% % disp('Optimization Routine finished Successfully')
-% % 
-% % 
-% % 
-% % 
-% % % E_RMS
-% % disp('--------------------------------------------------')
-% % E_Chl = sqrt(sum((XResultstest(:,1)-LUTconc(:,1)).^2)/size(XResultstest,1));
-% % E_Chl = E_Chl*100/68;
-% % str = sprintf('E_Chl  = %2.2f %%',E_Chl);
-% % disp(str)
-% % 
-% % E_SM = sqrt(sum((XResultstest(:,2)-LUTconc(:,2)).^2)/size(XResultstest,1));
-% % E_SM = E_SM*100/24;
-% % str = sprintf('E_SM   = %2.2f %%',E_SM);
-% % disp(str)
-% % 
-% % E_CDOM = sqrt(sum((XResultstest(:,3)-LUTconc(:,3)).^2)/size(XResultstest,1));
-% % E_CDOM = E_CDOM*100/14;
-% % str = sprintf('E_CDOM = %2.2f %%',E_CDOM);
-% % disp(str)
-% % 
-% % %% Residual Histogram
-% % figure
-% % set(gcf,'color','white')
-% % subplot(2,3,1)
-% % hist(residual(:,1))
-% % title('band 1')
-% % 
-% % subplot(2,3,2)
-% % hist(residual(:,2))
-% % title('band 2')
-% % 
-% % subplot(2,3,3)
-% % hist(residual(:,3))
-% % title('band 3')
-% % 
-% % subplot(2,3,4)
-% % hist(residual(:,4))
-% % title('band 4')
-% % 
-% % subplot(2,3,5)
-% % hist(residual(:,5))
-% % title('band 5')
-% % %% Display data vs retrieved
-% % 
-% % figure
-% % fs = 15;
-% % set(gcf,'color','white')
-% % plot(LUTconc(:,1),XResultstest(:,1),'.')
-% % xLimits = get(gca,'XLim');  %# Get the range of the x axis
-% % yLimits = get(gca,'YLim');  %# Get the range of the y axis
-% % hold on
-% % plot(xLimits,xLimits,'k')
-% % ylim(xLimits)
-% % xlim(xLimits)
-% % title('CHL Real vs retrieved','fontsize',fs)
-% % xlabel('real','fontsize',fs)
-% % ylabel('retrieved','fontsize',fs)
-% % set(gca,'fontsize',fs)
-% % axis equal
-% % 
-% % figure
-% % fs = 15;
-% % set(gcf,'color','white')
-% % plot(LUTconc(:,2),XResultstest(:,2),'.')
-% % xLimits = get(gca,'XLim');  %# Get the range of the x axis
-% % yLimits = get(gca,'YLim');  %# Get the range of the y axis
-% % hold on
-% % plot(xLimits,xLimits,'k')
-% % ylim(xLimits)
-% % xlim(xLimits)
-% % title('SM Real vs retrieved','fontsize',fs)
-% % xlabel('real','fontsize',fs)
-% % ylabel('retrieved','fontsize',fs)
-% % set(gca,'fontsize',fs)
-% % axis equal
-% % 
-% % figure
-% % fs = 15;
-% % set(gcf,'color','white')
-% % plot(LUTconc(:,3),XResultstest(:,3),'.')
-% % xLimits = get(gca,'XLim');  %# Get the range of the x axis
-% % yLimits = get(gca,'YLim');  %# Get the range of the y axis
-% % hold on
-% % plot(xLimits,xLimits,'k')
-% % ylim(xLimits)
-% % xlim(xLimits)
-% % title('CDOM Real vs retrieved','fontsize',fs)
-% % xlabel('real','fontsize',fs)
-% % ylabel('retrieved','fontsize',fs)
-% % set(gca,'fontsize',fs)
-% % axis equal
-% % 
-% % %% Retrieval Opt, %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % disp('--------------------------------------------------------------------------')
-% % disp('Running Optimization Routine')
-% %     XResults = opt(waterpixels(:,1:5),LUT(:,1:5),LUTconc);
-% % disp('Optimization Routine finished Successfully')
+figure
+bn = 1;
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(XResultsOpt(:,bn),XResultsLS(:,bn),'.')
+axis equal
+xlabel('C_a NonLin')
+ylabel('C_a Least Squared')
+Concmax = max([XResultsOpt(:,bn);XResultsLS(:,bn)]);
+hold on 
+plot([0 Concmax*1.1],[0 Concmax*1.1],'k')
+axis([0 Concmax*1.1 0 Concmax*1.1])
+%%
+figure
+bn = 2;
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(XResultsOpt(:,bn),XResultsLS(:,bn),'.')
+axis equal
+xlabel('TSS NonLin')
+ylabel('TSS Least Squared')
+Concmax = max([XResultsOpt(:,bn);XResultsLS(:,bn)]);
+hold on 
+plot([0 Concmax*1.1],[0 Concmax*1.1],'k')
+axis([0 Concmax*1.1 0 Concmax*1.1])
+%%
+figure
+bn = 3;
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(XResultsOpt(:,bn),XResultsLS(:,bn),'.')
+axis equal
+xlabel('CDOM NonLin')
+ylabel('CDOM Least Squared')
+Concmax = max([XResultsOpt(:,bn);XResultsLS(:,bn)]);
+hold on 
+plot([0 Concmax*1.1],[0 Concmax*1.1],'k')
+axis([0 Concmax*1.1 0 Concmax*1.1])
+
