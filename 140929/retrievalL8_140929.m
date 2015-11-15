@@ -438,7 +438,17 @@ Rrs = reshape(rr1(:,1),size(wavelength,1),nruns);
 
 LUT = spect_sampL8(Rrs,wavelength);
 
+LUTconcInput = zeros(size(LUT,1),1);
+LUTconcDPF = zeros(size(LUT,1),1);
+
 for index = 1:size(LUT,1) 
+    
+    if strcmp(c{1}(index),'input140929ONTOS')
+        LUTconcInput(index)= 1;
+    elseif strcmp(c{1}(index),'input140929LONGS')
+        LUTconcInput(index)= 2;     
+    end
+    
     if strcmp(c1{5}(index),'FFbb005.dpf')
         LUTconcDPF(index)= 0.5;
     elseif strcmp(c1{5}(index),'FFbb006.dpf')
@@ -470,6 +480,15 @@ for index = 1:size(LUT,1)
     end
 end
 
+% Cleaning LUT from repeated values
+LUT_All = unique([LUT LUTconcInput LUTconc LUTconcDPF],'rows','stable');
+if size(LUT_All,1)~=size(LUT,1)
+    LUT             = LUT_All(:,1:7);
+    LUTconc         = LUT_All(:,9:11);
+    LUTconcInput    = LUT_All(:,8);
+    LUTconcDPF      = LUT_All(:,12);
+    disp('Repeated Values in LUT. They were deleted!')
+end
 
 % rule5 = strcmp(c{1}(:),'input140408ONTNS')& LUTconc(:,1)<10&LUTconc(:,2)<10&LUTconc(:,3)<0.9 &...
 %     (strcmp(c{5}(:),'FFbb010.dpf')|strcmp(c{5}(:),'FFbb012.dpf'));
@@ -491,18 +510,18 @@ rule2 = strcmp(c{1}(:),'input140929LONGS')& ...
 
 LUTsmart = LUT(rule5|rule2,:);
 LUTconcsmart = LUTconc(rule5|rule2,:);
-Inputsmart = c{1}(rule5|rule2);
-DPFsmart = c{5}(rule5|rule2);
+Inputsmart = LUTconcInput(rule5|rule2);
+DPFsmart = LUTconcDPF(rule5|rule2);
 
 LUTlake = LUT(rule5,:);
 LUTconclake = LUTconc(rule5,:);
-Inputlake = c{1}(rule5);
-DPFlake = c{5}(rule5);
+Inputlake = LUTconcInput(rule5);
+DPFlake = LUTconcDPF(rule5);
 
 LUTpond = LUT(rule2,:);
 LUTconcpond = LUTconc(rule2,:);
-Inputpond = c{1}(rule2);
-DPFpond = c{5}(rule2);
+Inputpond = LUTconcInput(rule2);
+DPFpond = LUTconcDPF(rule2);
 
 WhichLUT =1;
 
@@ -510,36 +529,30 @@ switch WhichLUT
     case 0
         LUTused = LUT;
         LUTconcused = LUTconc;
-        Inputused = c{1};
-        DPFused = c{5};
+        LUTInputused = LUTconcInput;
+        LUTDPFused = LUTconcDPF;
         fprintf('Using full LUT\n');
-        LUTname = 'Full LUT';
         
     case 1
         LUTused = LUTsmart;
         LUTconcused = LUTconcsmart;
-        Inputused = Inputsmart;
-        DPFused = DPFsmart;     
+        LUTInputused = Inputsmart;
+        LUTDPFused = DPFsmart;     
         fprintf('Using smart LUT\n');
-        LUTname = 'Smart LUT';
         
     case 2
         LUTused = LUTlake;
         LUTconcused = LUTconclake;
-        Inputused = Inputlake;
-        DPFused = DPFlake;     
-        fprintf('Using lake LUT\n'); 
-        LUTname = 'Lake LUT';
-       
+        LUTInputused = Inputlake;
+        LUTDPFused = DPFlake;     
+        fprintf('Using lake LUT\n');     
         
     case 3
         LUTused = LUTpond;
         LUTconcused = LUTconcpond;
-        Inputused = Inputpond;
-        DPFused = DPFpond;     
-        fprintf('Using pond LUT\n');
-        LUTname = 'Pond LUT';
-        
+        LUTInputused = Inputpond;
+        LUTDPFused = DPFpond;     
+        fprintf('Using pond LUT\n');         
 end
 
 
@@ -565,63 +578,47 @@ ylabel('R_{rs} [1/sr]','fontsize',fs)
 xlim([0.4 2.5])
 grid on
 
-
-
 %% Retrieval Best Match %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 disp('--------------------------------------------------------------------------')
 disp('Running Best Match Routine')
-    [XResults,IMatrix] = BestMatchRetrieval(waterpixels(:,1:5),LUTused(:,1:5),LUTconcused);
+    [XResultsLS,IMatrixLS] = BestMatchRetrieval(waterpixels(:,1:5),LUTused(:,1:5),LUTconcused);
 disp('Routine finished Successfully')
+
+XResults = XResultsLS;
+IMatrix = IMatrixLS;
+
+%% Retrieval using optimization
+
+format short
+CDconc = unique(LUTconcused(:,3))
+SMconc = unique(LUTconcused(:,2))
+CHconc = unique(LUTconcused(:,1))
+%
+disp('--------------------------------------------------------------------------')
+disp('Running Optimization Routine')
+    [XResultsOpt,residualOpt,IMatrixOpt] = opt(waterpixels(:,1:5),LUTused(:,1:5),LUTconcused,LUTInputused,LUTDPFused);
+disp('Optimization Routine finished Successfully')
+
+save LSQNONLIN_results.mat XResultsOpt residualOpt IMatrixOpt
+%%
+load LSQNONLIN_results.mat
+
+XResults = XResultsOpt;
+IMatrix = IMatrixOpt;
+%% Maps
+
 % to see what kind of input (ONTNS or LONGS) and DPFs were retrieved
+InputRet = LUTInputused(IMatrix);
+DPFRet = LUTDPFused(IMatrix);
 
-InputType = zeros(size(IMatrix,1),1);
-DPFType = zeros(size(IMatrix,1),1);
+ConcRet = nan(size(masknew,1),5);
+ConcRet(masknew==1,:) = [XResults InputRet DPFRet]; % Concentration Retrieved
 
-for index = 1:size(IMatrix,1) 
-    if strcmp(Inputused(IMatrix(index)),'input140929ONTNS')
-        InputType(index)= 1;
-    elseif strcmp(Inputused(IMatrix(index)),'input140929LONGS')
-        InputType(index)= 2;     
-    end
-        
-    if strcmp(DPFused(IMatrix(index)),'FFbb005.dpf')
-        DPFType(index)= 0.5;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb006.dpf')
-        DPFType(index)= 0.6; 
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb007.dpf')
-        DPFType(index)= 0.7;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb008.dpf')
-        DPFType(index)= 0.8;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb009.dpf')
-        DPFType(index)= 0.9;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb010.dpf')
-        DPFType(index)= 1.0; 
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb012.dpf')
-        DPFType(index)= 1.2;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb014.dpf')
-        DPFType(index)= 1.4;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb016.dpf')
-        DPFType(index)= 1.6;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb018.dpf')
-        DPFType(index)= 1.8;  
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb020.dpf')
-        DPFType(index)= 2.0;     
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb022.dpf')
-        DPFType(index)= 2.2;      
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb024.dpf')
-        DPFType(index)= 2.4;        
-    end
-end
-
-% Maps
-ConcRet = zeros(size(masknew,1),5);
-ConcRet(masknew==1,:) = [XResults InputType DPFType]; % Concentration Retrieved
-
-CHLmap  = reshape(ConcRet(:,1),...
+CHmap  = reshape(ConcRet(:,1),...
     [size(imL8cropmask,1) size(imL8cropmask,2) size(imL8cropmask,3)]);
 SMmap   = reshape(ConcRet(:,2),...
     [size(imL8cropmask,1) size(imL8cropmask,2) size(imL8cropmask,3)]);
-CDOMmap = reshape(ConcRet(:,3),...
+CDmap = reshape(ConcRet(:,3),...
     [size(imL8cropmask,1) size(imL8cropmask,2) size(imL8cropmask,3)]);
 
 INPUTmap = reshape(ConcRet(:,4),...
@@ -630,18 +627,102 @@ INPUTmap = reshape(ConcRet(:,4),...
 DPFmap = reshape(ConcRet(:,5),...
     [size(imL8cropmask,1) size(imL8cropmask,2) size(imL8cropmask,3)]);
 
-CHLmaplog10 = log10(CHLmap);
-CHLmaplog10(CHLmaplog10==-Inf)=-4;
-% CHLmaplog10masked = bsxfun(@times, CHLmaplog10, landmask);
+CHmaplog10 = log10(CHmap);
+CHmaplog10(CHmaplog10==-Inf)=-4;
+% CHmaplog10masked = bsxfun(@times, CHmaplog10, landmask);
 
 SMmaplog10 = log10(SMmap);
 SMmaplog10(SMmaplog10==-Inf)=-4;
 % SMmaplog10masked = bsxfun(@times, SMmaplog10, landmask);
 
-CDOMmaplog10 = log10(CDOMmap);
-CDOMmaplog10(CDOMmaplog10==-Inf)=-4;
-% CDOMmaplog10masked = bsxfun(@times, CDOMmaplog10, landmask);
+CDmaplog10 = log10(CDmap);
+CDmaplog10(CDmaplog10==-Inf)=-4;
+% CDmaplog10masked = bsxfun(@times, CDmaplog10, landmask);
 
+%% DISSERTACION FIGURES -- log10 scale
+% define mask
+mask = logical(imL8cropmask);
+gray = cat(3,   0.7*ones(size(CDmaplog10)), ...
+                0.7*ones(size(CDmaplog10)),...
+                0.7*ones(size(CDmaplog10)));
+
+
+%% CHL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+figure('name',date)
+fs = 16;
+ms = 16;
+set(gcf,'color','white')
+imagesc(gray); % display color of the mask first
+hold on
+h0 = imagesc(CHmaplog10); % display Map imaage second
+set(gca, 'CLim', [min(CHmaplog10(:)), max(CHmaplog10(:))]);
+set(h0, 'AlphaData', mask) % Apply transparency to the mask
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',fs,'Location','southoutside')
+set(h,'Position',[.2 .08 .6 .05])
+title(h,'L8 retrieved C_a [mg m^{-3}]','FontSize',fs)
+set(gca, 'Units', 'normalized', 'Position', [0 0.1 1 1])
+y = get(h,'XTick');
+[xmin,xmax] = caxis;
+x = [10^xmin 10.^y];
+set(h,'XTick',log10(x));
+set(h,'XTickLabel',x)
+
+%% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+figure('name',date)
+fs = 16;
+ms = 16;
+set(gcf,'color','white')
+imagesc(gray); % display color of the mask first
+hold on
+h0 = imagesc(SMmaplog10); % display Map imaage second
+set(gca, 'CLim', [min(SMmaplog10(:)), max(SMmaplog10(:))]);
+set(h0, 'AlphaData', mask) % Apply transparency to the mas
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',fs,'Location','southoutside')
+set(h,'Position',[.2 .1 .6 .05])
+title(h,'L8 retrieved TSS [g m^{-3}]','FontSize',fs)
+set(gca, 'Units', 'normalized', 'Position', [0 .1 1 1])
+y = get(h,'XTick')
+[xmin,xmax] = caxis
+x = [10^(xmin) 0.1 1 10 10^(xmax)];
+set(h,'XTick',log10(x));
+set(h,'XTickLabel',x)
+
+
+%% CDOM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+figure('name',date)
+fs = 16;
+ms = 16;
+set(gcf,'color','white')
+imagesc(gray); % display color of the mask first
+hold on
+h0 = imagesc(CDmaplog10); % display Map imaage second
+set(gca, 'CLim', [min(CDmaplog10(:)), max(CDmaplog10(:))]);
+set(h0, 'AlphaData', mask) % Apply transparency to the mask
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',fs,'Location','southoutside')
+set(h,'Position',[.2 .07 .6 .05])
+title(h,'L8 retrieved a_{CDOM}(440nm) [1/m]','FontSize',fs)
+set(gca, 'Units', 'normalized', 'Position', [0 0.1 1 1])
+y = get(h,'XTick') % values in x from 10^x
+[xmin,xmax] = caxis
+x = [10^xmin 0.2 0.5 10^xmax];
+% x = 10.^y;
+set(h,'XTick',log10(x));
+set(h,'XTickLabel',x)
 %% Maps Linear Scale
 fs = 30; % font size
 cbfs = 15; % colorbar font size
@@ -657,7 +738,7 @@ axis image
 axis off
 
 subplot(2,2,2)
-imagesc(CHLmap)
+imagesc(CHmap)
 % caxis([min(XResults(:,1)) max(XResults(:,1))])
 title('<CHL>, [\mug/L] ','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -679,7 +760,7 @@ axis image
 axis off
 
 subplot(2,2,4)
-imagesc(CDOMmap)
+imagesc(CDmap)
 % caxis([min(XResults(:,3)) max(XResults(:,3))])
 title('a_{CDOM}(440nm), [1/m] ','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -996,7 +1077,7 @@ figure('name',date)
 fs = 16;
 ms = 16;
 set(gcf,'color','white')
-imagesc(CHLmap)
+imagesc(CHmap)
 set(gca,'fontsize',fs)
 axis equal
 axis image
@@ -1069,7 +1150,7 @@ figure('name',date)
 fs = 16;
 ms = 16;
 set(gcf,'color','white')
-imagesc(CDOMmap)
+imagesc(CDmap)
 set(gca,'fontsize',fs)
 axis equal
 axis image
@@ -1346,113 +1427,195 @@ axis off
 % save('LUTtest.txt','tt','-ascii')
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Test the optimization algorithm
 
+format short
+CDconc = unique(LUTconc(:,3))
+SMconc = unique(LUTconc(:,2))
+CHconc = unique(LUTconc(:,1))
+%
+disp('--------------------------------------------------------------------------')
+disp('Running Optimization Routine')
+    [XResultstest,residual] = opt(LUTused(:,1:5),LUTused(:,1:5),LUTconcused,LUTInputused,LUTDPFused);
+disp('Optimization Routine finished Successfully')
+
+%% E_RMS
+disp('--------------------------------------------------')
+E_CH = sqrt(sum((XResultstest(:,1)-LUTconcused(:,1)).^2)/size(XResultstest,1));
+E_CH = E_CH*100/max(CHconc);
+str = sprintf('E_CH = %2.2f %%',E_CH);
+disp(str)
+
+E_SM = sqrt(sum((XResultstest(:,2)-LUTconcused(:,2)).^2)/size(XResultstest,1));
+E_SM = E_SM*100/max(SMconc);
+str = sprintf('E_SM = %2.2f %%',E_SM);
+disp(str)
+
+E_CD = sqrt(sum((XResultstest(:,3)-LUTconcused(:,3)).^2)/size(XResultstest,1));
+E_CD = E_CD*100/max(CDconc);
+str = sprintf('E_CD = %2.2f %%',E_CD);
+disp(str)
+
+%% Residual Histogram
+figure
+fs = 15;
+set(gcf,'color','white')
+subplot(2,3,1)
+set(gca,'fontsize',fs)
+hist(residual(:,1),20)
+title('band 1')
+
+subplot(2,3,2)
+set(gca,'fontsize',fs)
+hist(residual(:,2),20)
+title('band 2')
+
+subplot(2,3,3)
+set(gca,'fontsize',fs)
+hist(residual(:,3),20)
+title('band 3')
+
+subplot(2,3,4)
+set(gca,'fontsize',fs)
+hist(residual(:,4),20)
+title('band 4')
+
+subplot(2,3,5)
+set(gca,'fontsize',fs)
+hist(residual(:,5),20)
+title('band 5')
+
+%% Display data vs retrieved
+% CHL
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(LUTconcused(:,1),XResultstest(:,1),'.')
+hold on
+maxconcCHL = 150;
+plot([0 maxconcCHL],[0 maxconcCHL],'--k')
+axis equal
+ylim([0 maxconcCHL])
+xlim([0 maxconcCHL])
+title('CHL Real vs retrieved','fontsize',fs)
+xlabel('real','fontsize',fs)
+ylabel('retrieved','fontsize',fs)
+set(gca,'fontsize',fs)
+
+
+% SM
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(LUTconcused(:,2),XResultstest(:,2),'.')
+hold on
+maxconcSM = 60;
+plot([0 maxconcSM],[0 maxconcSM],'--k')
+axis equal
+ylim([0 maxconcSM])
+xlim([0 maxconcSM])
+title('SM Real vs retrieved','fontsize',fs)
+xlabel('real','fontsize',fs)
+ylabel('retrieved','fontsize',fs)
+set(gca,'fontsize',fs)
+
+% CDOM
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(LUTconcused(:,3),XResultstest(:,3),'.')
+hold on
+maxconcCD = 1.4;
+plot([0 maxconcCD],[0 maxconcCD],'--k')
+axis equal
+ylim([0 maxconcCD])
+xlim([0 maxconcCD])
+title('CDOM Real vs retrieved','fontsize',fs)
+xlabel('real','fontsize',fs)
+ylabel('retrieved','fontsize',fs)
+set(gca,'fontsize',fs)
+%% Display data vs retrieved
+% CHL
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LUTconcused(:,1))
+hold on
+plot(XResultstest(:,1),'--r')
+title('CHL')
+legend('real','retrieved')
+xlabel('ith element')
+ylabel('C_a')
+grid on
+
+% SM
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LUTconcused(:,2))
+hold on
+plot(XResultstest(:,2),'--r')
+title('SM')
+legend('real','retrieved')
+xlabel('ith element')
+ylabel('TSS')
+grid on
+
+% CDOM
+figure
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(LUTconcused(:,3))
+hold on
+plot(XResultstest(:,3),'--r')
+title('CDOM')
+legend('real','retrieved')
+xlabel('ith element')
+ylabel('a_{CDOM}(440)')
+grid on
 %%
-% % %% Test the optimization algorhythm
-% % LUTconc = LUTconc;
-% % CDOMconc = unique(LUTconc(:,3))
-% % SMconc   = unique(LUTconc(:,2))
-% % CHLconc  = unique(LUTconc(:,1))
-% % 
-% % disp('--------------------------------------------------------------------------')
-% % disp('Running Optimization Routine')
-% %     [XResultstest,residual] = opt(LUT(:,1:5),LUT(:,1:5),LUTconc);
-% % disp('Optimization Routine finished Successfully')
-% % 
-% % 
-% % 
-% % 
-% % % E_RMS
-% % disp('--------------------------------------------------')
-% % E_Chl = sqrt(sum((XResultstest(:,1)-LUTconc(:,1)).^2)/size(XResultstest,1));
-% % E_Chl = E_Chl*100/68;
-% % str = sprintf('E_Chl  = %2.2f %%',E_Chl);
-% % disp(str)
-% % 
-% % E_SM = sqrt(sum((XResultstest(:,2)-LUTconc(:,2)).^2)/size(XResultstest,1));
-% % E_SM = E_SM*100/24;
-% % str = sprintf('E_SM   = %2.2f %%',E_SM);
-% % disp(str)
-% % 
-% % E_CDOM = sqrt(sum((XResultstest(:,3)-LUTconc(:,3)).^2)/size(XResultstest,1));
-% % E_CDOM = E_CDOM*100/14;
-% % str = sprintf('E_CDOM = %2.2f %%',E_CDOM);
-% % disp(str)
-% % 
-% % %% Residual Histogram
-% % figure
-% % set(gcf,'color','white')
-% % subplot(2,3,1)
-% % hist(residual(:,1))
-% % title('band 1')
-% % 
-% % subplot(2,3,2)
-% % hist(residual(:,2))
-% % title('band 2')
-% % 
-% % subplot(2,3,3)
-% % hist(residual(:,3))
-% % title('band 3')
-% % 
-% % subplot(2,3,4)
-% % hist(residual(:,4))
-% % title('band 4')
-% % 
-% % subplot(2,3,5)
-% % hist(residual(:,5))
-% % title('band 5')
-% % %% Display data vs retrieved
-% % 
-% % figure
-% % fs = 15;
-% % set(gcf,'color','white')
-% % plot(LUTconc(:,1),XResultstest(:,1),'.')
-% % xLimits = get(gca,'XLim');  %# Get the range of the x axis
-% % yLimits = get(gca,'YLim');  %# Get the range of the y axis
-% % hold on
-% % plot(xLimits,xLimits,'k')
-% % ylim(xLimits)
-% % xlim(xLimits)
-% % title('CHL Real vs retrieved','fontsize',fs)
-% % xlabel('real','fontsize',fs)
-% % ylabel('retrieved','fontsize',fs)
-% % set(gca,'fontsize',fs)
-% % axis equal
-% % 
-% % figure
-% % fs = 15;
-% % set(gcf,'color','white')
-% % plot(LUTconc(:,2),XResultstest(:,2),'.')
-% % xLimits = get(gca,'XLim');  %# Get the range of the x axis
-% % yLimits = get(gca,'YLim');  %# Get the range of the y axis
-% % hold on
-% % plot(xLimits,xLimits,'k')
-% % ylim(xLimits)
-% % xlim(xLimits)
-% % title('SM Real vs retrieved','fontsize',fs)
-% % xlabel('real','fontsize',fs)
-% % ylabel('retrieved','fontsize',fs)
-% % set(gca,'fontsize',fs)
-% % axis equal
-% % 
-% % figure
-% % fs = 15;
-% % set(gcf,'color','white')
-% % plot(LUTconc(:,3),XResultstest(:,3),'.')
-% % xLimits = get(gca,'XLim');  %# Get the range of the x axis
-% % yLimits = get(gca,'YLim');  %# Get the range of the y axis
-% % hold on
-% % plot(xLimits,xLimits,'k')
-% % ylim(xLimits)
-% % xlim(xLimits)
-% % title('CDOM Real vs retrieved','fontsize',fs)
-% % xlabel('real','fontsize',fs)
-% % ylabel('retrieved','fontsize',fs)
-% % set(gca,'fontsize',fs)
-% % axis equal
-% % 
-% % %% Retrieval Opt, %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % disp('--------------------------------------------------------------------------')
-% % disp('Running Optimization Routine')
-% %     XResults = opt(waterpixels(:,1:5),LUT(:,1:5),LUTconc);
-% % disp('Optimization Routine finished Successfully')
+figure
+bn = 1;
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(XResultsOpt(:,bn),XResultsLS(:,bn),'.')
+axis equal
+xlabel('C_a NonLin')
+ylabel('C_a Least Squared')
+Concmax = max([XResultsOpt(:,bn);XResultsLS(:,bn)]);
+hold on 
+plot([0 Concmax*1.1],[0 Concmax*1.1],'k')
+axis([0 Concmax*1.1 0 Concmax*1.1])
+%%
+figure
+bn = 2;
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(XResultsOpt(:,bn),XResultsLS(:,bn),'.')
+axis equal
+xlabel('TSS NonLin')
+ylabel('TSS Least Squared')
+Concmax = max([XResultsOpt(:,bn);XResultsLS(:,bn)]);
+hold on 
+plot([0 Concmax*1.1],[0 Concmax*1.1],'k')
+axis([0 Concmax*1.1 0 Concmax*1.1])
+%%
+figure
+bn = 3;
+fs = 15;
+set(gcf,'color','white')
+set(gca,'fontsize',fs)
+plot(XResultsOpt(:,bn),XResultsLS(:,bn),'.')
+axis equal
+xlabel('CDOM NonLin')
+ylabel('CDOM Least Squared')
+Concmax = max([XResultsOpt(:,bn);XResultsLS(:,bn)]);
+hold on 
+plot([0 Concmax*1.1],[0 Concmax*1.1],'k')
+axis([0 Concmax*1.1 0 Concmax*1.1])
