@@ -212,7 +212,7 @@ grid on
 astar_SM_CRANBoffset = astar_SM_CRANB - min(astar_SM_CRANB);
 astar_SM_ONTOSoffset = astar_SM_ONTOS - min(astar_SM_ONTOS);
 
-% CRANB
+%% CRANB
 % General model Exp2:
 %      f(x) = a*exp(b*x) + c*exp(d*x)
 % Coefficients (with 95% confidence bounds):
