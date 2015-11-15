@@ -9,7 +9,7 @@ cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/150916
 % From ELM using new L8 reflectance product
 % folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150408.tif';
 folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302015259LGN00/';
-filename = 'LC80170302015259LGN00_StudyArea_Rrs.tif';
+filename = 'LC80170302015259LGN00_StudyArea_Rrs_NaN.tif';
 date = '150916';
 
 filepath = [folderpath filename];
@@ -22,7 +22,8 @@ INFO = imfinfo(filepath);
 imL8cropmask = imread(...
     '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302015259LGN00/LC80170302015259LGN00_LandBottomMask.tif');
 
-imL8cropmask(imL8cropmask>0)=1;
+% imL8cropmask(imL8cropmask>0)=1;
+imL8cropmask(imL8cropmask==0)=NaN;
 
 
 L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
@@ -45,8 +46,8 @@ waterpixels(isnan(waterpixels))=0;
 %     '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/MOBELM/LC80170302014272LGN00_ROItif.tif');
 % imradnew = reshape(imL8radcrop,[size(imL8radcrop,1)*size(imL8radcrop,2) size(imL8radcrop,3)]);
 
-waterradpixels = imradnew(masknew==1,:);
-waterradpixels = double(waterradpixels);
+% waterradpixels = imradnew(masknew==1,:);
+% waterradpixels = double(waterradpixels);
 
 % for displaying
 
@@ -601,56 +602,22 @@ disp('Running Optimization Routine')
 disp('Optimization Routine finished Successfully')
 
 save LSQNONLIN_results.mat XResultsOpt residualOpt IMatrixOpt
+%%
 load LSQNONLIN_results.mat
 
 XResults = XResultsOpt;
 IMatrix = IMatrixOpt;
 
 
-%% to see what kind of input (ONTNS or LONGS) and DPFs were retrieved
+%% to see what kind of input (ONTOS or CRANB) and DPFs were retrieved
 
-InputType = zeros(size(IMatrix,1),1);
-DPFType = zeros(size(IMatrix,1),1);
 
-for index = 1:size(IMatrix,1) 
-    if strcmp(Inputused(IMatrix(index)),'input150916ONTNS')
-        InputType(index)= 1;
-    elseif strcmp(Inputused(IMatrix(index)),'input150916LONGS')
-        InputType(index)= 2;     
-    end
-        
-    if strcmp(DPFused(IMatrix(index)),'FFbb005.dpf')
-        DPFType(index)= 0.5;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb006.dpf')
-        DPFType(index)= 0.6; 
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb007.dpf')
-        DPFType(index)= 0.7;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb008.dpf')
-        DPFType(index)= 0.8;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb009.dpf')
-        DPFType(index)= 0.9;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb010.dpf')
-        DPFType(index)= 1.0; 
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb012.dpf')
-        DPFType(index)= 1.2;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb014.dpf')
-        DPFType(index)= 1.4;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb016.dpf')
-        DPFType(index)= 1.6;
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb018.dpf')
-        DPFType(index)= 1.8;  
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb020.dpf')
-        DPFType(index)= 2.0;     
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb022.dpf')
-        DPFType(index)= 2.2;      
-    elseif strcmp(DPFused(IMatrix(index)),'FFbb024.dpf')
-        DPFType(index)= 2.4;        
-    end
-end
+% to see what kind of input (ONTNS or LONGS) and DPFs were retrieved
+InputRet = LUTInputused(IMatrix);
+DPFRet = LUTDPFused(IMatrix);
 
-% Maps
-ConcRet = zeros(size(masknew,1),5);
-ConcRet(masknew==1,:) = [XResults InputType DPFType]; % Concentration Retrieved
+ConcRet = nan(size(masknew,1),5);
+ConcRet(masknew==1,:) = [XResults InputRet DPFRet]; % Concentration Retrieved
 
 CHLmap  = reshape(ConcRet(:,1),...
     [size(imL8cropmask,1) size(imL8cropmask,2) size(imL8cropmask,3)]);
@@ -1135,32 +1102,10 @@ xlabel('measured a_{CDOM}(440nm) [1/m]','fontsize',fs)
 ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
 legend('LONGS','LONGN','CRANB','IBAYN','ONTOS','Location','best')
 % save('CDOM.txt','-ascii','-double','-tabs','CDOMmap')
-%% Plot Input (ONTNS or LONGS) and DPFs retrieved
-figure('name',date)
-subplot(1,2,1)
-set(gcf,'color','white')
-imagesc(INPUTmap)
-title('INPUT map linear scale','fontsize',fs)
-set(gca,'fontsize',fs)
-axis equal
-axis image
-axis off
-h = colorbar;
-set(h,'fontsize',cbfs)
-
-subplot(1,2,2)
-set(gcf,'color','white')
-imagesc(DPFmap)
-title('DPF map linear scale','fontsize',fs)
-set(gca,'fontsize',fs)
-axis equal
-axis image
-axis off
-h = colorbar;
-set(h,'fontsize',cbfs)
 
 
-%% Mapping Concentrations linear scale
+
+%% Mapping Concentrations linear scale -- Gray color
 fs = 30; % font size
 cbfs = 15; % colorbar font size
 
