@@ -486,9 +486,9 @@ if size(LUT_All,1)~=size(LUT,1)
     disp('Repeated Values in LUT. They were deleted!')
 end
 %
-CHlimit = 15;
+CHlimit = 25;
 CHlimitup = 120;
-SMlimit = 10;
+SMlimit = 13;
 CDlimit = 0.20;
 % DPFlimitup = 1.9;
 % DPFlimitlo = 0.9;
@@ -609,8 +609,7 @@ XResults = XResultsOpt;
 IMatrix = IMatrixOpt;
 
 
-%% to see what kind of input (ONTOS or CRANB) and DPFs were retrieved
-
+%% Maps
 
 % to see what kind of input (ONTNS or LONGS) and DPFs were retrieved
 InputRet = LUTInputused(IMatrix);
@@ -619,11 +618,11 @@ DPFRet = LUTDPFused(IMatrix);
 ConcRet = nan(size(masknew,1),5);
 ConcRet(masknew==1,:) = [XResults InputRet DPFRet]; % Concentration Retrieved
 
-CHLmap  = reshape(ConcRet(:,1),...
+CHmap  = reshape(ConcRet(:,1),...
     [size(imL8cropmask,1) size(imL8cropmask,2) size(imL8cropmask,3)]);
 SMmap   = reshape(ConcRet(:,2),...
     [size(imL8cropmask,1) size(imL8cropmask,2) size(imL8cropmask,3)]);
-CDOMmap = reshape(ConcRet(:,3),...
+CDmap = reshape(ConcRet(:,3),...
     [size(imL8cropmask,1) size(imL8cropmask,2) size(imL8cropmask,3)]);
 
 INPUTmap = reshape(ConcRet(:,4),...
@@ -632,18 +631,115 @@ INPUTmap = reshape(ConcRet(:,4),...
 DPFmap = reshape(ConcRet(:,5),...
     [size(imL8cropmask,1) size(imL8cropmask,2) size(imL8cropmask,3)]);
 
-CHLmaplog10 = log10(CHLmap);
-CHLmaplog10(CHLmaplog10==-Inf)=-4;
-% CHLmaplog10masked = bsxfun(@times, CHLmaplog10, landmask);
+CHmaplog10 = log10(CHmap);
+CHmaplog10(CHmaplog10==-Inf)=-4;
+% CHmaplog10masked = bsxfun(@times, CHmaplog10, landmask);
 
 SMmaplog10 = log10(SMmap);
 SMmaplog10(SMmaplog10==-Inf)=-4;
 % SMmaplog10masked = bsxfun(@times, SMmaplog10, landmask);
 
-CDOMmaplog10 = log10(CDOMmap);
-CDOMmaplog10(CDOMmaplog10==-Inf)=-4;
-% CDOMmaplog10masked = bsxfun(@times, CDOMmaplog10, landmask);
+CDmaplog10 = log10(CDmap);
+CDmaplog10(CDmaplog10==-Inf)=-4;
+% CDmaplog10masked = bsxfun(@times, CDmaplog10, landmask);
 
+%% DISSERTACION FIGURES -- log10 scale
+% define mask
+mask = logical(imL8cropmask);
+gray = cat(3,   0.7*ones(size(imL8cropmask)), ...
+                0.7*ones(size(imL8cropmask)),...
+                0.7*ones(size(imL8cropmask)));
+
+%% ROI RGB image
+figure('name',date)
+fs = 16;
+ms = 16;
+set(gcf,'color','white')
+imagesc(gray); % display color of the mask first
+hold on
+h0 = imagesc(impos); % display Map imaage second
+set(h0, 'AlphaData', mask) % Apply transparency to the mask
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+set(gca, 'Units', 'normalized', 'Position', [0 0.1 1 1])
+%% CHL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+figure('name',date)
+fs = 16;
+ms = 16;
+set(gcf,'color','white')
+imagesc(gray); % display color of the mask first
+hold on
+h0 = imagesc(CHmaplog10); % display Map imaage second
+set(gca, 'CLim', [min(CHmaplog10(:)), max(CHmaplog10(:))]);
+set(h0, 'AlphaData', mask) % Apply transparency to the mask
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',fs,'Location','southoutside')
+set(h,'Position',[.2 .08 .6 .05])
+title(h,'L8 retrieved C_a [mg m^{-3}]','FontSize',fs)
+set(gca, 'Units', 'normalized', 'Position', [0 0.1 1 1])
+y = get(h,'XTick');
+[xmin,xmax] = caxis;
+x = [10^xmin 0.3 1.0 3.0 10 30 100];
+set(h,'XTick',log10(x));
+set(h,'XTickLabel',x)
+
+%% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+figure('name',date)
+fs = 16;
+ms = 16;
+set(gcf,'color','white')
+imagesc(gray); % display color of the mask first
+hold on
+h0 = imagesc(SMmaplog10); % display Map imaage second
+set(gca, 'CLim', [min(SMmaplog10(:)), max(SMmaplog10(:))]);
+set(h0, 'AlphaData', mask) % Apply transparency to the mas
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',fs,'Location','southoutside')
+set(h,'Position',[.2 .1 .6 .05])
+title(h,'L8 retrieved TSS [g m^{-3}]','FontSize',fs)
+set(gca, 'Units', 'normalized', 'Position', [0 .1 1 1])
+y = get(h,'XTick')
+[xmin,xmax] = caxis
+x = [10^xmin 3 10 30 10^xmax];
+set(h,'XTick',log10(x));
+set(h,'XTickLabel',x)
+
+
+%% CDOM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+figure('name',date)
+fs = 16;
+ms = 16;
+set(gcf,'color','white')
+imagesc(gray); % display color of the mask first
+hold on
+h0 = imagesc(CDmaplog10); % display Map imaage second
+set(gca, 'CLim', [min(CDmaplog10(:)), max(CDmaplog10(:))]);
+set(h0, 'AlphaData', mask) % Apply transparency to the mask
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',fs,'Location','southoutside')
+set(h,'Position',[.2 .07 .6 .05])
+title(h,'L8 retrieved a_{CDOM}(440nm) [1/m]','FontSize',fs)
+set(gca, 'Units', 'normalized', 'Position', [0 0.1 1 1])
+y = get(h,'XTick') % values in x from 10^x
+[xmin,xmax] = caxis
+x = [10^xmin 0.2 0.5 10^xmax];
+% x = 10.^y;
+set(h,'XTick',log10(x));
+set(h,'XTickLabel',x)
 %% Maps Linear Scale
 fs = 30; % font size
 cbfs = 15; % colorbar font size
@@ -659,7 +755,7 @@ axis image
 axis off
 
 subplot(2,2,2)
-imagesc(CHLmap)
+imagesc(CHmap)
 % caxis([min(XResults(:,1)) max(XResults(:,1))])
 title('<CHL>, [\mug/L] ','fontsize',fs)
 set(gca,'fontsize',fs)
@@ -681,7 +777,7 @@ axis image
 axis off
 
 subplot(2,2,4)
-imagesc(CDOMmap)
+imagesc(CDmap)
 % caxis([min(XResults(:,3)) max(XResults(:,3))])
 title('a_{CDOM}(440nm), [1/m] ','fontsize',fs)
 set(gca,'fontsize',fs)
