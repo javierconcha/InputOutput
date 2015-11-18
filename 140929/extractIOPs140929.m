@@ -688,6 +688,26 @@ set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTOS','IBAYN');
 grid on
 
+%% Figure Defense
+atotal = a_CH_ONTOS + a_SM_ONTOS + astar_CD_ONTOS_corrected;
+
+figure('name',date)
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,a_CH_ONTOS,'r','LineWidth',1.5)
+hold on
+plot(wavelength,a_SM_ONTOS,'g','LineWidth',1.5)
+plot(wavelength,astar_CD_ONTOS_corrected,'b','LineWidth',1.5);
+% plot(wavelength,atotal,'k','LineWidth',1.5)
+
+title('Absorption Coefficients','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
+set(gca,'fontsize',fs)
+legend('Chlorophyll-{\it a}','Particles','CDOM');
+% legend('Chlorophyll','particles','CDOM','a_{total}');
+grid on
+
 %% saving to be used in HL
 % astar = [wavelength(end:-1:1) astar_CD_LONGS440(end:-1:1)];
 % save('astar_CDOM_LONGS140929.txt','-ascii','astar')

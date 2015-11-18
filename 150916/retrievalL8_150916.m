@@ -41,10 +41,11 @@ waterpixels = double(waterpixels);
 waterpixels(isnan(waterpixels))=0;
 
 % % added 01-11-14. plot radiance curves
-% % radiance image
-% imL8radcrop = imread(...
-%     '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/MOBELM/LC80170302014272LGN00_ROItif.tif');
-% imradnew = reshape(imL8radcrop,[size(imL8radcrop,1)*size(imL8radcrop,2) size(imL8radcrop,3)]);
+% radiance image
+imL8radcrop = imread(...
+    [folderpath ...
+    '/LC80170302015259LGN00_ROI_rad_tif.tif']);
+imradnew = reshape(imL8radcrop,[size(imL8radcrop,1)*size(imL8radcrop,2) size(imL8radcrop,3)]);
 
 % waterradpixels = imradnew(masknew==1,:);
 % waterradpixels = double(waterradpixels);
@@ -657,7 +658,7 @@ ms = 16;
 set(gcf,'color','white')
 imagesc(gray); % display color of the mask first
 hold on
-h0 = imagesc(impos); % display Map imaage second
+h0 = imagesc(RGBdisplay); % display Map image second. From PaperPlots.m
 set(h0, 'AlphaData', mask) % Apply transparency to the mask
 set(gca,'fontsize',fs)
 axis equal
