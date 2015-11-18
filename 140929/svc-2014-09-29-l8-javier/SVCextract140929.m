@@ -812,18 +812,18 @@ grid on
 wavelengthSVC140929 = wavelengthSVC;
 
 figure
-fs = 15;
+fs = 18;
 set(gcf,'color','white')
-plot(wavelengthSVC,RrsONTOS140929,'r')
+plot(wavelengthSVC,RrsONTOS140929,'r','LineWidth',1.5)
 hold on
-plot(wavelengthSVC,RrsLONGS140929,'b')
-plot(wavelengthSVC,RrsLONGN140929,'g')
-plot(wavelengthSVC,RrsCRANB140929,'m')
-plot(wavelengthSVC,RrsIBAYN140929,'k')
+plot(wavelengthSVC,RrsLONGS140929,'b','LineWidth',1.5)
+plot(wavelengthSVC,RrsLONGN140929,'g','LineWidth',1.5)
+plot(wavelengthSVC,RrsCRANB140929,'m','LineWidth',1.5)
+plot(wavelengthSVC,RrsIBAYN140929,'k','LineWidth',1.5)
 
 legend('ONTOS','LONGS','LONGN','CRANB','IBAYN')
 title('R_{rs} -- 09/29/14 ','fontsize',fs)
-xlabel('wavelengthSVC [nm]','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
 ylabel('rem-sens reflectance R_{rs} (sr^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 axis([400 1000 0 0.04])
