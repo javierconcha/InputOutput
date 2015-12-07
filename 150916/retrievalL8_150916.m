@@ -37,6 +37,7 @@ masknew = reshape(imL8cropmask,[size(imL8cropmask,1)*size(imL8cropmask,2) size(i
 
 waterpixels = imnew(masknew==1,:);
 waterpixels = double(waterpixels);
+waterpixels = waterpixels - waterpixels(:,6)*ones(1,7);
 
 waterpixels(isnan(waterpixels))=0;
 
@@ -372,9 +373,11 @@ grid on
 
 clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's variables are in Workspace
 
-LUTfilename1 = 'Rvector150916_151102.txt'; % with more dpfs
+% LUTfilename1 = 'Rvector150916_151102.txt'; % with more dpfs
+LUTfilename1 = 'Rvector150916_151206.txt'; % with more dpfs
 
-LUTconcfilename1 = 'concentration_list150916_151102.txt';
+% LUTconcfilename1 = 'concentration_list150916_151102.txt';
+LUTconcfilename1 = 'concentration_list150916_151206.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/150916/';
 
@@ -497,13 +500,13 @@ CDlimit = 0.20;
 % input150916ONTNS
 rule5 = LUTconcInput==1 & ...
     LUTconc(:,1)<CHlimit & LUTconc(:,2)<SMlimit & LUTconc(:,3)<CDlimit;% & ...
-%     LUTconcDPF(:)<0.7 & LUTconcDPF(:)>0.5;
+%     LUTconcDPF(:)<1.0;
 
 % input150916CRANB
 rule2 = LUTconcInput==2 & ...
     LUTconc(:,1)>=CHlimit & LUTconc(:,1)<CHlimitup & LUTconc(:,2)>=SMlimit & ...
     LUTconc(:,3)>=CDlimit;% & ...
-%     LUTconcDPF(:)<0.9 &LUTconcDPF(:)>0.6;
+%     LUTconcDPF(:)>0.4;
 %
 LUTsmart = LUT(rule5|rule2,:);
 LUTconcsmart = LUTconc(rule5|rule2,:);
@@ -650,6 +653,34 @@ mask = logical(imL8cropmask);
 gray = cat(3,   0.7*ones(size(imL8cropmask)), ...
                 0.7*ones(size(imL8cropmask)),...
                 0.7*ones(size(imL8cropmask)));
+            
+%% Plot Input (ONTOS or CRANB) and DPFs retrieved
+figure('name',date,'Position',get(0,'ScreenSize'))
+subplot(1,2,1)
+set(gcf,'color','white')
+imagesc(gray); % display color of the mask first
+h0 = imagesc(INPUTmap);
+set(h0, 'AlphaData', mask) % Apply transparency to the mask
+title('INPUT map linear scale','fontsize',fs)
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',cbfs)
+
+subplot(1,2,2)
+set(gcf,'color','white')
+imagesc(gray); % display color of the mask first
+h0 = imagesc(DPFmap);
+set(h0, 'AlphaData', mask) % Apply transparency to the mask
+title('DPF map linear scale','fontsize',fs)
+set(gca,'fontsize',fs)
+axis equal
+axis image
+axis off
+h = colorbar;
+set(h,'fontsize',cbfs)            
 
 %% ROI RGB image
 figure('name',date)
@@ -788,42 +819,18 @@ axis equal
 axis image
 axis off
 
-%% Plot Input (ONTNS or LONGS) and DPFs retrieved
-figure('name',date,'Position',get(0,'ScreenSize'))
-subplot(1,2,1)
-set(gcf,'color','white')
-imagesc(INPUTmap)
-title('INPUT map linear scale','fontsize',fs)
-set(gca,'fontsize',fs)
-axis equal
-axis image
-axis off
-h = colorbar;
-set(h,'fontsize',cbfs)
-
-subplot(1,2,2)
-set(gcf,'color','white')
-imagesc(DPFmap)
-title('DPF map linear scale','fontsize',fs)
-set(gca,'fontsize',fs)
-axis equal
-axis image
-axis off
-h = colorbar;
-set(h,'fontsize',cbfs)
-
 %% Read ROIs from ENVI text Stat file 
 
 pathname = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/150916/';
 % statfilename = 'ROIstats_150916_150408.txt';
-statfilename = 'ROIstats_150916_150418CRANB_ONTOS.txt';
+statfilename = 'ROIstats_150916_151205.txt';
 
 fid = fopen([pathname statfilename]);
 s = textscan(fid, '%s', 'delimiter', '\n');
 % search for "data=":
 % idx1 = find(strcmp('Column 7: Mean: SAND~~7',s{1}),1);
-idx1 = find(strcmp('Column 7: Mean: IBAYN~~5',s{1}),1);% for MoB-ELM with bright: CRANB and dark: ONTOS
-
+% idx1 = find(strcmp('Column 7: Mean: IBAYN~~5',s{1}),1);% for MoB-ELM with bright: CRANB and dark: ONTOS
+idx1 = find(strcmp('Column 6: Mean: IBAYN~~6',s{1}),1);
 % and read from s{1}(idx1+1:idx2-1) the values using textscan again ...
 data = s{1}(idx1+1:size(s{1},1));
 fclose(fid);
@@ -833,63 +840,60 @@ for index = 1:size(data,1)
 end
 
 L8bands_ENVI = statdata(:,1);
-% Cranb = statdata(:,2);
-% LongS = statdata(:,3);
-% LongN = statdata(:,4);
-% IBayN = statdata(:,5);
-% OntOS = statdata(:,6);
-% Sand1 = statdata(:,7);
 
 % for MoB-ELM with bright: CRANB and dark: ONTOS
-Cranb = statdata(:,2); Cranb(isnan(Cranb(:)))=0;
-LongS = statdata(:,3); LongS(isnan(LongS(:)))=0;
-LongN = statdata(:,4); LongN(isnan(LongN(:)))=0;
-OntOS = statdata(:,5); OntOS(isnan(OntOS(:)))=0;
-Sand1 = statdata(:,6); Sand1(isnan(Sand1(:)))=0;
-IBayN = statdata(:,7); IBayN(isnan(IBayN(:)))=0;
+CRANB = statdata(:,2); CRANB(isnan(CRANB(:)))=0;
+LONGN = statdata(:,3); LONGN(isnan(LONGN(:)))=0;
+ONTOS = statdata(:,4); ONTOS(isnan(ONTOS(:)))=0;
+RVRPL = statdata(:,5); RVRPL(isnan(RVRPL(:)))=0;
+IBAYN = statdata(:,6); IBAYN(isnan(IBAYN(:)))=0;
 
 figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(L8bands_ENVI,Cranb,'r')
+plot(L8bands_ENVI,CRANB,'r')
 hold on
-plot(L8bands_ENVI,LongS,'g')
-plot(L8bands_ENVI,LongN,'b')
-plot(L8bands_ENVI,OntOS,'c')
-plot(L8bands_ENVI,IBayN,'y')
-plot(L8bands_ENVI,Sand1,'m')
-legend('Cranb','LongS','LongN','OntOS','IBayN','Sand1')
+plot(L8bands_ENVI,LONGN,'b')
+plot(L8bands_ENVI,ONTOS,'c')
+plot(L8bands_ENVI,RVRPL,'m')
+plot(L8bands_ENVI,IBAYN,'y')
+legend('CRANB','LONGN','ONTOS','RVRPL','IBAYN')
 grid on
 axis([.4 2.5 0 0.025])
 
 
-%% Find LONGS
-rule6 = strcmp(Inputused(:),'input150916LONGS')&...
-    LUTconcused(:,1)==45 & LUTconcused(:,2)==28.00 &...
-    LUTconcused(:,3)==1.0025;
+%% Find CRANB
+rule6 = LUTInputused==2&...
+    LUTconcused(:,1)==110 & LUTconcused(:,2)==28.00 &...
+    LUTconcused(:,3)==1.249;
 
 
-% find LongS in waterpixels with index I
-[Y,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*LongS').^2,2)));
+% find CRANB in waterpixels with index I
+[~,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*CRANB').^2,2)));
 
-Inputused(IMatrix(I))
-DPFused(IMatrix(I))
-LUTconcused(IMatrix(I),:)
+disp('Input:')
+disp(LUTInputused(IMatrix(I)))
 
-LongSconc150916 = [46.10 28.30 0.9819];
+disp('DPF:')
+disp(LUTDPFused(IMatrix(I)))
+
+disp('Concentrations:')
+disp(LUTconcused(IMatrix(I),:))
+
+LongSconc150916 = [99.3 28.3 1.249];
 LongSconc150916ret = XResults(I,:);
 
 figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(L8bands,LongS,'.-g')
+plot(L8bands,CRANB,'.-g')
 hold on
 plot(L8bands,waterpixels(I,:),'.-r')
 plot(L8bands,LUTused(IMatrix(I),:),'.-b')
 plot(L8bands,LUTused(rule6,:)','k')
-title('LongS','fontsize',fs)
+title('CRANB','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
 legend('ROI','Closest L8','ret. from HL','DPF LUT')
@@ -897,124 +901,144 @@ grid on
 xlim([0.4 2.5])
 
 %% Find LONGN
-rule6 = strcmp(Inputused(:),'input150916LONGS')&...
-    LUTconcused(:,1)==50 & LUTconcused(:,2)==16.7 &...
-    LUTconcused(:,3)==1.0025;
+rule6 = LUTInputused==2&...
+    LUTconcused(:,1)==110 & LUTconcused(:,2)==28.00 &...
+    LUTconcused(:,3)==1.249;
 
 
-% find LongN in waterpixels with index I
-[Y,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*LongN').^2,2)));
+% find LONGN in waterpixels with index I
+[~,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*LONGN').^2,2)));
 
-Inputused(IMatrix(I))
-DPFused(IMatrix(I))
-LUTconcused(IMatrix(I),:)
+disp('Input:')
+disp(LUTInputused(IMatrix(I)))
 
-LongNconc150916 = [47.90 16.7 1.0194];
-LongNconc150916ret = XResults(I,:);
+disp('DPF:')
+disp(LUTDPFused(IMatrix(I)))
+
+disp('Concentrations:')
+disp(LUTconcused(IMatrix(I),:))
+
+LONGNconc150916 = [116 29.2 1.249];
+LONGNconc150916ret = XResults(I,:);
 
 figure('name',date) 
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(L8bands,LongN,'.-g')
+plot(L8bands,LONGN,'.-g')
 hold on
 plot(L8bands,waterpixels(I,:),'.-r')
 plot(L8bands,LUTused(IMatrix(I),:),'.-b')
 plot(L8bands,LUTused(rule6,:)','k')
-title('LongN','fontsize',fs)
+title('LONGN','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
 legend('ROI','Closest L8','ret. from HL','DPF LUT')
 grid on
 xlim([0.4 2.5])
 
-%% Find Cranb
-rule6 = strcmp(Inputused(:),'input150916LONGS')&...
-    LUTconcused(:,1)==60 & LUTconcused(:,2)==30.7 &...
-    LUTconcused(:,3)==1.0025;
+%% Find ONTOS
+rule6 = LUTInputused==1&...
+    LUTconcused(:,1)==2.1 & LUTconcused(:,2)==5.0 &...
+    LUTconcused(:,3)==0.1759;
 
-% find Cranb in waterpixels with index I
-[Y,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*Cranb').^2,2)));
+% find ONTOS in waterpixels with index I
+[~,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*ONTOS').^2,2)));
 
-Inputused(IMatrix(I))
-DPFused(IMatrix(I))
-LUTconcused(IMatrix(I),:)
+disp('Input:')
+disp(LUTInputused(IMatrix(I)))
 
-Cranbconc150916 = [58.3 30.70 0.9297];
-Cranbconc150916ret = XResults(I,:);
+disp('DPF:')
+disp(LUTDPFused(IMatrix(I)))
+
+disp('Concentrations:')
+disp(LUTconcused(IMatrix(I),:))
+
+ONTOSconc150916 = [1.7 4.0 0.1759];
+ONTOSconc150916ret = XResults(I,:);
 
 figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(L8bands,Cranb,'.-g')
+plot(L8bands,ONTOS,'.-g')
 hold on
 plot(L8bands,waterpixels(I,:),'.-r')
 plot(L8bands,LUTused(IMatrix(I),:),'.-b')
 plot(L8bands,LUTused(rule6,:)','k')
-title('Cranb','fontsize',fs)
+title('ONTOS','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
 legend('ROI','Closest L8','ret. from HL','DPF LUT')
 grid on
 xlim([0.4 2.5])
 
-%% Find IBayN
-rule6 = strcmp(Inputused(:),'input150916LONGS')&...
-    LUTconcused(:,1)==30.0 & LUTconcused(:,2)==9.1100 &...
-    LUTconcused(:,3)==1.0025;
+%% Find RVRPL
+rule6 = LUTInputused==1&...
+    LUTconcused(:,1)==10 & LUTconcused(:,2)==5.0 &...
+    LUTconcused(:,3)==0.1759;
 
-% find IBayN in waterpixels with index I
-[Y,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*IBayN').^2,2)));
+% find RVRPL in waterpixels with index I
+[~,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*RVRPL').^2,2)));
 
-Inputused(IMatrix(I))
-DPFused(IMatrix(I))
-LUTconcused(IMatrix(I),:)
+disp('Input:')
+disp(LUTInputused(IMatrix(I)))
 
-IBayNconc150916 = [28.30 9.11 1.0025];
-IBayNconc150916ret = XResults(I,:);
+disp('DPF:')
+disp(LUTDPFused(IMatrix(I)))
+
+disp('Concentrations:')
+disp(LUTconcused(IMatrix(I),:))
+
+RVRPLconc150916 = [3.91 4.0 0.1759];
+RVRPLconc150916ret = XResults(I,:);
 
 figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(L8bands,IBayN,'.-g')
+plot(L8bands,RVRPL,'-g')
 hold on
 plot(L8bands,waterpixels(I,:),'.-r')
 plot(L8bands,LUTused(IMatrix(I),:),'.-b')
 plot(L8bands,LUTused(rule6,:)','k')
-title('IbayN','fontsize',fs)
+title('RVRPL','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
 legend('ROI','Closest L8','ret. from HL','DPF LUT')
 grid on
 xlim([0.4 2.5])
 
-%% Find OntOS
-rule6 = strcmp(Inputused(:),'input150916ONTOS')&...
-    LUTconcused(:,1)==2.1 & LUTconcused(:,2)==1.4 &...
-    LUTconcused(:,3)==0.0954;
+%% Find IBAYN
+rule6 = LUTInputused==2&...
+    LUTconcused(:,1)==20.0 & LUTconcused(:,2)==5.00 &...
+    LUTconcused(:,3)==1.249;
 
-% find OntOS in waterpixels with index I
-[Y,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*OntOS').^2,2)));
+% find IBAYN in waterpixels with index I
+[~,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*IBAYN').^2,2)));
 
-Inputused(IMatrix(I))
-DPFused(IMatrix(I))
-LUTconcused(IMatrix(I),:)
+disp('Input:')
+disp(LUTInputused(IMatrix(I)))
 
-OntOSconc150916 = [2.10 1.4 0.0954];
-OntOSconc150916ret = XResults(I,:);
+disp('DPF:')
+disp(LUTDPFused(IMatrix(I)))
+
+disp('Concentrations:')
+disp(LUTconcused(IMatrix(I),:))
+
+IBAYNconc150916 = [19.6 4.0 1.249];
+IBAYNconc150916ret = XResults(I,:);
 
 figure('name',date)
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(L8bands,OntOS,'-g')
+plot(L8bands,IBAYN,'.-g')
 hold on
 plot(L8bands,waterpixels(I,:),'.-r')
 plot(L8bands,LUTused(IMatrix(I),:),'.-b')
 plot(L8bands,LUTused(rule6,:)','k')
-title('OntOS','fontsize',fs)
+title('IBAYN','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
 legend('ROI','Closest L8','ret. from HL','DPF LUT')
@@ -1033,10 +1057,10 @@ set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(LongSconc150916(1),LongSconc150916ret(1),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc150916(1),LongNconc150916ret(1),'.k','MarkerSize', ms);
-plot(Cranbconc150916(1),Cranbconc150916ret(1),'.b','MarkerSize', ms);
-plot(IBayNconc150916(1),IBayNconc150916ret(1),'.g','MarkerSize', ms);
-plot(OntOSconc150916(1),OntOSconc150916ret(1),'.m','MarkerSize', ms);
+plot(LONGNconc150916(1),LONGNconc150916ret(1),'.k','MarkerSize', ms);
+plot(CRANBconc150916(1),CRANBconc150916ret(1),'.b','MarkerSize', ms);
+plot(IBAYNconc150916(1),IBAYNconc150916ret(1),'.g','MarkerSize', ms);
+plot(ONTOSconc150916(1),ONTOSconc150916ret(1),'.m','MarkerSize', ms);
 maxconcChl = 160;
 plot([0 maxconcChl],[0 maxconcChl],'k')
 axis equal
@@ -1053,10 +1077,10 @@ set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(LongSconc150916(2),LongSconc150916ret(2),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc150916(2),LongNconc150916ret(2),'.k','MarkerSize', ms);
-plot(Cranbconc150916(2),Cranbconc150916ret(2),'.b','MarkerSize', ms);
-plot(IBayNconc150916(2),IBayNconc150916ret(2),'.g','MarkerSize', ms);
-plot(OntOSconc150916(2),OntOSconc150916ret(2),'.m','MarkerSize', ms);
+plot(LONGNconc150916(2),LONGNconc150916ret(2),'.k','MarkerSize', ms);
+plot(CRANBconc150916(2),CRANBconc150916ret(2),'.b','MarkerSize', ms);
+plot(IBAYNconc150916(2),IBAYNconc150916ret(2),'.g','MarkerSize', ms);
+plot(ONTOSconc150916(2),ONTOSconc150916ret(2),'.m','MarkerSize', ms);
 maxconcTSS = 60;
 plot([0 maxconcTSS],[0 maxconcTSS],'k')
 axis equal
@@ -1073,10 +1097,10 @@ set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(LongSconc150916(3),LongSconc150916ret(3),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc150916(3),LongNconc150916ret(3),'.k','MarkerSize', ms);
-plot(Cranbconc150916(3),Cranbconc150916ret(3),'.b','MarkerSize', ms);
-plot(IBayNconc150916(3),IBayNconc150916ret(3),'.g','MarkerSize', ms);
-plot(OntOSconc150916(3),OntOSconc150916ret(3),'.m','MarkerSize', ms);
+plot(LONGNconc150916(3),LONGNconc150916ret(3),'.k','MarkerSize', ms);
+plot(CRANBconc150916(3),CRANBconc150916ret(3),'.b','MarkerSize', ms);
+plot(IBAYNconc150916(3),IBAYNconc150916ret(3),'.g','MarkerSize', ms);
+plot(ONTOSconc150916(3),ONTOSconc150916ret(3),'.m','MarkerSize', ms);
 maxconcCDOM = 1.5;
 plot([0 maxconcCDOM],[0 maxconcCDOM],'k')
 axis equal
@@ -1113,10 +1137,10 @@ set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(LongSconc150916(1),LongSconc150916ret(1),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc150916(1),LongNconc150916ret(1),'.k','MarkerSize', ms);
-plot(Cranbconc150916(1),Cranbconc150916ret(1),'.b','MarkerSize', ms);
-plot(IBayNconc150916(1),IBayNconc150916ret(1),'.g','MarkerSize', ms);
-plot(OntOSconc150916(1),OntOSconc150916ret(1),'.m','MarkerSize', ms);
+plot(LONGNconc150916(1),LONGNconc150916ret(1),'.k','MarkerSize', ms);
+plot(CRANBconc150916(1),CRANBconc150916ret(1),'.b','MarkerSize', ms);
+plot(IBAYNconc150916(1),IBAYNconc150916ret(1),'.g','MarkerSize', ms);
+plot(ONTOSconc150916(1),ONTOSconc150916ret(1),'.m','MarkerSize', ms);
 maxconcChl = 100;
 plot([0 maxconcChl],[0 maxconcChl],'--k')
 axis equal
@@ -1150,10 +1174,10 @@ set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(LongSconc150916(2),LongSconc150916ret(2),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc150916(2),LongNconc150916ret(2),'.k','MarkerSize', ms);
-plot(Cranbconc150916(2),Cranbconc150916ret(2),'.b','MarkerSize', ms);
-plot(IBayNconc150916(2),IBayNconc150916ret(2),'.g','MarkerSize', ms);
-plot(OntOSconc150916(2),OntOSconc150916ret(2),'.m','MarkerSize', ms);
+plot(LONGNconc150916(2),LONGNconc150916ret(2),'.k','MarkerSize', ms);
+plot(CRANBconc150916(2),CRANBconc150916ret(2),'.b','MarkerSize', ms);
+plot(IBAYNconc150916(2),IBAYNconc150916ret(2),'.g','MarkerSize', ms);
+plot(ONTOSconc150916(2),ONTOSconc150916ret(2),'.m','MarkerSize', ms);
 maxconcTSS = 40;
 plot([0 maxconcTSS],[0 maxconcTSS],'--k')
 axis equal
@@ -1186,10 +1210,10 @@ set(gcf,'color','white')
 set(gca,'fontsize',fs)
 plot(LongSconc150916(3),LongSconc150916ret(3),'.r','MarkerSize', ms);
 hold on
-plot(LongNconc150916(3),LongNconc150916ret(3),'.k','MarkerSize', ms);
-plot(Cranbconc150916(3),Cranbconc150916ret(3),'.b','MarkerSize', ms);
-plot(IBayNconc150916(3),IBayNconc150916ret(3),'.g','MarkerSize', ms);
-plot(OntOSconc150916(3),OntOSconc150916ret(3),'.m','MarkerSize', ms);
+plot(LONGNconc150916(3),LONGNconc150916ret(3),'.k','MarkerSize', ms);
+plot(CRANBconc150916(3),CRANBconc150916ret(3),'.b','MarkerSize', ms);
+plot(IBAYNconc150916(3),IBAYNconc150916ret(3),'.g','MarkerSize', ms);
+plot(ONTOSconc150916(3),ONTOSconc150916ret(3),'.m','MarkerSize', ms);
 maxconcCDOM = 1.5;
 plot([0 maxconcCDOM],[0 maxconcCDOM],'--k')
 axis equal
