@@ -692,7 +692,7 @@ grid on
 atotal = a_CH_ONTOS + a_SM_ONTOS + astar_CD_ONTOS_corrected;
 
 figure('name',date)
-fs = 15;
+fs = 18;
 set(gcf,'color','white')
 plot(wavelength,a_CH_ONTOS,'r','LineWidth',1.5)
 hold on
@@ -701,8 +701,8 @@ plot(wavelength,astar_CD_ONTOS_corrected,'b','LineWidth',1.5);
 % plot(wavelength,atotal,'k','LineWidth',1.5)
 
 title('Absorption Coefficients','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
-ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
+xlabel('wavelength (nm)','fontsize',fs)
+ylabel('Absorption Coefficient (m^{-1})','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('Chlorophyll-{\it a}','Particles','CDOM');
 % legend('Chlorophyll','particles','CDOM','a_{total}');
