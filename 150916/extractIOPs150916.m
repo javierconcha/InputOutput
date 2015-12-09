@@ -372,7 +372,7 @@ legend('CRANB','ONTOS','LONGN','RVRPL','IBAYN');
 xlim([400 900])
 grid on
 
-%% fitting exp
+%% fitting exp from fitting an exponential to a_CD_ONToffset vs wavelength
 % ONTOS
 % General model Exp2:
 %      f(x) = a*exp(b*x) + c*exp(d*x)
@@ -443,17 +443,128 @@ legend('CRANB','offset','fitted','zero');
 xlim([400 900])
 grid on
 
+% LONGN
+% General model Exp2:
+%      f(x) = a*exp(b*x) + c*exp(d*x)
+% Coefficients (with 95% confidence bounds):
+       a =        6244; %  (5818, 6671)
+       b =    -0.01986; %  (-0.02004, -0.01968)
+       c =      0.8536; %  (0.738, 0.9693)
+       d =   -0.003362; %  (-0.003551, -0.003172)
+
+% Goodness of fit:
+%   SSE: 0.04905
+%   R-square: 0.9996
+%   Adjusted R-square: 0.9996
+%   RMSE: 0.009934
+
+a_CD_LONGNfitted = a*exp(b*wavelength) + c*exp(d*wavelength);
+
+a_CD_LONGNzero = a_CD_LONGNfitted-a_CD_LONGNfitted(wavelength==900);
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,a_CD_LONGN,'k');
+hold on
+plot(wavelength,a_CD_LONGNoffset,'r');
+plot(wavelength,a_CD_LONGNfitted,'g');
+plot(wavelength,a_CD_LONGNzero,'b');
+title('CDOM Absorption Coefficient -- LONGN','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
+set(gca,'fontsize',fs)
+legend('LONGN','offset','fitted','zero');
+xlim([400 900])
+grid on
+
+% RVRPL
+
+wavelength_tailored = [wavelength(wavelength<600); 3000];
+a_CD_RVRPLoffset_tailored = [a_CD_RVRPL(wavelength<600); 0.023]; 
+% General model Exp2:
+%      f(x) = a*exp(b*x) + c*exp(d*x)
+% Coefficients (with 95% confidence bounds):
+       a =        1028; %  (909.2, 1147)
+       b =    -0.02092; %  (-0.02121, -0.02064)
+       c =     0.02295; %  (0.02154, 0.02435)
+       d =    1.35e-05; %  (-6.523e-05, 9.224e-05)
+
+% Goodness of fit:
+%   SSE: 0.00101
+%   R-square: 0.9986
+%   Adjusted R-square: 0.9986
+%   RMSE: 0.002264
+
+a_CD_RVRPLfitted = a*exp(b*wavelength) + c*exp(d*wavelength);
+
+a_CD_RVRPLzero = a_CD_RVRPLfitted-a_CD_RVRPLfitted(wavelength==900);
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,a_CD_RVRPL,'k');
+hold on
+plot(wavelength,a_CD_RVRPLoffset,'r');
+plot(wavelength,a_CD_RVRPLfitted,'g');
+plot(wavelength,a_CD_RVRPLzero,'b');
+title('CDOM Absorption Coefficient -- RVRPL','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
+set(gca,'fontsize',fs)
+legend('RVRPL','offset','fitted','zero');
+xlim([400 900])
+grid on
+
+% IBAYN
+% General model Exp2:
+%      f(x) = a*exp(b*x) + c*exp(d*x)
+% Coefficients (with 95% confidence bounds):
+       a =        5695; %  (5084, 6305)
+       b =     -0.0202; %  (-0.02049, -0.01992)
+       c =       1.619; %  (1.434, 1.803)
+       d =   -0.003803; %  (-0.003964, -0.003642)
+
+% Goodness of fit:
+%   SSE: 0.06738
+%   R-square: 0.9993
+%   Adjusted R-square: 0.9993
+%   RMSE: 0.01164
+
+a_CD_IBAYNfitted = a*exp(b*wavelength) + c*exp(d*wavelength);
+
+a_CD_IBAYNzero = a_CD_IBAYNfitted-a_CD_IBAYNfitted(wavelength==900);
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,a_CD_IBAYN,'k');
+hold on
+plot(wavelength,a_CD_IBAYNoffset,'r');
+plot(wavelength,a_CD_IBAYNfitted,'g');
+plot(wavelength,a_CD_IBAYNzero,'b');
+title('CDOM Absorption Coefficient -- IBAYN','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
+set(gca,'fontsize',fs)
+legend('IBAYN','offset','fitted','zero');
+xlim([400 900])
+grid on
+
 figure
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,a_CD_ONTOSzero,'k');
 hold on
-plot(wavelength,a_CD_CRANBzero,'b');
+plot(wavelength,a_CD_CRANBzero,'r');
+plot(wavelength,a_CD_LONGNzero,'g');
+plot(wavelength,a_CD_RVRPLzero,'c');
+plot(wavelength,a_CD_IBAYNzero,'--k');
 title('CDOM Absorption Coefficient -- zero','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
 set(gca,'fontsize',fs)
-legend('ONTOS','CRANB');
+legend('ONTOS','CRANB','LONGN','RVRPL','IBAYN');
 xlim([400 900])
 grid on
 
