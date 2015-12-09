@@ -480,6 +480,8 @@ for index = 1:size(LUT,1)
         LUTconcDPF(index)= 2.4;  
     elseif strcmp(c{5}(index),'FFbb026.dpf')
         LUTconcDPF(index)= 2.6;
+    elseif strcmp(c{5}(index),'FFbb030.dpf')
+        LUTconcDPF(index)= 3.0;    
     end
 end
 
@@ -493,10 +495,10 @@ if size(LUT_All,1)~=size(LUT,1)
     disp('Repeated Values in LUT. They were deleted!')
 end
 %
-CHlimit = 25;
+CHlimit = 10;
 CHlimitup = 120;
-SMlimit = 4;
-CDlimit = 0.20;
+SMlimit = 3;
+CDlimit = 0.70;
 % DPFlimitup = 1.9;
 % DPFlimitlo = 0.9;
 
@@ -508,8 +510,8 @@ rule5 = LUTconcInput==1 & ...
 % input150916CRANB
 rule2 = LUTconcInput==2 & ...
     LUTconc(:,1)>=CHlimit & LUTconc(:,1)<CHlimitup & LUTconc(:,2)>=SMlimit & ...
-    LUTconc(:,3)>=CDlimit;% & ...
-%     LUTconcDPF(:)>0.4;
+    LUTconc(:,3)>=CDlimit & ...
+    LUTconcDPF(:)<1.3;
 %
 LUTsmart = LUT(rule5|rule2,:);
 LUTconcsmart = LUTconc(rule5|rule2,:);
@@ -723,7 +725,7 @@ title(h,'L8 retrieved C_a [mg m^{-3}]','FontSize',fs)
 set(gca, 'Units', 'normalized', 'Position', [0 0.1 1 1])
 y = get(h,'XTick');
 [xmin,xmax] = caxis;
-x = [10^xmin 0.3 1.0 3.0 10 30 100];
+x = [0.3 1.0 3.0 10 30 100];
 set(h,'XTick',log10(x));
 set(h,'XTickLabel',x)
 
@@ -878,6 +880,12 @@ rule6 = LUTInputused==2&...
 % find CRANB in waterpixels with index I
 [~,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*CRANB').^2,2)));
 
+
+rule7 = LUTInputused==LUTInputused(IMatrix(I))&...
+    LUTconcused(:,1)==LUTconcused(IMatrix(I),1)&...
+    LUTconcused(:,2)==LUTconcused(IMatrix(I),2) &...
+    LUTconcused(:,3)==LUTconcused(IMatrix(I),3);
+
 disp('Input:')
 disp(LUTInputused(IMatrix(I)))
 
@@ -899,6 +907,7 @@ hold on
 plot(L8bands,waterpixels(I,:),'.-r')
 plot(L8bands,LUTused(IMatrix(I),:),'.-b')
 plot(L8bands,LUTused(rule6,:)','k')
+plot(L8bands,LUTused(rule7,:)','c')
 title('CRANB','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
@@ -914,6 +923,11 @@ rule6 = LUTInputused==2&...
 
 % find LONGN in waterpixels with index I
 [~,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*LONGN').^2,2)));
+
+rule7 = LUTInputused==LUTInputused(IMatrix(I))&...
+    LUTconcused(:,1)==LUTconcused(IMatrix(I),1)&...
+    LUTconcused(:,2)==LUTconcused(IMatrix(I),2) &...
+    LUTconcused(:,3)==LUTconcused(IMatrix(I),3);
 
 disp('Input:')
 disp(LUTInputused(IMatrix(I)))
@@ -936,6 +950,7 @@ hold on
 plot(L8bands,waterpixels(I,:),'.-r')
 plot(L8bands,LUTused(IMatrix(I),:),'.-b')
 plot(L8bands,LUTused(rule6,:)','k')
+plot(L8bands,LUTused(rule7,:)','c')
 title('LONGN','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
