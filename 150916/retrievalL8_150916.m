@@ -37,7 +37,7 @@ masknew = reshape(imL8cropmask,[size(imL8cropmask,1)*size(imL8cropmask,2) size(i
 
 waterpixels = imnew(masknew==1,:);
 waterpixels = double(waterpixels);
-waterpixels = waterpixels - waterpixels(:,6)*ones(1,7);
+waterpixels = waterpixels - waterpixels(:,6)*ones(1,7); % substract SWIR 1 value
 
 waterpixels(isnan(waterpixels))=0;
 
@@ -102,6 +102,7 @@ plot(L8bands,meanwp-stdwp,'g')
 plot(L8bands,maxwp,'r')
 plot(L8bands,minwp,'r')
 xlim([min(L8bands) max(L8bands)])
+grid on
 
 format short
 disp('---------------------------------------------------')
@@ -374,10 +375,12 @@ grid on
 clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's variables are in Workspace
 
 % LUTfilename1 = 'Rvector150916_151102.txt'; % with more dpfs
-LUTfilename1 = 'Rvector150916_151206.txt'; % with more dpfs
+% LUTfilename1 = 'Rvector150916_151206.txt'; % with more dpfs
+LUTfilename1 = 'Rvector150916_151208.txt'; % with more dpfs
 
 % LUTconcfilename1 = 'concentration_list150916_151102.txt';
-LUTconcfilename1 = 'concentration_list150916_151206.txt';
+% LUTconcfilename1 = 'concentration_list150916_151206.txt';
+LUTconcfilename1 = 'concentration_list150916_151208.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/150916/';
 
@@ -492,7 +495,7 @@ end
 %
 CHlimit = 25;
 CHlimitup = 120;
-SMlimit = 13;
+SMlimit = 4;
 CDlimit = 0.20;
 % DPFlimitup = 1.9;
 % DPFlimitlo = 0.9;
@@ -656,6 +659,9 @@ gray = cat(3,   0.7*ones(size(imL8cropmask)), ...
             
 %% Plot Input (ONTOS or CRANB) and DPFs retrieved
 figure('name',date,'Position',get(0,'ScreenSize'))
+fs = 16;
+ms = 16;
+cbfs = 15; % colorbar font size
 subplot(1,2,1)
 set(gcf,'color','white')
 imagesc(gray); % display color of the mask first
@@ -881,8 +887,8 @@ disp(LUTDPFused(IMatrix(I)))
 disp('Concentrations:')
 disp(LUTconcused(IMatrix(I),:))
 
-LongSconc150916 = [99.3 28.3 1.249];
-LongSconc150916ret = XResults(I,:);
+CRANBconc150916 = [99.3 28.3 1.249];
+CRANBconc150916ret = XResults(I,:);
 
 figure('name',date)
 fs = 15;
@@ -918,7 +924,7 @@ disp(LUTDPFused(IMatrix(I)))
 disp('Concentrations:')
 disp(LUTconcused(IMatrix(I),:))
 
-LONGNconc150916 = [116 29.2 1.249];
+LONGNconc150916 = [116 29.2 1.1539];
 LONGNconc150916ret = XResults(I,:);
 
 figure('name',date) 
@@ -939,7 +945,7 @@ xlim([0.4 2.5])
 
 %% Find ONTOS
 rule6 = LUTInputused==1&...
-    LUTconcused(:,1)==2.1 & LUTconcused(:,2)==5.0 &...
+    LUTconcused(:,1)==2.1 & LUTconcused(:,2)==2.0 &...
     LUTconcused(:,3)==0.1759;
 
 % find ONTOS in waterpixels with index I
@@ -975,7 +981,7 @@ xlim([0.4 2.5])
 
 %% Find RVRPL
 rule6 = LUTInputused==1&...
-    LUTconcused(:,1)==10 & LUTconcused(:,2)==5.0 &...
+    LUTconcused(:,1)==2.1 & LUTconcused(:,2)==2.0 &...
     LUTconcused(:,3)==0.1759;
 
 % find RVRPL in waterpixels with index I
@@ -990,7 +996,7 @@ disp(LUTDPFused(IMatrix(I)))
 disp('Concentrations:')
 disp(LUTconcused(IMatrix(I),:))
 
-RVRPLconc150916 = [3.91 4.0 0.1759];
+RVRPLconc150916 = [3.91 4.0 0.1032];
 RVRPLconc150916ret = XResults(I,:);
 
 figure('name',date)
@@ -1011,7 +1017,7 @@ xlim([0.4 2.5])
 
 %% Find IBAYN
 rule6 = LUTInputused==2&...
-    LUTconcused(:,1)==20.0 & LUTconcused(:,2)==5.00 &...
+    LUTconcused(:,1)==30.0 & LUTconcused(:,2)==5.00 &...
     LUTconcused(:,3)==1.249;
 
 % find IBAYN in waterpixels with index I
@@ -1026,7 +1032,7 @@ disp(LUTDPFused(IMatrix(I)))
 disp('Concentrations:')
 disp(LUTconcused(IMatrix(I),:))
 
-IBAYNconc150916 = [19.6 4.0 1.249];
+IBAYNconc150916 = [19.6 4.0 1.037];
 IBAYNconc150916ret = XResults(I,:);
 
 figure('name',date)
@@ -1055,7 +1061,7 @@ figure('name',date,'Position',get(0,'ScreenSize'))
 subplot(1,3,1)
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(LongSconc150916(1),LongSconc150916ret(1),'.r','MarkerSize', ms);
+plot(RVRPLconc150916(1),RVRPLconc150916ret(1),'.r','MarkerSize', ms);
 hold on
 plot(LONGNconc150916(1),LONGNconc150916ret(1),'.k','MarkerSize', ms);
 plot(CRANBconc150916(1),CRANBconc150916ret(1),'.b','MarkerSize', ms);
@@ -1069,13 +1075,13 @@ xlim([0 maxconcChl])
 title('<Chl>, [\mug/L]','fontsize',fs)
 xlabel('measured <Chl> [\mug/L] ','fontsize',fs)
 ylabel('L8 retrieved <Chl> [\mug/L]','fontsize',fs)
-legend('LONGS','LONGN','CRANB','IBAYN','ONTOS')
+legend('RVRPL','LONGN','CRANB','IBAYN','ONTOS')
 
 % figure
 subplot(1,3,2)
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(LongSconc150916(2),LongSconc150916ret(2),'.r','MarkerSize', ms);
+plot(RVRPLconc150916(2),RVRPLconc150916ret(2),'.r','MarkerSize', ms);
 hold on
 plot(LONGNconc150916(2),LONGNconc150916ret(2),'.k','MarkerSize', ms);
 plot(CRANBconc150916(2),CRANBconc150916ret(2),'.b','MarkerSize', ms);
@@ -1089,13 +1095,13 @@ xlim([0 maxconcTSS])
 title('<TSS>, [mg/L]','fontsize',fs)
 xlabel('measured <TSS> [mg/L] ','fontsize',fs)
 ylabel('L8 retrieved <TSS> [m/L]','fontsize',fs)
-% legend('LONGS','LONGN','CRANB','IBAYN','ONTOS')
+% legend('RVRPL','LONGN','CRANB','IBAYN','ONTOS')
 
 subplot(1,3,3)
 % figure
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(LongSconc150916(3),LongSconc150916ret(3),'.r','MarkerSize', ms);
+plot(RVRPLconc150916(3),RVRPLconc150916ret(3),'.r','MarkerSize', ms);
 hold on
 plot(LONGNconc150916(3),LONGNconc150916ret(3),'.k','MarkerSize', ms);
 plot(CRANBconc150916(3),CRANBconc150916ret(3),'.b','MarkerSize', ms);
@@ -1109,7 +1115,7 @@ xlim([0 maxconcCDOM])
 title('a_{CDOM}(440nm), [1/m]','fontsize',fs)
 xlabel('measured a_{CDOM}(440nm) [1/m]','fontsize',fs)
 ylabel('retrieved a_{CDOM}(440nm) [1/m]','fontsize',fs)
-% legend('LONGS','LONGN','CRANB','IBAYN','ONTOS')
+% legend('RVRPL','LONGN','CRANB','IBAYN','ONTOS')
 
 
 
