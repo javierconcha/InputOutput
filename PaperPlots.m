@@ -319,7 +319,12 @@ LongSconc140929(1),LongSconc140929ret(1);
 LongNconc140929(1),LongNconc140929ret(1);
 Cranbconc140929(1),Cranbconc140929ret(1);
 IBayNconc140929(1),IBayNconc140929ret(1);
-OntOSconc140929(1),OntOSconc140929ret(1)];
+OntOSconc140929(1),OntOSconc140929ret(1);
+RVRPLconc150916(1),RVRPLconc150916ret(1);
+LONGNconc150916(1),LONGNconc150916ret(1);
+CRANBconc150916(1),CRANBconc150916ret(1);
+IBAYNconc150916(1),IBAYNconc150916ret(1);
+ONTOSconc150916(1),ONTOSconc150916ret(1)];
 
 CHL_RMSE = sqrt(mean((CHL_data(:,1)-CHL_data(:,2)).^2));
 CHL_RMSErange = 100*CHL_RMSE/(max(CHL_data(:,1))-min(CHL_data(:,1)));
@@ -335,7 +340,12 @@ LongSconc140929(2),LongSconc140929ret(2);
 LongNconc140929(2),LongNconc140929ret(2);
 Cranbconc140929(2),Cranbconc140929ret(2);
 IBayNconc140929(2),IBayNconc140929ret(2);
-OntOSconc140929(2),OntOSconc140929ret(2)];
+OntOSconc140929(2),OntOSconc140929ret(2);
+RVRPLconc150916(2),RVRPLconc150916ret(2);
+LONGNconc150916(2),LONGNconc150916ret(2);
+CRANBconc150916(2),CRANBconc150916ret(2);
+IBAYNconc150916(2),IBAYNconc150916ret(2);
+ONTOSconc150916(2),ONTOSconc150916ret(2)];
 
 TSS_RMSE = sqrt(mean((TSS_data(:,1)-TSS_data(:,2)).^2));
 TSS_RMSErange = 100*TSS_RMSE/(max(TSS_data(:,1))-min(TSS_data(:,1)));
@@ -351,7 +361,12 @@ LongSconc140929(3),LongSconc140929ret(3);
 LongNconc140929(3),LongNconc140929ret(3);
 Cranbconc140929(3),Cranbconc140929ret(3);
 IBayNconc140929(3),IBayNconc140929ret(3);
-OntOSconc140929(3),OntOSconc140929ret(3)];
+OntOSconc140929(3),OntOSconc140929ret(3);
+RVRPLconc150916(3),RVRPLconc150916ret(3);
+LONGNconc150916(3),LONGNconc150916ret(3);
+CRANBconc150916(3),CRANBconc150916ret(3);
+IBAYNconc150916(3),IBAYNconc150916ret(3);
+ONTOSconc150916(3),ONTOSconc150916ret(3)];
 
 CDO_RMSE = sqrt(mean((CDO_data(:,1)-CDO_data(:,2)).^2));
 CDO_RMSErange = 100*CDO_RMSE/(max(CDO_data(:,1))-min(CDO_data(:,1)));
@@ -404,6 +419,11 @@ plot(LongNconc140929(1),LongNconc140929ret(1),'^k','MarkerSize', ms);
 plot(Cranbconc140929(1),Cranbconc140929ret(1),'^k','MarkerSize', ms);
 plot(IBayNconc140929(1),IBayNconc140929ret(1),'^k','MarkerSize', ms);
 plot(OntOSconc140929(1),OntOSconc140929ret(1),'^k','MarkerSize', ms);
+plot(RVRPLconc150916(1),RVRPLconc150916ret(1),'ok','MarkerSize', ms);
+plot(LONGNconc150916(1),LONGNconc150916ret(1),'ok','MarkerSize', ms);
+plot(CRANBconc150916(1),CRANBconc150916ret(1),'ok','MarkerSize', ms);
+plot(IBAYNconc150916(1),IBAYNconc150916ret(1),'ok','MarkerSize', ms);
+plot(ONTOSconc150916(1),ONTOSconc150916ret(1),'ok','MarkerSize', ms);
 maxconcCHL = 150;
 plot([0 maxconcCHL],[0 maxconcCHL],'--k')
 axis equal
@@ -441,6 +461,11 @@ plot(LongNconc140929(2),LongNconc140929ret(2),'^k','MarkerSize', ms);
 plot(Cranbconc140929(2),Cranbconc140929ret(2),'^k','MarkerSize', ms);
 plot(IBayNconc140929(2),IBayNconc140929ret(2),'^k','MarkerSize', ms);
 plot(OntOSconc140929(2),OntOSconc140929ret(2),'^k','MarkerSize', ms);
+plot(RVRPLconc150916(2),RVRPLconc150916ret(2),'ok','MarkerSize', ms);
+plot(LONGNconc150916(2),LONGNconc150916ret(2),'ok','MarkerSize', ms);
+plot(CRANBconc150916(2),CRANBconc150916ret(2),'ok','MarkerSize', ms);
+plot(IBAYNconc150916(2),IBAYNconc150916ret(2),'ok','MarkerSize', ms);
+plot(ONTOSconc150916(2),ONTOSconc150916ret(2),'ok','MarkerSize', ms);
 maxconcTSS = 60;
 plot([0 maxconcTSS],[0 maxconcTSS],'--k')
 axis equal
@@ -470,7 +495,8 @@ set(gca,'fontsize',fs)
 plot(LongSconc130919(3),LongSconc130919ret(3),'*k','MarkerSize', ms);
 hold on
 plot(LongSconc140929(3),LongSconc140929ret(3),'^k','MarkerSize', ms); % not correct position!!!
-legend('09-19-2013','09-29-2014','Location','best')
+plot(RVRPLconc150916(3),RVRPLconc150916ret(3),'ok','MarkerSize', ms); % not correct position!!!
+legend('09-19-2013','09-29-2014','09-16-2015','Location','best')
 plot(Cranbconc130919(3),Cranbconc130919ret(3),'*k','MarkerSize', ms);
 plot(OntOSconc130919(3),OntOSconc130919ret(3),'*k','MarkerSize', ms);
 plot(OntNSconc130919(3),OntNSconc130919ret(3),'*k','MarkerSize', ms);
@@ -479,6 +505,11 @@ plot(LongNconc140929(3),LongNconc140929ret(3),'^k','MarkerSize', ms);
 plot(Cranbconc140929(3),Cranbconc140929ret(3),'^k','MarkerSize', ms);
 plot(IBayNconc140929(3),IBayNconc140929ret(3),'^k','MarkerSize', ms);
 plot(OntOSconc140929(3),OntOSconc140929ret(3),'^k','MarkerSize', ms);
+plot(RVRPLconc150916(3),RVRPLconc150916ret(3),'ok','MarkerSize', ms);
+plot(LONGNconc150916(3),LONGNconc150916ret(3),'ok','MarkerSize', ms);
+plot(CRANBconc150916(3),CRANBconc150916ret(3),'ok','MarkerSize', ms);
+plot(IBAYNconc150916(3),IBAYNconc150916ret(3),'ok','MarkerSize', ms);
+plot(ONTOSconc150916(3),ONTOSconc150916ret(3),'ok','MarkerSize', ms);
 maxconcCDOM = 1.5;
 plot([0 maxconcCDOM],[0 maxconcCDOM],'--k')
 axis equal

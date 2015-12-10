@@ -376,11 +376,13 @@ clear c c1 Rrs LUT LUTconc LUTconcDPF LUTused InputType% if other retrieval's va
 
 % LUTfilename1 = 'Rvector150916_151102.txt'; % with more dpfs
 % LUTfilename1 = 'Rvector150916_151206.txt'; % with more dpfs
-LUTfilename1 = 'Rvector150916_151208.txt'; % with more dpfs
+% LUTfilename1 = 'Rvector150916_151208.txt'; % with more dpfs
+LUTfilename1 = 'Rvector150916_151210.txt'; % with more dpfs
 
 % LUTconcfilename1 = 'concentration_list150916_151102.txt';
 % LUTconcfilename1 = 'concentration_list150916_151206.txt';
-LUTconcfilename1 = 'concentration_list150916_151208.txt';
+% LUTconcfilename1 = 'concentration_list150916_151208.txt';
+LUTconcfilename1 = 'concentration_list150916_151210.txt';
 
 filepath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/150916/';
 
@@ -511,7 +513,7 @@ rule5 = LUTconcInput==1 & ...
 rule2 = LUTconcInput==2 & ...
     LUTconc(:,1)>=CHlimit & LUTconc(:,1)<CHlimitup & LUTconc(:,2)>=SMlimit & ...
     LUTconc(:,3)>=CDlimit & ...
-    LUTconcDPF(:)<1.1;
+    LUTconcDPF(:)<1.0;
 %
 LUTsmart = LUT(rule5|rule2,:);
 LUTconcsmart = LUTconc(rule5|rule2,:);
