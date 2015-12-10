@@ -843,6 +843,8 @@ idx1 = find(strcmp('Column 6: Mean: IBAYN~~6',s{1}),1);
 data = s{1}(idx1+1:size(s{1},1));
 fclose(fid);
 
+clear statdata
+
 for index = 1:size(data,1)
     statdata(index,:) = str2num(cell2mat(data(index)));
 end

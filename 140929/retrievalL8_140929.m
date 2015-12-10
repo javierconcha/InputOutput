@@ -5,6 +5,8 @@
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/retrieval/')
 addpath('/Users/javier/Downloads/mtit')
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/140929
+
+clear imnew masknew waterpixels
 %% L8 image cropped
 % From ELM using new L8 reflectance product
 % folderpath = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/L8images/LC80170302014272LGN00/LC80170302014272LGN00_ROI_Rrs_150408.tif';
@@ -823,6 +825,8 @@ idx1 = find(strcmp('Column 7: Mean: IBAYN~~5',s{1}),1);% for MoB-ELM with bright
 data = s{1}(idx1+1:size(s{1},1));
 fclose(fid);
 
+clear statdata
+
 for index = 1:size(data,1)
     statdata(index,:) = str2num(cell2mat(data(index)));
 end
@@ -834,7 +838,7 @@ L8bands_ENVI = statdata(:,1);
 % IBayN = statdata(:,5);
 % OntOS = statdata(:,6);
 % Sand1 = statdata(:,7);
-
+%%
 % for MoB-ELM with bright: CRANB and dark: ONTOS
 Cranb = statdata(:,2); Cranb(isnan(Cranb(:)))=0;
 LongS = statdata(:,3); LongS(isnan(LongS(:)))=0;
@@ -860,7 +864,7 @@ axis([.4 2.5 0 0.025])
 
 
 %% Find LONGS
-rule6 = strcmp(Inputused(:),'input140929LONGS')&...
+rule6 = LUTInputused(:)==2&...
     LUTconcused(:,1)==45 & LUTconcused(:,2)==28.00 &...
     LUTconcused(:,3)==1.0025;
 
@@ -868,8 +872,8 @@ rule6 = strcmp(Inputused(:),'input140929LONGS')&...
 % find LongS in waterpixels with index I
 [Y,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*LongS').^2,2)));
 
-Inputused(IMatrix(I))
-DPFused(IMatrix(I))
+LUTInputused(IMatrix(I))
+LUTDPFused(IMatrix(I))
 LUTconcused(IMatrix(I),:)
 
 LongSconc140929 = [46.10 28.30 0.9819];
@@ -892,7 +896,7 @@ grid on
 xlim([0.4 2.5])
 
 %% Find LONGN
-rule6 = strcmp(Inputused(:),'input140929LONGS')&...
+rule6 = LUTInputused(:)==2&...
     LUTconcused(:,1)==50 & LUTconcused(:,2)==16.7 &...
     LUTconcused(:,3)==1.0025;
 
@@ -900,8 +904,8 @@ rule6 = strcmp(Inputused(:),'input140929LONGS')&...
 % find LongN in waterpixels with index I
 [Y,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*LongN').^2,2)));
 
-Inputused(IMatrix(I))
-DPFused(IMatrix(I))
+LUTInputused(IMatrix(I))
+LUTDPFused(IMatrix(I))
 LUTconcused(IMatrix(I),:)
 
 LongNconc140929 = [47.90 16.7 1.0194];
@@ -924,15 +928,15 @@ grid on
 xlim([0.4 2.5])
 
 %% Find Cranb
-rule6 = strcmp(Inputused(:),'input140929LONGS')&...
+rule6 = LUTInputused==2&...
     LUTconcused(:,1)==60 & LUTconcused(:,2)==30.7 &...
     LUTconcused(:,3)==1.0025;
 
 % find Cranb in waterpixels with index I
 [Y,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*Cranb').^2,2)));
 
-Inputused(IMatrix(I))
-DPFused(IMatrix(I))
+LUTInputused(IMatrix(I))
+LUTDPFused(IMatrix(I))
 LUTconcused(IMatrix(I),:)
 
 Cranbconc140929 = [58.3 30.70 0.9297];
@@ -955,15 +959,15 @@ grid on
 xlim([0.4 2.5])
 
 %% Find IBayN
-rule6 = strcmp(Inputused(:),'input140929LONGS')&...
+rule6 = LUTInputused(:)==2&...
     LUTconcused(:,1)==30.0 & LUTconcused(:,2)==9.1100 &...
     LUTconcused(:,3)==1.0025;
 
 % find IBayN in waterpixels with index I
 [Y,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*IBayN').^2,2)));
 
-Inputused(IMatrix(I))
-DPFused(IMatrix(I))
+LUTInputused(IMatrix(I))
+LUTDPFused(IMatrix(I))
 LUTconcused(IMatrix(I),:)
 
 IBayNconc140929 = [28.30 9.11 1.0025];
@@ -986,15 +990,15 @@ grid on
 xlim([0.4 2.5])
 
 %% Find OntOS
-rule6 = strcmp(Inputused(:),'input140929ONTOS')&...
+rule6 = LUTInputused(:)==1&...
     LUTconcused(:,1)==2.1 & LUTconcused(:,2)==1.4 &...
     LUTconcused(:,3)==0.0954;
 
 % find OntOS in waterpixels with index I
 [Y,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*OntOS').^2,2)));
 
-Inputused(IMatrix(I))
-DPFused(IMatrix(I))
+LUTInputused(IMatrix(I))
+LUTDPFused(IMatrix(I))
 LUTconcused(IMatrix(I),:)
 
 OntOSconc140929 = [2.10 1.4 0.0954];
