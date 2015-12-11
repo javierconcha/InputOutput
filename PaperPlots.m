@@ -385,7 +385,7 @@ bar(error,0.5)
 Labels = {'C_a','TSS','a_{CDOM}(440nm)'};
 
 set(gca,'FontSize',fs);
-ylabel('RMSE [%]','FontSize',fs)
+ylabel('NRMSE [%]','FontSize',fs)
 barmap=[0.7 0.7 0.7];
 colormap(barmap)
 ylim([0 20])
