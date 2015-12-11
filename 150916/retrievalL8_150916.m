@@ -498,8 +498,9 @@ if size(LUT_All,1)~=size(LUT,1)
 end
 %
 CHlimit = 10;
-CHlimitup = 120;
+% CHlimitup = 120;
 SMlimit = 3;
+SMlimitup = 35;
 CDlimit = 0.70;
 % DPFlimitup = 1.9;
 % DPFlimitlo = 0.9;
@@ -511,9 +512,10 @@ rule5 = LUTconcInput==1 & ...
 
 % input150916CRANB
 rule2 = LUTconcInput==2 & ...
-    LUTconc(:,1)>=CHlimit & LUTconc(:,1)<CHlimitup & LUTconc(:,2)>=SMlimit & ...
+    LUTconc(:,1)>=CHlimit & LUTconc(:,1)~=45& ...
+    LUTconc(:,2)>=SMlimit & LUTconc(:,2)<SMlimitup & ...
     LUTconc(:,3)>=CDlimit & ...
-    LUTconcDPF(:)<1.0;
+    LUTconcDPF(:)<1.1;
 %
 LUTsmart = LUT(rule5|rule2,:);
 LUTconcsmart = LUTconc(rule5|rule2,:);
@@ -876,6 +878,8 @@ axis([.4 2.5 0 0.025])
 
 
 %% Find CRANB
+site = 'CRANB';
+display(site)
 rule6 = LUTInputused==2&...
     LUTconcused(:,1)==110 & LUTconcused(:,2)==28.00 &...
     LUTconcused(:,3)==1.249;
@@ -899,8 +903,8 @@ disp(LUTDPFused(IMatrix(I)))
 disp('Concentrations:')
 disp(LUTconcused(IMatrix(I),:))
 
-CRANBconc150916 = [99.3 28.3 1.249];
-CRANBconc150916ret = XResults(I,:);
+CRANBconc150916 = [66.11 28.3 1.249]
+CRANBconc150916ret = XResults(I,:)
 
 figure('name',date)
 fs = 15;
@@ -920,6 +924,9 @@ grid on
 xlim([0.4 2.5])
 
 %% Find LONGN
+site = 'LONGN';
+display(site)
+
 rule6 = LUTInputused==2&...
     LUTconcused(:,1)==110 & LUTconcused(:,2)==28.00 &...
     LUTconcused(:,3)==1.249;
@@ -942,8 +949,8 @@ disp(LUTDPFused(IMatrix(I)))
 disp('Concentrations:')
 disp(LUTconcused(IMatrix(I),:))
 
-LONGNconc150916 = [116 29.2 1.1539];
-LONGNconc150916ret = XResults(I,:);
+LONGNconc150916 = [95.69 29.2 1.1539]
+LONGNconc150916ret = XResults(I,:)
 
 figure('name',date) 
 fs = 15;
@@ -963,12 +970,20 @@ grid on
 xlim([0.4 2.5])
 
 %% Find ONTOS
+site = 'ONTOS';
+display(site)
+
 rule6 = LUTInputused==1&...
     LUTconcused(:,1)==2.1 & LUTconcused(:,2)==2.0 &...
     LUTconcused(:,3)==0.1759;
 
 % find ONTOS in waterpixels with index I
 [~,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*ONTOS').^2,2)));
+
+rule7 = LUTInputused==LUTInputused(IMatrix(I))&...
+    LUTconcused(:,1)==LUTconcused(IMatrix(I),1)&...
+    LUTconcused(:,2)==LUTconcused(IMatrix(I),2) &...
+    LUTconcused(:,3)==LUTconcused(IMatrix(I),3);
 
 disp('Input:')
 disp(LUTInputused(IMatrix(I)))
@@ -979,8 +994,8 @@ disp(LUTDPFused(IMatrix(I)))
 disp('Concentrations:')
 disp(LUTconcused(IMatrix(I),:))
 
-ONTOSconc150916 = [1.7 4.0 0.1759];
-ONTOSconc150916ret = XResults(I,:);
+ONTOSconc150916 = [3.07 4.0 0.1759]
+ONTOSconc150916ret = XResults(I,:)
 
 figure('name',date)
 fs = 15;
@@ -991,6 +1006,7 @@ hold on
 plot(L8bands,waterpixels(I,:),'.-r')
 plot(L8bands,LUTused(IMatrix(I),:),'.-b')
 plot(L8bands,LUTused(rule6,:)','k')
+plot(L8bands,LUTused(rule7,:)','c')
 title('ONTOS','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
@@ -999,12 +1015,20 @@ grid on
 xlim([0.4 2.5])
 
 %% Find RVRPL
+site = 'RVRPL';
+display(site)
+
 rule6 = LUTInputused==1&...
     LUTconcused(:,1)==2.1 & LUTconcused(:,2)==2.0 &...
     LUTconcused(:,3)==0.1759;
 
 % find RVRPL in waterpixels with index I
 [~,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*RVRPL').^2,2)));
+
+rule7 = LUTInputused==LUTInputused(IMatrix(I))&...
+    LUTconcused(:,1)==LUTconcused(IMatrix(I),1)&...
+    LUTconcused(:,2)==LUTconcused(IMatrix(I),2) &...
+    LUTconcused(:,3)==LUTconcused(IMatrix(I),3);
 
 disp('Input:')
 disp(LUTInputused(IMatrix(I)))
@@ -1015,8 +1039,8 @@ disp(LUTDPFused(IMatrix(I)))
 disp('Concentrations:')
 disp(LUTconcused(IMatrix(I),:))
 
-RVRPLconc150916 = [3.91 4.0 0.1032];
-RVRPLconc150916ret = XResults(I,:);
+RVRPLconc150916 = [5.18 4.0 0.1032]
+RVRPLconc150916ret = XResults(I,:)
 
 figure('name',date)
 fs = 15;
@@ -1027,6 +1051,7 @@ hold on
 plot(L8bands,waterpixels(I,:),'.-r')
 plot(L8bands,LUTused(IMatrix(I),:),'.-b')
 plot(L8bands,LUTused(rule6,:)','k')
+plot(L8bands,LUTused(rule7,:)','c')
 title('RVRPL','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
@@ -1035,12 +1060,20 @@ grid on
 xlim([0.4 2.5])
 
 %% Find IBAYN
+site = 'IBAYN';
+display(site)
+
 rule6 = LUTInputused==2&...
     LUTconcused(:,1)==30.0 & LUTconcused(:,2)==5.00 &...
     LUTconcused(:,3)==1.249;
 
 % find IBAYN in waterpixels with index I
 [~,I] = min(sqrt(mean((waterpixels-ones(size(waterpixels,1),1)*IBAYN').^2,2)));
+
+rule7 = LUTInputused==LUTInputused(IMatrix(I))&...
+    LUTconcused(:,1)==LUTconcused(IMatrix(I),1)&...
+    LUTconcused(:,2)==LUTconcused(IMatrix(I),2) &...
+    LUTconcused(:,3)==LUTconcused(IMatrix(I),3);
 
 disp('Input:')
 disp(LUTInputused(IMatrix(I)))
@@ -1051,8 +1084,8 @@ disp(LUTDPFused(IMatrix(I)))
 disp('Concentrations:')
 disp(LUTconcused(IMatrix(I),:))
 
-IBAYNconc150916 = [19.6 4.0 1.037];
-IBAYNconc150916ret = XResults(I,:);
+IBAYNconc150916 = [15.27 4.0 1.037]
+IBAYNconc150916ret = XResults(I,:)
 
 figure('name',date)
 fs = 15;
@@ -1063,6 +1096,7 @@ hold on
 plot(L8bands,waterpixels(I,:),'.-r')
 plot(L8bands,LUTused(IMatrix(I),:),'.-b')
 plot(L8bands,LUTused(rule6,:)','k')
+plot(L8bands,LUTused(rule7,:)','c')
 title('IBAYN','fontsize',fs)
 xlabel('wavelength [\mu m]','fontsize',fs)
 ylabel('R_{rs} [1/m]','fontsize',fs)
